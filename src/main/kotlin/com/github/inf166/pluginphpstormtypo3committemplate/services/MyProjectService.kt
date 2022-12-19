@@ -1,7 +1,7 @@
-package org.jetbrains.plugins.template.services
+package com.github.inf166.pluginphpstormtypo3committemplate.services
 
 import com.intellij.openapi.project.Project
-import org.jetbrains.plugins.template.MyBundle
+import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
 
 class MyProjectService(project: Project) {
 
