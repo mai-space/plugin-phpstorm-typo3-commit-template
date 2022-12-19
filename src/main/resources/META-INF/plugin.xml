@@ -1,18 +1,35 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.inf166.pluginphpstormtypo3committemplate</id>
-    <name>IntelliJ Platform Plugin plugin-phpstorm-typo3-commit-template</name>
-    <vendor>inf166</vendor>
+    <name>Git Commit Template with TYPO3 Commit Guidelines</name>
+    <vendor email="joel@maispace.de" url="https://github.com/Inf166/plugin-phpstorm-typo3-commit-template">Joel Maximilian Mai</vendor>
+
+    <description><![CDATA[
+    <p>Create a commit message with the following template:</p>
+
+    <pre>
+        [&lt;type&gt;] &lt;subject&gt;
+        Breaking Changes:
+        &lt;Breaking Changes entered here&gt;
+        &lt;BLANK LINE&gt;
+        &lt;BLANK LINE&gt;
+        Done Tasks:
+        &lt;Tasks entered here&gt;
+        &lt;BLANK LINE&gt;
+        To-Do:
+        &lt;To-Do's entered here&gt;
+        refs: #&lt;Ticket number here&gt;
+    </pre>
+    ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.MyProjectService"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.inf166.pluginphpstormtypo3committemplate.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="Commit.Button" class="com.github.inf166.pluginphpstormtypo3committemplate.classes.CreateCommitAction"
+                text="Create Commit Message"
+                description="Create commit message"
+                icon="/icons/load.png">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>

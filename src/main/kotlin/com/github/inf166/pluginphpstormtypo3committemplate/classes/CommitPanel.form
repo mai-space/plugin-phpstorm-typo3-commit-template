@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.github.inf166.pluginphpstormtypo3committemplate.classes.CommitPanel">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="16">
+    <margin top="16" left="16" bottom="16" right="16"/>
+    <constraints>
+      <xy x="20" y="20" width="4930" height="953"/>
+    </constraints>
+    <properties>
+      <focusCycleRoot value="false"/>
+      <preferredSize width="2500" height="584"/>
+    </properties>
+    <border type="none">
+      <color color="-12698050"/>
+    </border>
+    <children>
+      <component id="8bb2e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Type of change"/>
+        </properties>
+      </component>
+      <component id="19a59" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <horizontalTextPosition value="2"/>
+          <text value="Subject:"/>
+        </properties>
+      </component>
+      <component id="92216" class="javax.swing.JTextField" binding="shortDescription">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <toolTipText value="Seen in the git log, so choose carefully"/>
+        </properties>
+      </component>
+      <component id="a5d3c" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <icon value="icons/hammer.png"/>
+          <labelFor value="32600"/>
+          <text value="Done Tasks:"/>
+        </properties>
+      </component>
+      <component id="83b17" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Reference to ticket:"/>
+          <toolTipText value="Comma-separated list of issues which are closed by this commit"/>
+        </properties>
+      </component>
+      <component id="73448" class="javax.swing.JTextField" binding="closedIssues">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="c313a" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <icon value="icons/boom.png"/>
+          <labelFor value="15a33"/>
+          <text value="Breaking changes:"/>
+        </properties>
+      </component>
+      <grid id="1360f" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="aaa51" class="javax.swing.JRadioButton" binding="featureRadioButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="feature"/>
+              <selected value="true"/>
+              <text value="[FEATURE] - A new feature (also small additions)"/>
+            </properties>
+          </component>
+          <component id="2ac27" class="javax.swing.JRadioButton" binding="bugfixRadioButton">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="bugfix"/>
+              <selected value="false"/>
+              <text value="[BUGFIX] -  A fix for a bug"/>
+            </properties>
+          </component>
+          <component id="621d2" class="javax.swing.JRadioButton" binding="securityRadioButton">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="security"/>
+              <text value="[SECURITY] - Visualizes that a change fixes a security issue. This tag is used by the Security Team."/>
+            </properties>
+          </component>
+          <component id="7d0c5" class="javax.swing.JRadioButton" binding="taskRadioButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="task"/>
+              <text value="[TASK] - Anything not covered by the above categories. E.g. Refactoring of a component"/>
+            </properties>
+          </component>
+          <component id="48d9a" class="javax.swing.JRadioButton" binding="docsRadioButton">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="docs"/>
+              <text value="[DOCS] - This tag is used for changes regarding the documentation"/>
+            </properties>
+          </component>
+          <hspacer id="ae76c">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <component id="15a33" class="javax.swing.JTextArea" binding="breakingChanges">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="60"/>
+          </grid>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <lineWrap value="true"/>
+          <margin top="2" left="6" bottom="2" right="6"/>
+          <nextFocusableComponent value="73448"/>
+          <requestFocusEnabled value="true"/>
+          <rows value="3"/>
+          <tabSize value="2"/>
+          <text value=""/>
+          <toolTipText value="Describe what behaviour was changed or can be broken by this commit"/>
+        </properties>
+      </component>
+      <component id="d2f1" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <icon value="icons/later.png"/>
+          <labelFor value="e0a37"/>
+          <text value="To-Do's:"/>
+        </properties>
+      </component>
+      <component id="e0a37" class="javax.swing.JTextArea" binding="workInProgress">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="60"/>
+          </grid>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <lineWrap value="true"/>
+          <margin top="2" left="6" bottom="2" right="6"/>
+          <nextFocusableComponent value="15a33"/>
+          <requestFocusEnabled value="true"/>
+          <rows value="3"/>
+          <tabSize value="2"/>
+          <text value=""/>
+          <toolTipText value="Describe what needs to be done later"/>
+        </properties>
+      </component>
+      <component id="32600" class="javax.swing.JTextArea" binding="longDescription">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="60"/>
+          </grid>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <lineWrap value="true"/>
+          <margin top="2" left="6" bottom="2" right="6"/>
+          <nextFocusableComponent value="e0a37"/>
+          <requestFocusEnabled value="true"/>
+          <tabSize value="2"/>
+          <text value=""/>
+          <toolTipText value="Describe your done tasks here"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="changeTypeGroup" bound="true">
+      <member id="aaa51"/>
+      <member id="48d9a"/>
+      <member id="621d2"/>
+      <member id="7d0c5"/>
+      <member id="1325a"/>
+      <member id="c1b37"/>
+      <member id="5ced0"/>
+      <member id="d4c37"/>
+      <member id="9b279"/>
+      <member id="3f8cc"/>
+      <member id="2ac27"/>
+    </group>
+  </buttonGroups>
+</form>
