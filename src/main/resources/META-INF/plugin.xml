@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.inf166.pluginphpstormtypo3committemplate</id>
-    <name>Git Commit Template with TYPO3 Commit Guidelines</name>
+    <name>Commit Template with TYPO3 Commit Message Guidelines</name>
     <vendor email="joel@maispace.de" url="https://github.com/Inf166/plugin-phpstorm-typo3-commit-template">Joel Maximilian Mai</vendor>
 
     <description><![CDATA[

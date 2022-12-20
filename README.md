@@ -36,11 +36,14 @@ Once you are in the dialog, you can navigate by using the `Tab` Key.<br>
 Fill the form as you see fit.<br>
 
 <img src="src/main/resources/images/dialog.png" alt="dialog" width="550">
-<img src="src/main/resources/images/filled_dialog.png" alt="filled_dialog" width="550">
 <br>
 
 If you are happy with your commit message, press `Apply` and the message will be templated
-and inserted into your commit message dialog<br>
+and inserted into your commit message dialog.<br>
+
+<img src="src/main/resources/images/filled_dialog.png" alt="filled_dialog" width="550">
+<br>
+
 Please note, that the template is dynamic. So filling breaking changes will result in the `[!!!]` flag being set.<br>
 This also works with the to-do list which results in the `[WIP]` flag being set.<br>
 If you do not want any flags, just fill the `Done Tasks` Section, so only the Type will be displayed.<br>
