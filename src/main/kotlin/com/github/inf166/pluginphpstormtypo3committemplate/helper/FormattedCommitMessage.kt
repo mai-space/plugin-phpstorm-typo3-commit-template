@@ -1,11 +1,11 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.helper
 
 import org.apache.commons.lang.StringUtils.isNotBlank
+import org.apache.commons.lang.StringUtils.startsWith
 import java.util.*
-import com.github.inf166.pluginphpstormtypo3committemplate.components.TypeRadioButtonGroup
 
 class FormattedCommitMessage {
-    private var changeType: TypeRadioButtonGroup? = null
+    private var changeType: String
     private var subjectLine: String
     private var doneTasks: String
     private var breakingChanges: String
@@ -13,6 +13,7 @@ class FormattedCommitMessage {
     private var closedIssue: String
 
     private constructor() {
+        this.changeType = ""
         this.subjectLine = ""
         this.doneTasks = ""
         this.breakingChanges = ""
@@ -21,10 +22,10 @@ class FormattedCommitMessage {
     }
 
     constructor(
-        changeType: TypeRadioButtonGroup?, subjectLine: String, doneTasks: String,
+        changeType: Any?, subjectLine: String, doneTasks: String,
         breakingChanges: String, workInProgress: String, closedIssue: String
     ) {
-        this.changeType = changeType
+        this.changeType = changeType.toString()
         this.subjectLine = subjectLine
         this.doneTasks = doneTasks
         this.breakingChanges = breakingChanges
@@ -41,40 +42,33 @@ class FormattedCommitMessage {
             .append(" ")
             .append(this.subjectLine)
 
-        val map: MutableMap<String, String> = HashMap()
-        map["Breaking-Changes: "] = this.breakingChanges
-        map["Tasks: "] = this.doneTasks
-        map["To-Do's: "] = this.workInProgress
-        map["refs: "] = "#$this.closedIssue"
-        val changeNotes: Array<Pair<String, String>> = map.entries.map { Pair(it.key, it.value) } .toTypedArray()
-
-        formattedCommitMessage = addChangeNotes(formattedCommitMessage, changeNotes)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Breaking-Changes: ", this.breakingChanges)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Tasks: ", this.doneTasks)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "To-Do's: ", this.workInProgress)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "refs: ", "#"+this.closedIssue)
 
         return formattedCommitMessage.toString()
     }
 
-    private fun setMessageFlags(formattedCommitMessage: StringBuilder, changeType: TypeRadioButtonGroup?, breakingChanges: String, workInProgress: String): StringBuilder {
+    private fun setMessageFlags(formattedCommitMessage: StringBuilder, changeType: String, breakingChanges: String, workInProgress: String): StringBuilder {
         if (isNotBlank(breakingChanges)) {
             formattedCommitMessage.append("[!!!]")
         }
         if (isNotBlank(workInProgress)) {
             formattedCommitMessage.append("[WIP]")
         }
-        if (changeType != null) {
-            formattedCommitMessage.append(changeType.label())
-        }
+        formattedCommitMessage.append("[$changeType]")
 
         return formattedCommitMessage
     }
 
-    private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotes: Array<Pair<String, String>>): StringBuilder {
-        changeNotes.forEach {
-            if(isNotBlank(it.second)) {
-                formattedCommitMessage
-                    .append(System.lineSeparator())
-                    .append(System.lineSeparator())
-                    .append("$it.first\n$it.second")
-            }
+    private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotesTitle: String, changeNotes: String): StringBuilder {
+        if(startsWith(changeNotes,"#") && changeNotes.length == 1 ) return formattedCommitMessage
+        if(isNotBlank(changeNotes)) {
+            formattedCommitMessage
+                .append(System.lineSeparator())
+                .append(System.lineSeparator())
+                .append("$changeNotesTitle\n$changeNotes")
         }
 
         return formattedCommitMessage
