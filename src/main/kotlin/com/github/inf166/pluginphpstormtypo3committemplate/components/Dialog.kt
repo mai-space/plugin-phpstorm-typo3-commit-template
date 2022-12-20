@@ -5,13 +5,17 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.Gray
+import com.intellij.ui.layout.selectedValueIs
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.KeyboardFocusManager
 import javax.swing.*
 import javax.swing.border.Border
 
-public final class Dialog(project: Project?): DialogWrapper(project) {
+public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
+
+    private var oldCommitMessage: FormattedCommitMessage?
+
     private lateinit var container: JPanel
     private lateinit var subjectLine: JPanel
     private lateinit var commitTypeRow: JPanel
@@ -31,6 +35,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
     private lateinit var todoList: JTextArea
 
     init {
+        this.oldCommitMessage = oldCommitMessage
         title = "Commit Message Template by TYPO3 Guidelines"
         setOKButtonText("Apply")
         init()
@@ -50,13 +55,12 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         commitTypeRow = JPanel(BorderLayout(0,3))
         val commitTypeLabel = JLabel("Type of Commit")
         commitType = ComboBox<String>()
-        commitType.addItem("FEATURE")
-        commitType.addItem("TASK")
-        commitType.addItem("BUGFIX")
-        commitType.addItem("SECURITY")
-        commitType.addItem("DOCS")
+        for (changeType in this.oldCommitMessage?.changeTypes!!) {
+            commitType.addItem(changeType)
+        }
         commitType.maximumSize = commitType.preferredSize
         commitType.border = componentBorder
+        commitType.selectedItem = this.oldCommitMessage?.changeType ?: ""
         commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
         commitTypeRow.add(commitType, BorderLayout.SOUTH)
         subjectLine.add(commitTypeRow, BorderLayout.WEST)
@@ -65,6 +69,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         val commitSubjectLabel = JLabel("Subject of Commit")
         commitSubject = JTextField(34)
         commitSubject.border = componentBorder
+        commitSubject.text = this.oldCommitMessage?.subjectLine ?: ""
         subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
         subjectRow.add(commitSubject, BorderLayout.SOUTH)
         subjectLine.add(subjectRow, BorderLayout.CENTER)
@@ -78,6 +83,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         doneTasks.border = componentBorder
         doneTasks.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         doneTasks.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
+        doneTasks.text = this.oldCommitMessage?.doneTasks ?: ""
         taskRow.add(doneTasksLabel, BorderLayout.NORTH)
         taskRow.add(doneTasks, BorderLayout.SOUTH)
 
@@ -90,6 +96,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         breakingChanges.border = componentBorder
         breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
+        breakingChanges.text = this.oldCommitMessage?.breakingChanges ?: ""
         breakingRow.add(breakingChangesLabel, BorderLayout.NORTH)
         breakingRow.add(breakingChanges, BorderLayout.SOUTH)
 
@@ -102,6 +109,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         todoList.border = componentBorder
         todoList.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         todoList.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
+        todoList.text = this.oldCommitMessage?.todoList ?: ""
         todoRow.add(todoListLabel, BorderLayout.NORTH)
         todoRow.add(todoList, BorderLayout.SOUTH)
 
@@ -112,6 +120,7 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         val commitIssueLabel = JLabel("Issue No.: ")
         issueNumber = JTextField(38)
         issueNumber.border = componentBorder
+        issueNumber.text = this.oldCommitMessage?.issueNumber ?: ""
         referenceRow.add(commitIssueLabel, BorderLayout.WEST)
         referenceRow.add(issueNumber, BorderLayout.CENTER)
 
