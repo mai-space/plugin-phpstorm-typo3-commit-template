@@ -11,7 +11,6 @@ import java.awt.KeyboardFocusManager
 import javax.swing.*
 import javax.swing.border.Border
 
-
 public final class Dialog(project: Project?): DialogWrapper(project) {
     private lateinit var container: JPanel
     private lateinit var subjectLine: JPanel
