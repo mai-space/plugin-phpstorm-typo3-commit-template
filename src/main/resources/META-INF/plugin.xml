@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.inf166.pluginphpstormtypo3committemplate</id>
     <name>Commit Template with TYPO3 Commit Message Guidelines</name>
-    <vendor email="joel@maispace.de" url="https://github.com/Inf166/plugin-phpstorm-typo3-commit-template">Joel Maximilian Mai</vendor>
+    <vendor email="joel@maispace.de" url="https://github.com/Inf166">Joel Maximilian Mai</vendor>
 
     <description><![CDATA[
     <p>Create a commit message with the following template:</p>
