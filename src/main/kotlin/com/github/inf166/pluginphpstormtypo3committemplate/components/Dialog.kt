@@ -4,9 +4,13 @@ import com.github.inf166.pluginphpstormtypo3committemplate.helper.FormattedCommi
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.ui.Gray
 import java.awt.BorderLayout
-import java.awt.FlowLayout
+import java.awt.Dimension
+import java.awt.KeyboardFocusManager
 import javax.swing.*
+import javax.swing.border.Border
+
 
 public final class Dialog(project: Project?): DialogWrapper(project) {
     private lateinit var container: JPanel
@@ -33,13 +37,18 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         init()
     }
     override fun createCenterPanel(): JComponent {
+        val border: Border = BorderFactory.createLineBorder(Gray._107, 1)
+        val componentBorder = BorderFactory.createCompoundBorder(
+            border,
+            BorderFactory.createEmptyBorder(3, 3, 3, 3)
+        )
+
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
 
-        subjectLine = JPanel()
-        subjectLine.layout = BoxLayout(subjectLine, BoxLayout.LINE_AXIS)
+        subjectLine = JPanel(BorderLayout(3,0))
 
-        commitTypeRow = JPanel(BorderLayout())
+        commitTypeRow = JPanel(BorderLayout(0,3))
         val commitTypeLabel = JLabel("Type of Commit")
         commitType = ComboBox<String>()
         commitType.addItem("FEATURE")
@@ -47,48 +56,65 @@ public final class Dialog(project: Project?): DialogWrapper(project) {
         commitType.addItem("BUGFIX")
         commitType.addItem("SECURITY")
         commitType.addItem("DOCS")
+        commitType.maximumSize = commitType.preferredSize
+        commitType.border = componentBorder
         commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
         commitTypeRow.add(commitType, BorderLayout.SOUTH)
-        subjectLine.add(commitTypeRow)
+        subjectLine.add(commitTypeRow, BorderLayout.WEST)
 
-        subjectRow = JPanel(BorderLayout())
+        subjectRow = JPanel(BorderLayout(0,3))
         val commitSubjectLabel = JLabel("Subject of Commit")
-        commitSubject = JTextField()
+        commitSubject = JTextField(34)
+        commitSubject.border = componentBorder
         subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
         subjectRow.add(commitSubject, BorderLayout.SOUTH)
-        subjectLine.add(subjectRow)
+        subjectLine.add(subjectRow, BorderLayout.CENTER)
 
         container.add(subjectLine)
+        container.add(Box.createRigidArea(Dimension(0,8)))
 
-        taskRow = JPanel(BorderLayout())
+        taskRow = JPanel(BorderLayout(0,3))
         val doneTasksLabel = JLabel("Done Tasks: ")
-        doneTasks = JTextArea()
+        doneTasks = JTextArea(5,34)
+        doneTasks.border = componentBorder
+        doneTasks.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
+        doneTasks.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         taskRow.add(doneTasksLabel, BorderLayout.NORTH)
         taskRow.add(doneTasks, BorderLayout.SOUTH)
 
         container.add(taskRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
 
-        breakingRow = JPanel(BorderLayout())
+        breakingRow = JPanel(BorderLayout(0,3))
         val breakingChangesLabel = JLabel("Breaking-Changes: ")
-        breakingChanges = JTextArea()
+        breakingChanges = JTextArea(5,34)
+        breakingChanges.border = componentBorder
+        breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
+        breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         breakingRow.add(breakingChangesLabel, BorderLayout.NORTH)
         breakingRow.add(breakingChanges, BorderLayout.SOUTH)
 
         container.add(breakingRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
 
-        todoRow = JPanel(BorderLayout())
+        todoRow = JPanel(BorderLayout(0,3))
         val todoListLabel = JLabel("To-Do's: ")
-        todoList = JTextArea()
+        todoList = JTextArea(5,34)
+        todoList.border = componentBorder
+        todoList.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
+        todoList.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         todoRow.add(todoListLabel, BorderLayout.NORTH)
         todoRow.add(todoList, BorderLayout.SOUTH)
 
         container.add(todoRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
 
-        referenceRow = JPanel(FlowLayout())
-        val commitIssueLabel = JLabel("Issue No.:")
-        issueNumber = JTextField()
-        referenceRow.add(commitIssueLabel)
-        referenceRow.add(issueNumber)
+        referenceRow = JPanel(BorderLayout(3,0))
+        val commitIssueLabel = JLabel("Issue No.: ")
+        issueNumber = JTextField(38)
+        issueNumber.border = componentBorder
+        referenceRow.add(commitIssueLabel, BorderLayout.WEST)
+        referenceRow.add(issueNumber, BorderLayout.CENTER)
 
         container.add(referenceRow)
 
