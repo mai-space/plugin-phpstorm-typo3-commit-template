@@ -30,6 +30,17 @@
                 text="Show Template"
                 description="Show the template for creating commit messages"
                 icon="/icons/action.svg">
+            <keyboard-shortcut
+                    keymap="$default"
+                    first-keystroke="control shift M"/>
+            <keyboard-shortcut
+                    keymap="Mac OS X"
+                    first-keystroke="control shift M"
+                    remove="true"/>
+            <keyboard-shortcut
+                    keymap="Mac OS X 10.5+"
+                    first-keystroke="control shift M"
+                    replace-all="true"/>
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>
     </actions>
