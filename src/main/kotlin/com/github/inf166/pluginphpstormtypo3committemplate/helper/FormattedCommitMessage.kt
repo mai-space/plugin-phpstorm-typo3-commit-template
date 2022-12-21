@@ -44,9 +44,9 @@ class FormattedCommitMessage {
                 i++
                 if (i < this.changeTypes.size) possibleTypes += "|"
             }
-            var changeTypePattern = Pattern.compile("(?<=\\[)(FEATURE|TASK|BUGFIX|SECURITY|DOCS)(?=\\])")
-            var subjectPattern = Pattern.compile("[^([a-z]+)(\\((.+)\\))?] (.+)")
-            var issueNumberPattern = Pattern.compile("((?<=refs: \\n#)(.+))")
+            val changeTypePattern = Pattern.compile("(?<=\\[)(FEATURE|TASK|BUGFIX|SECURITY|DOCS)(?=])")
+            val subjectPattern = Pattern.compile("[]+?] (.+)")
+            val issueNumberPattern = Pattern.compile("((?<=refs: \\n#)(.+))")
 
             var matcher = changeTypePattern.matcher(oldCommitMessage)
             if (matcher.find()) {
@@ -62,6 +62,7 @@ class FormattedCommitMessage {
                 this.subjectLine = ""
             }
 
+            /* TODO: Parse Issue Numbers */
             matcher = issueNumberPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
                 this.issueNumber = matcher.group(1)
@@ -119,6 +120,7 @@ class FormattedCommitMessage {
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Breaking-Changes: ", this.breakingChanges)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Tasks: ", this.doneTasks)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "To-Do's: ", this.todoList)
+        /* TODO: Parse Issue Numbers */
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "refs: ", "#"+this.issueNumber)
 
         return formattedCommitMessage.toString()

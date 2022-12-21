@@ -1,8 +1,8 @@
 # plugin-phpstorm-typo3-commit-template
 
 ![Build](https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
 
 <!-- Plugin description -->
 This plugin allows to create a commit message with the following template:

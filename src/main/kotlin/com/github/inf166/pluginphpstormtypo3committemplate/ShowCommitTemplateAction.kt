@@ -21,17 +21,17 @@ class ShowCommitTemplateAction : AnAction(), DumbAware {
             commitMessageString = commitPanel.commitMessage
         }
 
-        if(commitMessageString.length > 1) {
-            var oldCommitMessage = FormattedCommitMessage(commitMessageString)
-            prompt = Dialog(actionEvent.project, oldCommitMessage)
+        prompt = if(commitMessageString.length > 1) {
+            val oldCommitMessage = FormattedCommitMessage(commitMessageString)
+            Dialog(actionEvent.project, oldCommitMessage)
         } else {
-            var emptyCommitMessage = FormattedCommitMessage()
-            prompt = Dialog(actionEvent.project, emptyCommitMessage)
+            val emptyCommitMessage = FormattedCommitMessage()
+            Dialog(actionEvent.project, emptyCommitMessage)
         }
 
         prompt.show()
 
-        if (prompt.getExitCode() and DialogWrapper.OK_EXIT_CODE == 0) {
+        if (prompt.exitCode == DialogWrapper.OK_EXIT_CODE) {
             intelliJcommitPannel.setCommitMessage(prompt.getCommitMessage().getFormattedCommitMessage())
         }
     }
