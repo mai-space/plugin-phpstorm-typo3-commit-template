@@ -18,7 +18,10 @@ class FormattedCommitMessage {
     var doneTasks: String
     var breakingChanges: String
     var todoList: String
-    var issueNumber: String
+    var relatedNumber: String
+    var resolvesNumber: String
+    var releasesVersion: String
+    var dependencyPatch: String
 
     constructor() {
         this.changeType = ""
@@ -26,7 +29,10 @@ class FormattedCommitMessage {
         this.doneTasks = ""
         this.breakingChanges = ""
         this.todoList = ""
-        this.issueNumber = ""
+        this.relatedNumber = ""
+        this.resolvesNumber = ""
+        this.releasesVersion = ""
+        this.dependencyPatch = ""
     }
 
     constructor(oldCommitMessage: String) {
@@ -35,18 +41,17 @@ class FormattedCommitMessage {
         this.doneTasks = oldCommitMessage
         this.breakingChanges = ""
         this.todoList = ""
-        this.issueNumber = ""
+        this.relatedNumber = ""
+        this.resolvesNumber = ""
+        this.releasesVersion = ""
+        this.dependencyPatch = ""
         try {
-            var possibleTypes: String = ""
-            var i = 0
-            while (i < this.changeTypes.size) {
-                possibleTypes += changeType
-                i++
-                if (i < this.changeTypes.size) possibleTypes += "|"
-            }
             val changeTypePattern = Pattern.compile("(?<=\\[)(FEATURE|TASK|BUGFIX|SECURITY|DOCS)(?=])")
             val subjectPattern = Pattern.compile("[]+?] (.+)")
-            val issueNumberPattern = Pattern.compile("((?<=refs: \\n#)(.+))")
+            val relatedNumberPattern = Pattern.compile("((?<=Related: )(.+))")
+            val resolvesNumberPattern = Pattern.compile("((?<=Resolves: )(.+))")
+            val releasesVersionPattern = Pattern.compile("((?<=Releases: )(.+))")
+            val dependencyPatchPattern = Pattern.compile("((?<=Depends: )(.+))")
 
             var matcher = changeTypePattern.matcher(oldCommitMessage)
             if (matcher.find()) {
@@ -62,12 +67,57 @@ class FormattedCommitMessage {
                 this.subjectLine = ""
             }
 
-            /* TODO: Parse Issue Numbers */
-            matcher = issueNumberPattern.matcher(oldCommitMessage)
+            matcher = relatedNumberPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
-                this.issueNumber = matcher.group(1)
+                var relatedNumberMatches = matcher.group(1)
+                var relatedNumbers = relatedNumberMatches.split(" ")
+                var currentNumber = 0
+                while (currentNumber < relatedNumbers.size) {
+                    this.relatedNumber += relatedNumbers[currentNumber].replace("#", "")
+                    currentNumber++
+                    if (currentNumber < relatedNumbers.size) this.relatedNumber += " "
+                }
             } else {
-                this.issueNumber = ""
+                this.relatedNumber = ""
+            }
+            matcher = resolvesNumberPattern.matcher(oldCommitMessage)
+            if (matcher.find()) {
+                var resolvesNumberMatches = matcher.group(1)
+                var resolvesNumbers = resolvesNumberMatches.split(" ")
+                var currentNumber = 0
+                while (currentNumber < resolvesNumbers.size) {
+                    this.resolvesNumber += resolvesNumbers[currentNumber].replace("#", "")
+                    currentNumber++
+                    if (currentNumber < resolvesNumbers.size) this.resolvesNumber += " "
+                }
+            } else {
+                this.resolvesNumber = ""
+            }
+            matcher = releasesVersionPattern.matcher(oldCommitMessage)
+            if (matcher.find()) {
+                var releasesVersionMatches = matcher.group(1)
+                var releasesVersions = releasesVersionMatches.split(" ")
+                var currentVersion = 0
+                while (currentVersion < releasesVersions.size) {
+                    this.releasesVersion += releasesVersions[currentVersion].replace(",", "")
+                    currentVersion++
+                    if (currentVersion < releasesVersions.size) this.releasesVersion += " "
+                }
+            } else {
+                this.releasesVersion = ""
+            }
+            matcher = dependencyPatchPattern.matcher(oldCommitMessage)
+            if (matcher.find()) {
+                var dependencyPatchMatches = matcher.group(1)
+                var dependencyPatches = dependencyPatchMatches.split(" ")
+                var currentPatch = 0
+                while (currentPatch < dependencyPatches.size) {
+                    this.dependencyPatch += dependencyPatches[currentPatch].replace(",", "")
+                    currentPatch++
+                    if (currentPatch < dependencyPatches.size) this.dependencyPatch += " "
+                }
+            } else {
+                this.dependencyPatch = ""
             }
 
             var changeLogs = oldCommitMessage.split("\n\n")
@@ -76,17 +126,17 @@ class FormattedCommitMessage {
                 if (changeLog.startsWith("Breaking-Changes: \n")) {
                     var stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n');
-                    this.breakingChanges = stringBuilder.toString().trim().replace("Breaking-Changes: \n", "")
+                    this.breakingChanges = stringBuilder.toString().trim().replace("- ", "* ").replace("Breaking-Changes: \n", "")
                 }
                 if (changeLog.startsWith("Tasks: \n")) {
                     var stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n');
-                    this.doneTasks = stringBuilder.toString().trim().replace("Tasks: \n", "")
+                    this.doneTasks = stringBuilder.toString().trim().replace("- ", "* ").replace("Tasks: \n", "")
                 }
                 if (changeLog.startsWith("To-Do's: \n")) {
                     var stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n');
-                    this.todoList = stringBuilder.toString().trim().replace("To-Do's: \n", "")
+                    this.todoList = stringBuilder.toString().trim().replace("- ", "* ").replace("To-Do's: \n", "")
                 }
             }
 
@@ -98,14 +148,18 @@ class FormattedCommitMessage {
 
     constructor(
         changeType: Any?, subjectLine: String, doneTasks: String,
-        breakingChanges: String, todoList: String, issueNumber: String
+        breakingChanges: String, todoList: String, relatedNumber: String,
+        resolvesNumber: String, releasesVersion: String, dependencyPatch: String,
     ) {
         this.changeType = changeType.toString()
         this.subjectLine = subjectLine
         this.doneTasks = doneTasks
         this.breakingChanges = breakingChanges
         this.todoList = todoList
-        this.issueNumber = issueNumber
+        this.relatedNumber = relatedNumber
+        this.resolvesNumber = resolvesNumber
+        this.releasesVersion = releasesVersion
+        this.dependencyPatch = dependencyPatch
     }
 
     fun getFormattedCommitMessage(): String {
@@ -120,8 +174,11 @@ class FormattedCommitMessage {
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Breaking-Changes: ", this.breakingChanges)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Tasks: ", this.doneTasks)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "To-Do's: ", this.todoList)
-        /* TODO: Parse Issue Numbers */
-        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "refs: ", "#"+this.issueNumber)
+        formattedCommitMessage.append(System.lineSeparator())
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Related: ", this.relatedNumber, "#", true)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Resolves: ", this.resolvesNumber, "#", true)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Releases: ", this.releasesVersion, ",", false)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Depends: ", this.dependencyPatch, ",", false)
 
         return formattedCommitMessage.toString()
     }
@@ -138,14 +195,33 @@ class FormattedCommitMessage {
         return formattedCommitMessage
     }
 
-    private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotesTitle: String, changeNotes: String): StringBuilder {
-        if(startsWith(changeNotes,"#") && changeNotes.length == 1 ) return formattedCommitMessage
-        if(isNotBlank(changeNotes)) {
-            formattedCommitMessage
-                .append(System.lineSeparator())
-                .append(System.lineSeparator())
-                .append("$changeNotesTitle\n$changeNotes")
+    private fun addReferences(formattedCommitMessage: StringBuilder, referenceTitle: String, referenceList: String, referenceDelimitor: String, addbefore: Boolean): StringBuilder {
+        if (!isNotBlank(referenceList)) return formattedCommitMessage
+        formattedCommitMessage.append(System.lineSeparator())
+        formattedCommitMessage.append(referenceTitle)
+        var referenceItems = referenceList.split(" ")
+        var iterator = 0
+        while (iterator < referenceItems.size) {
+            if (addbefore) {
+                formattedCommitMessage.append(referenceDelimitor)
+                formattedCommitMessage.append(referenceItems[iterator])
+            } else {
+                formattedCommitMessage.append(referenceItems[iterator])
+                if (iterator < referenceItems.size -1) formattedCommitMessage.append(referenceDelimitor)
+            }
+            iterator++
+            if (iterator < referenceItems.size) formattedCommitMessage.append(" ")
         }
+        return formattedCommitMessage
+    }
+
+    private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotesTitle: String, changeNotes: String): StringBuilder {
+        if(!isNotBlank(changeNotes)) return formattedCommitMessage
+        var formattedChangeNotes = changeNotes.replace("- ", "* ")
+        formattedCommitMessage
+            .append(System.lineSeparator())
+            .append(System.lineSeparator())
+            .append("$changeNotesTitle\n$formattedChangeNotes")
 
         return formattedCommitMessage
     }

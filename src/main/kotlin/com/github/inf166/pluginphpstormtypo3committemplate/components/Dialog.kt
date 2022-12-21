@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.Gray
-import com.intellij.ui.layout.selectedValueIs
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.KeyboardFocusManager
@@ -23,12 +22,18 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
     private lateinit var taskRow: JPanel
     private lateinit var breakingRow: JPanel
     private lateinit var todoRow: JPanel
-    private lateinit var referenceRow: JPanel
+    private lateinit var relatedRow: JPanel
+    private lateinit var resolvesRow: JPanel
+    private lateinit var releaseRow: JPanel
+    private lateinit var dependencyRow: JPanel
 
     private lateinit var commitType: ComboBox<String>
 
     private lateinit var commitSubject: JTextField
-    private lateinit var issueNumber: JTextField
+    private lateinit var relatedNumber: JTextField
+    private lateinit var resolvesNumber: JTextField
+    private lateinit var releasesVersion: JTextField
+    private lateinit var dependencyPatch: JTextField
 
     private lateinit var doneTasks: JTextArea
     private lateinit var breakingChanges: JTextArea
@@ -116,15 +121,53 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
         container.add(todoRow)
         container.add(Box.createRigidArea(Dimension(0,8)))
 
-        referenceRow = JPanel(BorderLayout(3,0))
-        val commitIssueLabel = JLabel("Issue No.: ")
-        issueNumber = JTextField(38)
-        issueNumber.border = componentBorder
-        issueNumber.text = this.oldCommitMessage?.issueNumber ?: ""
-        referenceRow.add(commitIssueLabel, BorderLayout.WEST)
-        referenceRow.add(issueNumber, BorderLayout.CENTER)
+        relatedRow = JPanel(BorderLayout(3,3))
+        val relatedLabel = JLabel("Related: ")
+        relatedLabel.setPreferredSize(Dimension(80,32))
+        relatedNumber = JTextField(38)
+        relatedNumber.border = componentBorder
+        relatedNumber.text = this.oldCommitMessage?.relatedNumber ?: ""
+        relatedRow.add(relatedLabel, BorderLayout.WEST)
+        relatedRow.add(relatedNumber, BorderLayout.CENTER)
 
-        container.add(referenceRow)
+        container.add(relatedRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
+
+        resolvesRow = JPanel(BorderLayout(3,3))
+        val resolvesLabel = JLabel("Resolves: ")
+        resolvesLabel.setPreferredSize(Dimension(80,32))
+        resolvesNumber = JTextField(38)
+        resolvesNumber.border = componentBorder
+        resolvesNumber.text = this.oldCommitMessage?.resolvesNumber ?: ""
+        resolvesRow.add(resolvesLabel, BorderLayout.WEST)
+        resolvesRow.add(resolvesNumber, BorderLayout.CENTER)
+
+        container.add(resolvesRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
+
+        releaseRow = JPanel(BorderLayout(3,3))
+        val releaseLabel = JLabel("Release: ")
+        releaseLabel.setPreferredSize(Dimension(80,32))
+        releasesVersion = JTextField(38)
+        releasesVersion.border = componentBorder
+        releasesVersion.text = this.oldCommitMessage?.releasesVersion ?: ""
+        releaseRow.add(releaseLabel, BorderLayout.WEST)
+        releaseRow.add(releasesVersion, BorderLayout.CENTER)
+
+        container.add(releaseRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
+
+        dependencyRow = JPanel(BorderLayout(3,3))
+        val dependencyLabel = JLabel("Depends: ")
+        dependencyLabel.setPreferredSize(Dimension(80,32))
+        dependencyPatch = JTextField(38)
+        dependencyPatch.border = componentBorder
+        dependencyPatch.text = this.oldCommitMessage?.dependencyPatch ?: ""
+        dependencyRow.add(dependencyLabel, BorderLayout.WEST)
+        dependencyRow.add(dependencyPatch, BorderLayout.CENTER)
+
+        container.add(dependencyRow)
+        container.add(Box.createRigidArea(Dimension(0,8)))
 
         return container
     }
@@ -136,7 +179,10 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
             doneTasks.text.trim { it <= ' ' },
             breakingChanges.text.trim { it <= ' ' },
             todoList.text.trim { it <= ' ' },
-            issueNumber.text.trim { it <= ' ' }
+            relatedNumber.text.trim { it <= ' ' },
+            resolvesNumber.text.trim { it <= ' ' },
+            releasesVersion.text.trim { it <= ' ' },
+            dependencyPatch.text.trim { it <= ' ' }
         )
     }
 }
