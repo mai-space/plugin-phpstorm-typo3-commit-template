@@ -11,7 +11,7 @@ import java.awt.KeyboardFocusManager
 import javax.swing.*
 import javax.swing.border.Border
 
-public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
+class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
 
     private var oldCommitMessage: FormattedCommitMessage?
 
@@ -123,7 +123,7 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
 
         relatedRow = JPanel(BorderLayout(3,3))
         val relatedLabel = JLabel("Related: ")
-        relatedLabel.setPreferredSize(Dimension(80,32))
+        relatedLabel.preferredSize = Dimension(80,32)
         relatedNumber = JTextField(38)
         relatedNumber.border = componentBorder
         relatedNumber.text = this.oldCommitMessage?.relatedNumber ?: ""
@@ -135,7 +135,7 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
 
         resolvesRow = JPanel(BorderLayout(3,3))
         val resolvesLabel = JLabel("Resolves: ")
-        resolvesLabel.setPreferredSize(Dimension(80,32))
+        resolvesLabel.preferredSize = Dimension(80,32)
         resolvesNumber = JTextField(38)
         resolvesNumber.border = componentBorder
         resolvesNumber.text = this.oldCommitMessage?.resolvesNumber ?: ""
@@ -147,7 +147,7 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
 
         releaseRow = JPanel(BorderLayout(3,3))
         val releaseLabel = JLabel("Release: ")
-        releaseLabel.setPreferredSize(Dimension(80,32))
+        releaseLabel.preferredSize = Dimension(80,32)
         releasesVersion = JTextField(38)
         releasesVersion.border = componentBorder
         releasesVersion.text = this.oldCommitMessage?.releasesVersion ?: ""
@@ -159,7 +159,7 @@ public final class Dialog(project: Project?, oldCommitMessage: FormattedCommitMe
 
         dependencyRow = JPanel(BorderLayout(3,3))
         val dependencyLabel = JLabel("Depends: ")
-        dependencyLabel.setPreferredSize(Dimension(80,32))
+        dependencyLabel.preferredSize = Dimension(80,32)
         dependencyPatch = JTextField(38)
         dependencyPatch.border = componentBorder
         dependencyPatch.text = this.oldCommitMessage?.dependencyPatch ?: ""

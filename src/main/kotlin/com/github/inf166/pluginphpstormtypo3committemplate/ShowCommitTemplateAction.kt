@@ -16,12 +16,11 @@ class ShowCommitTemplateAction : AnAction(), DumbAware {
         val commitPanel = getCommitPanel(actionEvent) ?: return
         val intelliJcommitPannel: CommitMessageI = getCommitPanel(actionEvent) ?: return
         var commitMessageString = ""
-        var prompt: Dialog
         if (commitPanel is CheckinProjectPanel) {
             commitMessageString = commitPanel.commitMessage
         }
 
-        prompt = if(commitMessageString.length > 1) {
+        val prompt: Dialog = if(commitMessageString.length > 1) {
             val oldCommitMessage = FormattedCommitMessage(commitMessageString)
             Dialog(actionEvent.project, oldCommitMessage)
         } else {

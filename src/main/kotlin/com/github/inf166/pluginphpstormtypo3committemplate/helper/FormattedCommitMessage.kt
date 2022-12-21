@@ -1,7 +1,6 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.helper
 
 import org.apache.commons.lang.StringUtils.isNotBlank
-import org.apache.commons.lang.StringUtils.startsWith
 import java.util.regex.Pattern
 
 class FormattedCommitMessage {
@@ -69,8 +68,8 @@ class FormattedCommitMessage {
 
             matcher = relatedNumberPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
-                var relatedNumberMatches = matcher.group(1)
-                var relatedNumbers = relatedNumberMatches.split(" ")
+                val relatedNumberMatches = matcher.group(1)
+                val relatedNumbers = relatedNumberMatches.split(" ")
                 var currentNumber = 0
                 while (currentNumber < relatedNumbers.size) {
                     this.relatedNumber += relatedNumbers[currentNumber].replace("#", "")
@@ -82,8 +81,8 @@ class FormattedCommitMessage {
             }
             matcher = resolvesNumberPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
-                var resolvesNumberMatches = matcher.group(1)
-                var resolvesNumbers = resolvesNumberMatches.split(" ")
+                val resolvesNumberMatches = matcher.group(1)
+                val resolvesNumbers = resolvesNumberMatches.split(" ")
                 var currentNumber = 0
                 while (currentNumber < resolvesNumbers.size) {
                     this.resolvesNumber += resolvesNumbers[currentNumber].replace("#", "")
@@ -95,8 +94,8 @@ class FormattedCommitMessage {
             }
             matcher = releasesVersionPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
-                var releasesVersionMatches = matcher.group(1)
-                var releasesVersions = releasesVersionMatches.split(" ")
+                val releasesVersionMatches = matcher.group(1)
+                val releasesVersions = releasesVersionMatches.split(" ")
                 var currentVersion = 0
                 while (currentVersion < releasesVersions.size) {
                     this.releasesVersion += releasesVersions[currentVersion].replace(",", "")
@@ -108,8 +107,8 @@ class FormattedCommitMessage {
             }
             matcher = dependencyPatchPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
-                var dependencyPatchMatches = matcher.group(1)
-                var dependencyPatches = dependencyPatchMatches.split(" ")
+                val dependencyPatchMatches = matcher.group(1)
+                val dependencyPatches = dependencyPatchMatches.split(" ")
                 var currentPatch = 0
                 while (currentPatch < dependencyPatches.size) {
                     this.dependencyPatch += dependencyPatches[currentPatch].replace(",", "")
@@ -120,22 +119,22 @@ class FormattedCommitMessage {
                 this.dependencyPatch = ""
             }
 
-            var changeLogs = oldCommitMessage.split("\n\n")
+            val changeLogs = oldCommitMessage.split("\n\n")
             this.doneTasks = ""
             for (changeLog in changeLogs) {
                 if (changeLog.startsWith("Breaking-Changes: \n")) {
-                    var stringBuilder: java.lang.StringBuilder = StringBuilder()
-                    stringBuilder.append(changeLog).append('\n');
+                    val stringBuilder: java.lang.StringBuilder = StringBuilder()
+                    stringBuilder.append(changeLog).append('\n')
                     this.breakingChanges = stringBuilder.toString().trim().replace("- ", "* ").replace("Breaking-Changes: \n", "")
                 }
                 if (changeLog.startsWith("Tasks: \n")) {
-                    var stringBuilder: java.lang.StringBuilder = StringBuilder()
-                    stringBuilder.append(changeLog).append('\n');
+                    val stringBuilder: java.lang.StringBuilder = StringBuilder()
+                    stringBuilder.append(changeLog).append('\n')
                     this.doneTasks = stringBuilder.toString().trim().replace("- ", "* ").replace("Tasks: \n", "")
                 }
                 if (changeLog.startsWith("To-Do's: \n")) {
-                    var stringBuilder: java.lang.StringBuilder = StringBuilder()
-                    stringBuilder.append(changeLog).append('\n');
+                    val stringBuilder: java.lang.StringBuilder = StringBuilder()
+                    stringBuilder.append(changeLog).append('\n')
                     this.todoList = stringBuilder.toString().trim().replace("- ", "* ").replace("To-Do's: \n", "")
                 }
             }
@@ -199,7 +198,7 @@ class FormattedCommitMessage {
         if (!isNotBlank(referenceList)) return formattedCommitMessage
         formattedCommitMessage.append(System.lineSeparator())
         formattedCommitMessage.append(referenceTitle)
-        var referenceItems = referenceList.split(" ")
+        val referenceItems = referenceList.split(" ")
         var iterator = 0
         while (iterator < referenceItems.size) {
             if (addbefore) {
@@ -217,7 +216,7 @@ class FormattedCommitMessage {
 
     private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotesTitle: String, changeNotes: String): StringBuilder {
         if(!isNotBlank(changeNotes)) return formattedCommitMessage
-        var formattedChangeNotes = changeNotes.replace("- ", "* ")
+        val formattedChangeNotes = changeNotes.replace("- ", "* ")
         formattedCommitMessage
             .append(System.lineSeparator())
             .append(System.lineSeparator())
