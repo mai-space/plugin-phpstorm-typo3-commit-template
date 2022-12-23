@@ -5,23 +5,6 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
 
 <!-- Plugin description -->
-This plugin allows to create a commit message with the following template:
-
-```html
-[<FLAGS>][<TYPE>] <SUBJECT>
-
-Breaking Changes: (optional) 
-<BREAKING CHANGES HERE>    
-    
-Tasks: (optional) 
-<TASK LIST HERE&>
-
-To-Do's: (optional) 
-<TO-DOs HERE>
-
-refs: #<TICKET NUMBER HERE>
-```
-
 From the commit guidelines of TYPO3 [here](https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html).
 
 ## Usage
@@ -29,26 +12,26 @@ From the commit guidelines of TYPO3 [here](https://docs.typo3.org/m/typo3/guide-
 Open your Commit-Dialog by clicking the module or pressing `Control/CMD + K`.<br>
 You can open the template dialog by pressing `Control + Shift + K`.<br>
 
-<img src="src/main/resources/images/open_dialog.png" alt="open_dialog" width="550">
+<img src="https://raw.githubusercontent.com/Inf166/plugin-phpstorm-typo3-commit-template/main/src/main/resources/images/open_dialog.png" alt="open_dialog" width="550">
 <br>
 
 Once you are in the dialog, you can navigate by using the `Tab` Key.<br>
 Fill the form as you see fit.<br>
 
-<img src="src/main/resources/images/dialog.png" alt="dialog" width="550">
+<img src="https://raw.githubusercontent.com/Inf166/plugin-phpstorm-typo3-commit-template/main/src/main/resources/images/dialog.png" alt="dialog" width="550">
 <br>
 
 If you are happy with your commit message, press `Apply` and the message will be templated
 and inserted into your commit message dialog.<br>
 
-<img src="src/main/resources/images/filled_dialog.png" alt="filled_dialog" width="550">
+<img src="https://raw.githubusercontent.com/Inf166/plugin-phpstorm-typo3-commit-template/main/src/main/resources/images/filled_dialog.png" alt="filled_dialog" width="550">
 <br>
 
 Please note, that the template is dynamic. So filling breaking changes will result in the `[!!!]` flag being set.<br>
 This also works with the to-do list which results in the `[WIP]` flag being set.<br>
 If you do not want any flags, just fill the `Done Tasks` Section, so only the Type will be displayed.<br>
 
-<img src="src/main/resources/images/inserted_dialog.png" alt="inserted_dialog" width="550"><br>
+<img src="https://raw.githubusercontent.com/Inf166/plugin-phpstorm-typo3-commit-template/main/src/main/resources/images/inserted_dialog.png" alt="inserted_dialog" width="550"><br>
 
 ## Installation
 
@@ -70,10 +53,6 @@ If you do not want any flags, just fill the `Done Tasks` Section, so only the Ty
 ### Origins
 This Plugin has already once been made by me. But I wanted to refactor not only my Jetbrains Marketplace Account but also the Code Base and Design of the Plugin.
 If you want to take a look at the previous Code: [Check it out here.](https://github.com/Inf166/plugin-phpstorm-commit-template)
-
-### Git commit template Plugin for IntelliJ
-Forked from: [[MobileTribe/commit-template-idea-plugin]](https://github.com/MobileTribe/commit-template-idea-plugin).
-I used parts of his code, but heavily modified it and am planning on changing more.
 
 ### Plugin based on the IntelliJ Platform Plugin Template
 
