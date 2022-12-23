@@ -5,9 +5,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.Gray
-import java.awt.BorderLayout
-import java.awt.Dimension
-import java.awt.KeyboardFocusManager
+import com.intellij.ui.components.JBScrollPane
+import org.jdesktop.swingx.prompt.PromptSupport
+import java.awt.*
 import javax.swing.*
 import javax.swing.border.Border
 
@@ -26,6 +26,10 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
     private lateinit var resolvesRow: JPanel
     private lateinit var releaseRow: JPanel
     private lateinit var dependencyRow: JPanel
+
+    private lateinit var taskScrollPane: JBScrollPane
+    private lateinit var breakingScrollPane: JBScrollPane
+    private lateinit var todoScrollPane: JBScrollPane
 
     private lateinit var commitType: ComboBox<String>
 
@@ -64,6 +68,7 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
             commitType.addItem(changeType)
         }
         commitType.maximumSize = commitType.preferredSize
+        commitType.toolTipText = "Select the Type of your Commit"
         commitType.border = componentBorder
         commitType.selectedItem = this.oldCommitMessage?.changeType ?: ""
         commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
@@ -73,6 +78,10 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         subjectRow = JPanel(BorderLayout(0,3))
         val commitSubjectLabel = JLabel("Subject of Commit")
         commitSubject = JTextField(34)
+        PromptSupport.setPrompt("A short description", commitSubject)
+        PromptSupport.setFontStyle(Font.ITALIC, commitSubject)
+        PromptSupport.setForeground(Gray._120, commitSubject)
+        commitSubject.toolTipText = "Write a brief summary of what the change does now"
         commitSubject.border = componentBorder
         commitSubject.text = this.oldCommitMessage?.subjectLine ?: ""
         subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
@@ -82,49 +91,71 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         container.add(subjectLine)
         container.add(Box.createRigidArea(Dimension(0,8)))
 
-        taskRow = JPanel(BorderLayout(0,3))
+        taskRow = JPanel(BorderLayout(0,0))
         val doneTasksLabel = JLabel("Done Tasks: ")
+        taskRow.add(doneTasksLabel, BorderLayout.WEST)
         doneTasks = JTextArea(5,34)
-        doneTasks.border = componentBorder
+        PromptSupport.setPrompt("* Added something", doneTasks)
+        PromptSupport.setFontStyle(Font.ITALIC, doneTasks)
+        PromptSupport.setForeground(Gray._120, doneTasks)
+        doneTasks.toolTipText = "List the things you have done"
+        doneTasks.minimumSize = Dimension(507, 107)
         doneTasks.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         doneTasks.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         doneTasks.text = this.oldCommitMessage?.doneTasks ?: ""
-        taskRow.add(doneTasksLabel, BorderLayout.NORTH)
-        taskRow.add(doneTasks, BorderLayout.SOUTH)
-
+        taskScrollPane = JBScrollPane(doneTasks)
+        taskScrollPane.border = componentBorder
         container.add(taskRow)
+        container.add(Box.createRigidArea(Dimension(0,3)))
+        container.add(taskScrollPane)
         container.add(Box.createRigidArea(Dimension(0,8)))
 
-        breakingRow = JPanel(BorderLayout(0,3))
+        breakingRow = JPanel(BorderLayout(0,0))
         val breakingChangesLabel = JLabel("Breaking-Changes: ")
+        breakingRow.add(breakingChangesLabel, BorderLayout.WEST)
         breakingChanges = JTextArea(5,34)
-        breakingChanges.border = componentBorder
+        PromptSupport.setPrompt("* Done something dangerous", breakingChanges)
+        PromptSupport.setFontStyle(Font.ITALIC, breakingChanges)
+        PromptSupport.setForeground(Gray._120, breakingChanges)
+        breakingChanges.toolTipText = "List things you have done that could result in issues"
+        breakingChanges.minimumSize = Dimension(507, 107)
         breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         breakingChanges.text = this.oldCommitMessage?.breakingChanges ?: ""
-        breakingRow.add(breakingChangesLabel, BorderLayout.NORTH)
-        breakingRow.add(breakingChanges, BorderLayout.SOUTH)
-
+        breakingScrollPane = JBScrollPane(breakingChanges)
+        breakingScrollPane.border = componentBorder
         container.add(breakingRow)
+        container.add(Box.createRigidArea(Dimension(0,3)))
+        container.add(breakingScrollPane)
         container.add(Box.createRigidArea(Dimension(0,8)))
 
-        todoRow = JPanel(BorderLayout(0,3))
+        todoRow = JPanel(BorderLayout(0,0))
         val todoListLabel = JLabel("To-Do's: ")
+        todoRow.add(todoListLabel, BorderLayout.WEST)
         todoList = JTextArea(5,34)
-        todoList.border = componentBorder
+        PromptSupport.setPrompt("* Need to do this", todoList)
+        PromptSupport.setFontStyle(Font.ITALIC, todoList)
+        PromptSupport.setForeground(Gray._120, todoList)
+        todoList.toolTipText = "List open tasks that have to be done"
+        todoList.minimumSize = Dimension(507, 107)
         todoList.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
         todoList.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
         todoList.text = this.oldCommitMessage?.todoList ?: ""
-        todoRow.add(todoListLabel, BorderLayout.NORTH)
-        todoRow.add(todoList, BorderLayout.SOUTH)
-
+        todoScrollPane = JBScrollPane(todoList)
+        todoScrollPane.border = componentBorder
         container.add(todoRow)
+        container.add(Box.createRigidArea(Dimension(0,3)))
+        container.add(todoScrollPane)
         container.add(Box.createRigidArea(Dimension(0,8)))
 
         relatedRow = JPanel(BorderLayout(3,3))
         val relatedLabel = JLabel("Related: ")
         relatedLabel.preferredSize = Dimension(80,32)
         relatedNumber = JTextField(38)
+        PromptSupport.setPrompt("1234 3456", relatedNumber)
+        PromptSupport.setFontStyle(Font.ITALIC, relatedNumber)
+        PromptSupport.setForeground(Gray._120, relatedNumber)
+        relatedNumber.toolTipText = "Add issues related to this change which are not resolved"
         relatedNumber.border = componentBorder
         relatedNumber.text = this.oldCommitMessage?.relatedNumber ?: ""
         relatedRow.add(relatedLabel, BorderLayout.WEST)
@@ -137,6 +168,10 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         val resolvesLabel = JLabel("Resolves: ")
         resolvesLabel.preferredSize = Dimension(80,32)
         resolvesNumber = JTextField(38)
+        PromptSupport.setPrompt("1234 3456", resolvesNumber)
+        PromptSupport.setFontStyle(Font.ITALIC, resolvesNumber)
+        PromptSupport.setForeground(Gray._120, resolvesNumber)
+        resolvesNumber.toolTipText = "Add issues to this which are resolved by your Changes"
         resolvesNumber.border = componentBorder
         resolvesNumber.text = this.oldCommitMessage?.resolvesNumber ?: ""
         resolvesRow.add(resolvesLabel, BorderLayout.WEST)
@@ -149,6 +184,10 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         val releaseLabel = JLabel("Release: ")
         releaseLabel.preferredSize = Dimension(80,32)
         releasesVersion = JTextField(38)
+        PromptSupport.setPrompt("main, 11.5", releasesVersion)
+        PromptSupport.setFontStyle(Font.ITALIC, releasesVersion)
+        PromptSupport.setForeground(Gray._120, releasesVersion)
+        releasesVersion.toolTipText = "This is a comma separated list of the target versions you intend to apply this fix on"
         releasesVersion.border = componentBorder
         releasesVersion.text = this.oldCommitMessage?.releasesVersion ?: ""
         releaseRow.add(releaseLabel, BorderLayout.WEST)
@@ -161,6 +200,10 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         val dependencyLabel = JLabel("Depends: ")
         dependencyLabel.preferredSize = Dimension(80,32)
         dependencyPatch = JTextField(38)
+        PromptSupport.setPrompt("ChangeId, OfCorePatch", dependencyPatch)
+        PromptSupport.setFontStyle(Font.ITALIC, dependencyPatch)
+        PromptSupport.setForeground(Gray._120, dependencyPatch)
+        dependencyPatch.toolTipText = "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch"
         dependencyPatch.border = componentBorder
         dependencyPatch.text = this.oldCommitMessage?.dependencyPatch ?: ""
         dependencyRow.add(dependencyLabel, BorderLayout.WEST)
