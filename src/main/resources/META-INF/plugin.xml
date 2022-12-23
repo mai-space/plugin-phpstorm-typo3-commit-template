@@ -4,23 +4,9 @@
     <name>Commit Template with TYPO3 Commit Message Guidelines</name>
     <vendor email="joel@maispace.de" url="https://github.com/Inf166">Joel Maximilian Mai</vendor>
 
-    <description><![CDATA[
-    <p>Create a commit message with the following template:</p>
-
-    <pre>
-        [&lt;type&gt;] &lt;subject&gt;
-        Breaking Changes:
-        &lt;Breaking Changes entered here&gt;
-        &lt;BLANK LINE&gt;
-        &lt;BLANK LINE&gt;
-        Done Tasks:
-        &lt;Tasks entered here&gt;
-        &lt;BLANK LINE&gt;
-        To-Do:
-        &lt;To-Do's entered here&gt;
-        refs: #&lt;Ticket number here&gt;
-    </pre>
-    ]]></description>
+    <description>
+        This Plugin helps you to write better Commit Messages following the TYPO3 Guidelines.
+    </description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.vcs</depends>
