@@ -3,6 +3,7 @@ package com.github.inf166.pluginphpstormtypo3committemplate.helper
 import org.apache.commons.lang.StringUtils.isNotBlank
 import java.util.regex.Pattern
 
+
 class FormattedCommitMessage {
    val changeTypes = arrayOf(
         "FEATURE",
@@ -47,8 +48,6 @@ class FormattedCommitMessage {
         try {
             val changeTypePattern = Pattern.compile("(?<=\\[)(FEATURE|TASK|BUGFIX|SECURITY|DOCS)(?=])")
             val subjectPattern = Pattern.compile("[]+?] (.+)")
-            val relatedNumberPattern = Pattern.compile("((?<=Related: )(.+))")
-            val resolvesNumberPattern = Pattern.compile("((?<=Resolves: )(.+))")
             val releasesVersionPattern = Pattern.compile("((?<=Releases: )(.+))")
             val dependencyPatchPattern = Pattern.compile("((?<=Depends: )(.+))")
 
@@ -66,55 +65,32 @@ class FormattedCommitMessage {
                 this.subjectLine = ""
             }
 
-            matcher = relatedNumberPattern.matcher(oldCommitMessage)
-            if (matcher.find()) {
-                val relatedNumberMatches = matcher.group(1)
-                val relatedNumbers = relatedNumberMatches.split(" ")
-                var currentNumber = 0
-                while (currentNumber < relatedNumbers.size) {
-                    this.relatedNumber += relatedNumbers[currentNumber].replace("#", "")
-                    currentNumber++
-                    if (currentNumber < relatedNumbers.size) this.relatedNumber += " "
-                }
-            } else {
-                this.relatedNumber = ""
-            }
-            matcher = resolvesNumberPattern.matcher(oldCommitMessage)
-            if (matcher.find()) {
-                val resolvesNumberMatches = matcher.group(1)
-                val resolvesNumbers = resolvesNumberMatches.split(" ")
-                var currentNumber = 0
-                while (currentNumber < resolvesNumbers.size) {
-                    this.resolvesNumber += resolvesNumbers[currentNumber].replace("#", "")
-                    currentNumber++
-                    if (currentNumber < resolvesNumbers.size) this.resolvesNumber += " "
-                }
-            } else {
-                this.resolvesNumber = ""
-            }
+            val relatedNumberRegex = Regex("((?<=Related: )(.+))")
+            val relatedNumberMatches = relatedNumberRegex.findAll(oldCommitMessage)
+            this.relatedNumber = relatedNumberMatches.map { it.groupValues[1] }
+                .joinToString()
+                .replace("#", "")
+                .replace(",", "")
+
+            val resolvesNumberRegex = Regex("((?<=Resolves: )(.+))")
+            val resolvesNumberMatches = resolvesNumberRegex.findAll(oldCommitMessage)
+            this.resolvesNumber = resolvesNumberMatches.map { it.groupValues[1] }
+                .joinToString()
+                .replace("#", "")
+                .replace(",", "")
+
             matcher = releasesVersionPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
                 val releasesVersionMatches = matcher.group(1)
-                val releasesVersions = releasesVersionMatches.split(" ")
-                var currentVersion = 0
-                while (currentVersion < releasesVersions.size) {
-                    this.releasesVersion += releasesVersions[currentVersion].replace(",", "")
-                    currentVersion++
-                    if (currentVersion < releasesVersions.size) this.releasesVersion += " "
-                }
+                this.releasesVersion = releasesVersionMatches
             } else {
                 this.releasesVersion = ""
             }
+
             matcher = dependencyPatchPattern.matcher(oldCommitMessage)
             if (matcher.find()) {
                 val dependencyPatchMatches = matcher.group(1)
-                val dependencyPatches = dependencyPatchMatches.split(" ")
-                var currentPatch = 0
-                while (currentPatch < dependencyPatches.size) {
-                    this.dependencyPatch += dependencyPatches[currentPatch].replace(",", "")
-                    currentPatch++
-                    if (currentPatch < dependencyPatches.size) this.dependencyPatch += " "
-                }
+                this.dependencyPatch = dependencyPatchMatches
             } else {
                 this.dependencyPatch = ""
             }
@@ -169,15 +145,26 @@ class FormattedCommitMessage {
         formattedCommitMessage
             .append(" ")
             .append(this.subjectLine)
+        formattedCommitMessage.append(System.lineSeparator())
 
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Breaking-Changes: ", this.breakingChanges)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Tasks: ", this.doneTasks)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "To-Do's: ", this.todoList)
+
+        var relatedNumberMatches: List<String> = this.relatedNumber.split(" ")
+        relatedNumberMatches.forEach {
+            formattedCommitMessage.append(System.lineSeparator())
+            formattedCommitMessage.append("Related: #"+it)
+        }
+
+        var resolvesNumberMatches: List<String> = this.resolvesNumber.split(" ")
+        resolvesNumberMatches.forEach {
+            formattedCommitMessage.append(System.lineSeparator())
+            formattedCommitMessage.append("Resolves: #"+it)
+        }
         formattedCommitMessage.append(System.lineSeparator())
-        formattedCommitMessage = addReferences(formattedCommitMessage, "Related: ", this.relatedNumber, "#", true)
-        formattedCommitMessage = addReferences(formattedCommitMessage, "Resolves: ", this.resolvesNumber, "#", true)
-        formattedCommitMessage = addReferences(formattedCommitMessage, "Releases: ", this.releasesVersion, ",", false)
-        formattedCommitMessage = addReferences(formattedCommitMessage, "Depends: ", this.dependencyPatch, ",", false)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Releases: ", this.releasesVersion)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "Depends: ", this.dependencyPatch)
 
         return formattedCommitMessage.toString()
     }
@@ -194,23 +181,11 @@ class FormattedCommitMessage {
         return formattedCommitMessage
     }
 
-    private fun addReferences(formattedCommitMessage: StringBuilder, referenceTitle: String, referenceList: String, referenceDelimitor: String, addbefore: Boolean): StringBuilder {
+    private fun addReferences(formattedCommitMessage: StringBuilder, referenceTitle: String, referenceList: String): StringBuilder {
         if (!isNotBlank(referenceList)) return formattedCommitMessage
-        formattedCommitMessage.append(System.lineSeparator())
         formattedCommitMessage.append(referenceTitle)
-        val referenceItems = referenceList.split(" ")
-        var iterator = 0
-        while (iterator < referenceItems.size) {
-            if (addbefore) {
-                formattedCommitMessage.append(referenceDelimitor)
-                formattedCommitMessage.append(referenceItems[iterator])
-            } else {
-                formattedCommitMessage.append(referenceItems[iterator])
-                if (iterator < referenceItems.size -1) formattedCommitMessage.append(referenceDelimitor)
-            }
-            iterator++
-            if (iterator < referenceItems.size) formattedCommitMessage.append(" ")
-        }
+        formattedCommitMessage.append(referenceList)
+        formattedCommitMessage.append(System.lineSeparator())
         return formattedCommitMessage
     }
 
@@ -219,8 +194,8 @@ class FormattedCommitMessage {
         val formattedChangeNotes = changeNotes.replace("- ", "* ")
         formattedCommitMessage
             .append(System.lineSeparator())
-            .append(System.lineSeparator())
             .append("$changeNotesTitle\n$formattedChangeNotes")
+            .append(System.lineSeparator())
 
         return formattedCommitMessage
     }
