@@ -153,14 +153,18 @@ class FormattedCommitMessage {
 
         var relatedNumberMatches: List<String> = this.relatedNumber.split(" ")
         relatedNumberMatches.forEach {
-            formattedCommitMessage.append(System.lineSeparator())
-            formattedCommitMessage.append("Related: #"+it)
+            if(isNotBlank(it)) {
+                formattedCommitMessage.append(System.lineSeparator())
+                formattedCommitMessage.append("Related: #"+it)
+            }
         }
 
         var resolvesNumberMatches: List<String> = this.resolvesNumber.split(" ")
         resolvesNumberMatches.forEach {
-            formattedCommitMessage.append(System.lineSeparator())
-            formattedCommitMessage.append("Resolves: #"+it)
+            if(isNotBlank(it)) {
+                formattedCommitMessage.append(System.lineSeparator())
+                formattedCommitMessage.append("Resolves: #"+it)
+            }
         }
         formattedCommitMessage.append(System.lineSeparator())
         formattedCommitMessage = addReferences(formattedCommitMessage, "Releases: ", this.releasesVersion)
