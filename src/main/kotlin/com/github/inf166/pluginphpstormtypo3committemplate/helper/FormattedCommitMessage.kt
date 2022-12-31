@@ -3,7 +3,6 @@ package com.github.inf166.pluginphpstormtypo3committemplate.helper
 import org.apache.commons.lang.StringUtils.isNotBlank
 import java.util.regex.Pattern
 
-
 class FormattedCommitMessage {
    val changeTypes = arrayOf(
         "FEATURE",

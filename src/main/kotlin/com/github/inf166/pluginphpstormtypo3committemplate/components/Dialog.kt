@@ -4,44 +4,25 @@ import com.github.inf166.pluginphpstormtypo3committemplate.helper.FormattedCommi
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.Gray
-import com.intellij.ui.components.JBScrollPane
-import org.jdesktop.swingx.prompt.PromptSupport
-import java.awt.*
 import javax.swing.*
-import javax.swing.border.Border
 
 class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
 
     private var oldCommitMessage: FormattedCommitMessage?
 
     private lateinit var container: JPanel
-    private lateinit var subjectLine: JPanel
-    private lateinit var commitTypeRow: JPanel
-    private lateinit var subjectRow: JPanel
-    private lateinit var taskRow: JPanel
-    private lateinit var breakingRow: JPanel
-    private lateinit var todoRow: JPanel
-    private lateinit var relatedRow: JPanel
-    private lateinit var resolvesRow: JPanel
-    private lateinit var releaseRow: JPanel
-    private lateinit var dependencyRow: JPanel
 
-    private lateinit var taskScrollPane: JBScrollPane
-    private lateinit var breakingScrollPane: JBScrollPane
-    private lateinit var todoScrollPane: JBScrollPane
+    private lateinit var typeDropdown: ComboBox<String>
 
-    private lateinit var commitType: ComboBox<String>
+    private lateinit var subjectInputField: JTextField
+    private lateinit var relatedInputField: JTextField
+    private lateinit var resolvesInputField: JTextField
+    private lateinit var releaseInputField: JTextField
+    private lateinit var dependencyInputField: JTextField
 
-    private lateinit var commitSubject: JTextField
-    private lateinit var relatedNumber: JTextField
-    private lateinit var resolvesNumber: JTextField
-    private lateinit var releasesVersion: JTextField
-    private lateinit var dependencyPatch: JTextField
-
-    private lateinit var doneTasks: JTextArea
-    private lateinit var breakingChanges: JTextArea
-    private lateinit var todoList: JTextArea
+    private lateinit var taskTextArea: JTextArea
+    private lateinit var breakingTextArea: JTextArea
+    private lateinit var todoTextArea: JTextArea
 
     init {
         this.oldCommitMessage = oldCommitMessage
@@ -50,182 +31,102 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         init()
     }
     override fun createCenterPanel(): JComponent {
-        val border: Border = BorderFactory.createLineBorder(Gray._107, 1)
-        val componentBorder = BorderFactory.createCompoundBorder(
-            border,
-            BorderFactory.createEmptyBorder(3, 3, 3, 3)
-        )
+        val border = JetbrainsBorderFactory.getBorder()
 
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
 
-        subjectLine = JPanel(BorderLayout(3,0))
+        typeDropdown = SubjectLine.getCommitType(
+            this.oldCommitMessage?.changeTypes!!,
+            "Select the Type of your Commit",
+            this.oldCommitMessage?.changeType ?: ""
+        )
+        subjectInputField = SubjectLine.getSubjectInput(
+            "A short description",
+            "Write a brief summary of what the change does now",
+            this.oldCommitMessage?.subjectLine ?: ""
+        )
+        container.add(SubjectLine.getSubjectLine(
+            typeDropdown,
+            "Type of Commit",
+            subjectInputField,
+            "Subject of Commit"
+        ))
+        container.add(Spacer.getComponentSpacer())
 
-        commitTypeRow = JPanel(BorderLayout(0,3))
-        val commitTypeLabel = JLabel("Type of Commit")
-        commitType = ComboBox<String>()
-        for (changeType in this.oldCommitMessage?.changeTypes!!) {
-            commitType.addItem(changeType)
-        }
-        commitType.maximumSize = commitType.preferredSize
-        commitType.toolTipText = "Select the Type of your Commit"
-        commitType.border = componentBorder
-        commitType.selectedItem = this.oldCommitMessage?.changeType ?: ""
-        commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
-        commitTypeRow.add(commitType, BorderLayout.SOUTH)
-        subjectLine.add(commitTypeRow, BorderLayout.WEST)
+        container.add(Changelog.getLabel("Done Tasks: "))
+        container.add(Spacer.getLabelSpacer())
+        taskTextArea = Changelog.getTextArea(
+            "* Added something",
+            "List the things you have done",
+            this.oldCommitMessage?.doneTasks ?: "")
+        container.add(Changelog.getScrollPane(taskTextArea))
+        container.add(Spacer.getComponentSpacer())
 
-        subjectRow = JPanel(BorderLayout(0,3))
-        val commitSubjectLabel = JLabel("Subject of Commit")
-        commitSubject = JTextField(34)
-        PromptSupport.setPrompt("A short description", commitSubject)
-        PromptSupport.setFontStyle(Font.ITALIC, commitSubject)
-        PromptSupport.setForeground(Gray._120, commitSubject)
-        commitSubject.toolTipText = "Write a brief summary of what the change does now"
-        commitSubject.border = componentBorder
-        commitSubject.text = this.oldCommitMessage?.subjectLine ?: ""
-        subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
-        subjectRow.add(commitSubject, BorderLayout.SOUTH)
-        subjectLine.add(subjectRow, BorderLayout.CENTER)
+        container.add(Changelog.getLabel("Breaking Changes: "))
+        container.add(Spacer.getLabelSpacer())
+        breakingTextArea = Changelog.getTextArea(
+            "* Done something dangerous",
+            "List things you have done that could result in issues",
+            this.oldCommitMessage?.breakingChanges ?: "")
+        container.add(Changelog.getScrollPane(breakingTextArea))
+        container.add(Spacer.getComponentSpacer())
 
-        container.add(subjectLine)
-        container.add(Box.createRigidArea(Dimension(0,8)))
+        container.add(Changelog.getLabel("To-Do's: "))
+        container.add(Spacer.getLabelSpacer())
+        todoTextArea = Changelog.getTextArea(
+            "* Need to do this",
+            "List open tasks that have to be done",
+            this.oldCommitMessage?.todoList ?: "")
+        container.add(Changelog.getScrollPane(todoTextArea))
+        container.add(Spacer.getComponentSpacer())
 
-        taskRow = JPanel(BorderLayout(0,0))
-        val doneTasksLabel = JLabel("Done Tasks: ")
-        taskRow.add(doneTasksLabel, BorderLayout.WEST)
-        doneTasks = JTextArea(5,34)
-        PromptSupport.setPrompt("* Added something", doneTasks)
-        PromptSupport.setFontStyle(Font.ITALIC, doneTasks)
-        PromptSupport.setForeground(Gray._120, doneTasks)
-        doneTasks.toolTipText = "List the things you have done"
-        doneTasks.minimumSize = Dimension(507, 107)
-        doneTasks.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
-        doneTasks.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
-        doneTasks.text = this.oldCommitMessage?.doneTasks ?: ""
-        taskScrollPane = JBScrollPane(doneTasks)
-        taskScrollPane.border = componentBorder
-        container.add(taskRow)
-        container.add(Box.createRigidArea(Dimension(0,3)))
-        container.add(taskScrollPane)
-        container.add(Box.createRigidArea(Dimension(0,8)))
+        relatedInputField = Reference.getInputField(
+            "1234 3456",
+            "Add issues related to this change which are not resolved",
+            this.oldCommitMessage?.relatedNumber ?: ""
+        )
+        container.add(Reference.getLabelWithInput("Related: ",relatedInputField))
+        container.add(Spacer.getComponentSpacer())
 
-        breakingRow = JPanel(BorderLayout(0,0))
-        val breakingChangesLabel = JLabel("Breaking-Changes: ")
-        breakingRow.add(breakingChangesLabel, BorderLayout.WEST)
-        breakingChanges = JTextArea(5,34)
-        PromptSupport.setPrompt("* Done something dangerous", breakingChanges)
-        PromptSupport.setFontStyle(Font.ITALIC, breakingChanges)
-        PromptSupport.setForeground(Gray._120, breakingChanges)
-        breakingChanges.toolTipText = "List things you have done that could result in issues"
-        breakingChanges.minimumSize = Dimension(507, 107)
-        breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
-        breakingChanges.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
-        breakingChanges.text = this.oldCommitMessage?.breakingChanges ?: ""
-        breakingScrollPane = JBScrollPane(breakingChanges)
-        breakingScrollPane.border = componentBorder
-        container.add(breakingRow)
-        container.add(Box.createRigidArea(Dimension(0,3)))
-        container.add(breakingScrollPane)
-        container.add(Box.createRigidArea(Dimension(0,8)))
+        resolvesInputField = Reference.getInputField(
+            "1234 3456",
+            "Add issues to this which are resolved by your Changes",
+            this.oldCommitMessage?.resolvesNumber ?: ""
+        )
+        container.add(Reference.getLabelWithInput("Resolves: ",resolvesInputField))
+        container.add(Spacer.getComponentSpacer())
 
-        todoRow = JPanel(BorderLayout(0,0))
-        val todoListLabel = JLabel("To-Do's: ")
-        todoRow.add(todoListLabel, BorderLayout.WEST)
-        todoList = JTextArea(5,34)
-        PromptSupport.setPrompt("* Need to do this", todoList)
-        PromptSupport.setFontStyle(Font.ITALIC, todoList)
-        PromptSupport.setForeground(Gray._120, todoList)
-        todoList.toolTipText = "List open tasks that have to be done"
-        todoList.minimumSize = Dimension(507, 107)
-        todoList.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null)
-        todoList.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null)
-        todoList.text = this.oldCommitMessage?.todoList ?: ""
-        todoScrollPane = JBScrollPane(todoList)
-        todoScrollPane.border = componentBorder
-        container.add(todoRow)
-        container.add(Box.createRigidArea(Dimension(0,3)))
-        container.add(todoScrollPane)
-        container.add(Box.createRigidArea(Dimension(0,8)))
+        releaseInputField = Reference.getInputField(
+            "main, 11.5",
+            "This is a comma separated list of the target versions you intend to apply this fix on",
+            this.oldCommitMessage?.releasesVersion ?: ""
+        )
+        container.add(Reference.getLabelWithInput("Release: ",releaseInputField))
+        container.add(Spacer.getComponentSpacer())
 
-        relatedRow = JPanel(BorderLayout(3,3))
-        val relatedLabel = JLabel("Related: ")
-        relatedLabel.preferredSize = Dimension(80,32)
-        relatedNumber = JTextField(38)
-        PromptSupport.setPrompt("1234 3456", relatedNumber)
-        PromptSupport.setFontStyle(Font.ITALIC, relatedNumber)
-        PromptSupport.setForeground(Gray._120, relatedNumber)
-        relatedNumber.toolTipText = "Add issues related to this change which are not resolved"
-        relatedNumber.border = componentBorder
-        relatedNumber.text = this.oldCommitMessage?.relatedNumber ?: ""
-        relatedRow.add(relatedLabel, BorderLayout.WEST)
-        relatedRow.add(relatedNumber, BorderLayout.CENTER)
-
-        container.add(relatedRow)
-        container.add(Box.createRigidArea(Dimension(0,8)))
-
-        resolvesRow = JPanel(BorderLayout(3,3))
-        val resolvesLabel = JLabel("Resolves: ")
-        resolvesLabel.preferredSize = Dimension(80,32)
-        resolvesNumber = JTextField(38)
-        PromptSupport.setPrompt("1234 3456", resolvesNumber)
-        PromptSupport.setFontStyle(Font.ITALIC, resolvesNumber)
-        PromptSupport.setForeground(Gray._120, resolvesNumber)
-        resolvesNumber.toolTipText = "Add issues to this which are resolved by your Changes"
-        resolvesNumber.border = componentBorder
-        resolvesNumber.text = this.oldCommitMessage?.resolvesNumber ?: ""
-        resolvesRow.add(resolvesLabel, BorderLayout.WEST)
-        resolvesRow.add(resolvesNumber, BorderLayout.CENTER)
-
-        container.add(resolvesRow)
-        container.add(Box.createRigidArea(Dimension(0,8)))
-
-        releaseRow = JPanel(BorderLayout(3,3))
-        val releaseLabel = JLabel("Release: ")
-        releaseLabel.preferredSize = Dimension(80,32)
-        releasesVersion = JTextField(38)
-        PromptSupport.setPrompt("main, 11.5", releasesVersion)
-        PromptSupport.setFontStyle(Font.ITALIC, releasesVersion)
-        PromptSupport.setForeground(Gray._120, releasesVersion)
-        releasesVersion.toolTipText = "This is a comma separated list of the target versions you intend to apply this fix on"
-        releasesVersion.border = componentBorder
-        releasesVersion.text = this.oldCommitMessage?.releasesVersion ?: ""
-        releaseRow.add(releaseLabel, BorderLayout.WEST)
-        releaseRow.add(releasesVersion, BorderLayout.CENTER)
-
-        container.add(releaseRow)
-        container.add(Box.createRigidArea(Dimension(0,8)))
-
-        dependencyRow = JPanel(BorderLayout(3,3))
-        val dependencyLabel = JLabel("Depends: ")
-        dependencyLabel.preferredSize = Dimension(80,32)
-        dependencyPatch = JTextField(38)
-        PromptSupport.setPrompt("ChangeId, OfCorePatch", dependencyPatch)
-        PromptSupport.setFontStyle(Font.ITALIC, dependencyPatch)
-        PromptSupport.setForeground(Gray._120, dependencyPatch)
-        dependencyPatch.toolTipText = "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch"
-        dependencyPatch.border = componentBorder
-        dependencyPatch.text = this.oldCommitMessage?.dependencyPatch ?: ""
-        dependencyRow.add(dependencyLabel, BorderLayout.WEST)
-        dependencyRow.add(dependencyPatch, BorderLayout.CENTER)
-
-        container.add(dependencyRow)
-        container.add(Box.createRigidArea(Dimension(0,8)))
+        dependencyInputField = Reference.getInputField(
+            "ChangeId, OfCorePatch",
+            "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch",
+            this.oldCommitMessage?.dependencyPatch ?: ""
+        )
+        container.add(Reference.getLabelWithInput("Depends: ",dependencyInputField))
+        container.add(Spacer.getComponentSpacer())
 
         return container
     }
 
     fun getCommitMessage(): FormattedCommitMessage {
         return FormattedCommitMessage(
-            commitType.getItemAt(commitType.selectedIndex).toString(),
-            commitSubject.text.trim { it <= ' ' },
-            doneTasks.text.trim { it <= ' ' },
-            breakingChanges.text.trim { it <= ' ' },
-            todoList.text.trim { it <= ' ' },
-            relatedNumber.text.trim { it <= ' ' },
-            resolvesNumber.text.trim { it <= ' ' },
-            releasesVersion.text.trim { it <= ' ' },
-            dependencyPatch.text.trim { it <= ' ' }
+            typeDropdown.getItemAt(typeDropdown.selectedIndex).toString(),
+            subjectInputField.text.trim { it <= ' ' },
+            taskTextArea.text.trim { it <= ' ' },
+            breakingTextArea.text.trim { it <= ' ' },
+            todoTextArea.text.trim { it <= ' ' },
+            relatedInputField.text.trim { it <= ' ' },
+            resolvesInputField.text.trim { it <= ' ' },
+            releaseInputField.text.trim { it <= ' ' },
+            dependencyInputField.text.trim { it <= ' ' }
         )
     }
 }
