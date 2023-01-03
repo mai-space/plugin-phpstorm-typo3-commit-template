@@ -18,8 +18,8 @@ class Constants {
         const val textFieldWidth : Int = 80
         const val textFieldHeight : Int = 32
 
-        val placeholderColor : Color = Gray._120
-        val borderColorDark = Gray._50
-        val borderColorLight = Gray._107
+        val placeholderColor: Color = Gray._120
+        val borderColorDark: Color = Gray._50
+        val borderColorLight: Color = Gray._107
     }
 }
