@@ -23,12 +23,15 @@ class Reference {
             placeholder: String = "",
             toolTipText: String = "",
             previousCommitMessage: String = ""): JTextField {
+            // Init and Style for TextField
             val referenceInput = JTextField(Constants.textFieldColumns)
             PromptSupport.setPrompt(placeholder, referenceInput)
             PromptSupport.setFontStyle(Font.ITALIC, referenceInput)
             PromptSupport.setForeground(Constants.placeholderColor, referenceInput)
-            referenceInput.toolTipText = toolTipText
             referenceInput.border = JetbrainsBorderFactory.getBorder()
+
+            // Set Values
+            referenceInput.toolTipText = toolTipText
             referenceInput.text = previousCommitMessage
             return referenceInput
         }
