@@ -1,7 +1,6 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.components
 
 import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
-import com.intellij.openapi.editor.actions.EnterAction
 import com.intellij.ui.components.JBScrollPane
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout

@@ -150,19 +150,19 @@ class FormattedCommitMessage {
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "Tasks: ", this.doneTasks)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "To-Do's: ", this.todoList)
 
-        var relatedNumberMatches: List<String> = this.relatedNumber.split(" ")
+        val relatedNumberMatches: List<String> = this.relatedNumber.split(" ")
         relatedNumberMatches.forEach {
             if(isNotBlank(it)) {
                 formattedCommitMessage.append(System.lineSeparator())
-                formattedCommitMessage.append("Related: #"+it)
+                formattedCommitMessage.append("Related: #$it")
             }
         }
 
-        var resolvesNumberMatches: List<String> = this.resolvesNumber.split(" ")
+        val resolvesNumberMatches: List<String> = this.resolvesNumber.split(" ")
         resolvesNumberMatches.forEach {
             if(isNotBlank(it)) {
                 formattedCommitMessage.append(System.lineSeparator())
-                formattedCommitMessage.append("Resolves: #"+it)
+                formattedCommitMessage.append("Resolves: #$it")
             }
         }
         formattedCommitMessage.append(System.lineSeparator())

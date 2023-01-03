@@ -6,7 +6,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import javax.swing.*
 
-class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
+class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
 
     private var oldCommitMessage: FormattedCommitMessage?
 
@@ -31,7 +31,6 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
         init()
     }
     override fun createCenterPanel(): JComponent {
-        val border = JetbrainsBorderFactory.getBorder()
 
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
@@ -86,7 +85,7 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
             "Add issues related to this change which are not resolved",
             this.oldCommitMessage?.relatedNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("Related: ",relatedInputField))
+        container.add(Reference.getLabelWithInput("Related: ",relatedInputField, true, this.project))
         container.add(Spacer.getComponentSpacer())
 
         resolvesInputField = Reference.getInputField(
@@ -94,7 +93,7 @@ class Dialog(project: Project?, oldCommitMessage: FormattedCommitMessage?): Dial
             "Add issues to this which are resolved by your Changes",
             this.oldCommitMessage?.resolvesNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("Resolves: ",resolvesInputField))
+        container.add(Reference.getLabelWithInput("Resolves: ",resolvesInputField, true, this.project))
         container.add(Spacer.getComponentSpacer())
 
         releaseInputField = Reference.getInputField(
