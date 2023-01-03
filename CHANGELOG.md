@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [1.0.5] - 2023-01-03
+
+### Added
+- Add tooltips and placeholders
+- Fixed TextArea resizing pushes other content over the panel
+- Auto-Add Star for focus into TextArea
+- Auto-Add Star for each `return` press
+- Enhance Action Icon
+- Used deprecated method in GitUtils in order to save import of git4idea
+- Added ´getIssueNoFromBranchName´ Button
+- Added GitUtils for Project Branch name
+- Fix mac shortcut
+
 ## [1.0.4] - 2022-12-21
 
 ### Added
@@ -40,7 +53,8 @@
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/commits/v1.0.3
 [1.0.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/commit/2fe81ec28aeb953fdea4652ea969df56581a4cdc
