@@ -21,11 +21,11 @@
                     first-keystroke="control shift M"/>
             <keyboard-shortcut
                     keymap="Mac OS X"
-                    first-keystroke="control shift M"
+                    first-keystroke="Ctrl shift M"
                     remove="true"/>
             <keyboard-shortcut
                     keymap="Mac OS X 10.5+"
-                    first-keystroke="control shift M"
+                    first-keystroke="Ctrl shift M"
                     replace-all="true"/>
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>
