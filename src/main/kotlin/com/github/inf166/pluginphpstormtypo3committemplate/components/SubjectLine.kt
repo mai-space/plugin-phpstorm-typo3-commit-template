@@ -12,9 +12,9 @@ import javax.swing.JTextField
 class SubjectLine {
     companion object {
         fun getCommitType(
-            changeTypes : Array<String> = arrayOf("ERROR"),
-            toolTipText : String = "",
-            previousChangeType : String = ""
+            changeTypes: List<String>,
+            toolTipText: String = "",
+            previousChangeType: String = ""
         ): ComboBox<String> {
             val commitType = ComboBox<String>()
             for (changeType in changeTypes) {

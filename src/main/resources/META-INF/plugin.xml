@@ -11,6 +11,12 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.vcs</depends>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.PersistentSettings"/>
+        <projectService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.ProjectService"/>
+        <applicationConfigurable instance="com.github.inf166.pluginphpstormtypo3committemplate.services.TemplateConfigurable"/>
+    </extensions>
+
     <actions>
         <action id="Commit.Button" class="com.github.inf166.pluginphpstormtypo3committemplate.ShowCommitTemplateAction"
                 text="Show Template"

@@ -54,7 +54,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         ))
         container.add(Spacer.getComponentSpacer())
 
-        container.add(Changelog.getLabel("${Constants.LabelForTasks} "))
+        container.add(Changelog.getLabel("${Constants.labelForTasks} "))
         container.add(Spacer.getLabelSpacer())
         taskTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Added something",
@@ -63,7 +63,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         container.add(Changelog.getScrollPane(taskTextArea))
         container.add(Spacer.getComponentSpacer())
 
-        container.add(Changelog.getLabel("${Constants.LabelForBreakingChanges} "))
+        container.add(Changelog.getLabel("${Constants.labelForBreakingChanges} "))
         container.add(Spacer.getLabelSpacer())
         breakingTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Done something dangerous",
@@ -72,7 +72,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         container.add(Changelog.getScrollPane(breakingTextArea))
         container.add(Spacer.getComponentSpacer())
 
-        container.add(Changelog.getLabel("${Constants.LabelForTodos} "))
+        container.add(Changelog.getLabel("${Constants.labelForTodos} "))
         container.add(Spacer.getLabelSpacer())
         todoTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Need to do this",
@@ -86,7 +86,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "Add issues related to this change which are not resolved",
             this.oldCommitMessage?.relatedNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.LabelForRelated} ",relatedInputField, true, this.project))
+        container.add(Reference.getLabelWithInput("${Constants.labelForRelated} ",relatedInputField, true, this.project))
         container.add(Spacer.getComponentSpacer())
 
         resolvesInputField = Reference.getInputField(
@@ -94,7 +94,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "Add issues to this which are resolved by your Changes",
             this.oldCommitMessage?.resolvesNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.LabelForResolves} ",resolvesInputField, true, this.project))
+        container.add(Reference.getLabelWithInput("${Constants.labelForResolves} ",resolvesInputField, true, this.project))
         container.add(Spacer.getComponentSpacer())
 
         releaseInputField = Reference.getInputField(
@@ -102,7 +102,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "This is a comma separated list of the target versions you intend to apply this fix on",
             this.oldCommitMessage?.releasesVersion ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.LabelForRelease} ",releaseInputField))
+        container.add(Reference.getLabelWithInput("${Constants.labelForRelease} ",releaseInputField))
         container.add(Spacer.getComponentSpacer())
 
         dependencyInputField = Reference.getInputField(
@@ -110,7 +110,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch",
             this.oldCommitMessage?.dependencyPatch ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.LabelForDepends} ",dependencyInputField))
+        container.add(Reference.getLabelWithInput("${Constants.labelForDepends} ",dependencyInputField))
         container.add(Spacer.getComponentSpacer())
 
         return container

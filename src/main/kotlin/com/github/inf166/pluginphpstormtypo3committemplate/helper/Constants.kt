@@ -1,5 +1,6 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.helper
 
+import com.github.inf166.pluginphpstormtypo3committemplate.services.PersistentSettings
 import com.intellij.ui.Gray
 import java.awt.Color
 
@@ -21,25 +22,19 @@ class Constants {
         val placeholderColor: Color = Gray._120
         val borderColorLight: Color = Gray._107
 
-        const val bulletPoint: String = "*"
-        const val issueIndicator: String = "#"
+        // Also found in MyBundle.properties
+        var bulletPoint: String = PersistentSettings.instance.bulletPoint
+        var issueIndicator: String = PersistentSettings.instance.issueIndicator
 
-        val changeTypes = arrayOf(
-            "FEATURE",
-            "TASK",
-            "BUGFIX",
-            "SECURITY",
-            "DOCS",
-        )
-        const val LabelForTasks: String = "Tasks:"
-        const val LabelForBreakingChanges: String = "Breaking-Changes:"
-        const val LabelForTodos: String = "To-Do's:"
+        var changeTypes: List<String> = PersistentSettings.instance.changeTypes.split(",").map { it.trim() }
+        var labelForTasks: String = PersistentSettings.instance.labelForTasks
+        var labelForBreakingChanges: String = PersistentSettings.instance.labelForBreakingChanges
+        var labelForTodos: String = PersistentSettings.instance.labelForTodos
 
-        const val LabelForRelated: String = "Related:"
-        const val LabelForResolves: String = "Resolves:"
-        const val LabelForRelease: String = "Releases:"
-        const val LabelForDepends: String = "Depends:"
-
+        var labelForRelated: String = PersistentSettings.instance.labelForRelated
+        var labelForResolves: String = PersistentSettings.instance.labelForResolves
+        var labelForRelease: String = PersistentSettings.instance.labelForRelease
+        var labelForDepends: String = PersistentSettings.instance.labelForDepends
 
     }
 }
