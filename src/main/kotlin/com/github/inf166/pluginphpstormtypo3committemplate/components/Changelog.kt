@@ -45,7 +45,7 @@ class Changelog {
 
                 private fun addNewLineto(newTextArea: JTextArea) {
                     val stringBuilder: java.lang.StringBuilder = StringBuilder()
-                    stringBuilder.append(newTextArea.text).append('\n').append("* ")
+                    stringBuilder.append(newTextArea.text).append('\n').append("${Constants.bulletPoint} ")
                     newTextArea.text = stringBuilder.toString()
                 }
             })
@@ -62,7 +62,7 @@ class Changelog {
                         }
                         val input: String = textArea.text.toString()
                         if (input == "") {
-                            textArea.text = "* "
+                            textArea.text = "${Constants.bulletPoint} "
                         }
                     } catch (ignored: ClassCastException) {
                     }
@@ -74,7 +74,7 @@ class Changelog {
                             textArea = e.component as JTextArea
                         }
                         val input: String = textArea.text.toString()
-                        if (input == "* ") {
+                        if (input == "${Constants.bulletPoint} ") {
                             textArea.text = ""
                         }
                     } catch (ignored: ClassCastException) {

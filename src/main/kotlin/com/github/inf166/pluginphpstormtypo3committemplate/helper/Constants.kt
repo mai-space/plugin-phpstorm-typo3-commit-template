@@ -19,7 +19,27 @@ class Constants {
         const val textFieldHeight : Int = 32
 
         val placeholderColor: Color = Gray._120
-        val borderColorDark: Color = Gray._50
         val borderColorLight: Color = Gray._107
+
+        const val bulletPoint: String = "*"
+        const val issueIndicator: String = "#"
+
+        val changeTypes = arrayOf(
+            "FEATURE",
+            "TASK",
+            "BUGFIX",
+            "SECURITY",
+            "DOCS",
+        )
+        const val LabelForTasks: String = "Tasks:"
+        const val LabelForBreakingChanges: String = "Breaking-Changes:"
+        const val LabelForTodos: String = "To-Do's:"
+
+        const val LabelForRelated: String = "Related:"
+        const val LabelForResolves: String = "Resolves:"
+        const val LabelForRelease: String = "Releases:"
+        const val LabelForDepends: String = "Depends:"
+
+
     }
 }
