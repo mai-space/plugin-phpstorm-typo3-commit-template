@@ -28,7 +28,7 @@ class Reference {
             referenceRow.add(referenceInput, BorderLayout.CENTER)
 
             val branchIssueNoButton = JButton()
-            if (showReloadButton && project != null) {
+            if (showReloadButton && project != null && project.let { GitUtils.extractBranchName(it) } != "") {
                 branchIssueNoButton.action = object : AbstractAction() {
                     override fun actionPerformed(ae: ActionEvent) {
                         referenceInput.text = project.let { GitUtils.extractBranchName(it) }
