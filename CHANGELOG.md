@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [1.0.6] - 2023-01-09
+
+### Added
+- Fixed Mac Shortcut error on startup
+- Fixed show form
+- Added settings panel
+- Added persistent Settings
+
+### Future Improvements
+- Add Gitmoji Support (#18 )
+- Add more settings to the reference list (like , seperated lists)  (#18 )
+- Disable fields of the template from the settings (#18 )
+
 ## [1.0.5] - 2023-01-03
 
 ### Added
@@ -53,7 +66,8 @@
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/commits/v1.0.3
