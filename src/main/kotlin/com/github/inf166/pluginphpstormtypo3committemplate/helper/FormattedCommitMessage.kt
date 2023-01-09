@@ -61,14 +61,14 @@ class FormattedCommitMessage {
             val relatedNumberMatches = relatedNumberRegex.findAll(oldCommitMessage)
             this.relatedNumber = relatedNumberMatches.map { it.groupValues[1] }
                 .joinToString()
-                .replace("${Constants.issueIndicator}", "")
+                .replace(Constants.issueIndicator, "")
                 .replace(",", "")
 
             val resolvesNumberRegex = Regex("((?<=${Constants.labelForResolves} )(.+))")
             val resolvesNumberMatches = resolvesNumberRegex.findAll(oldCommitMessage)
             this.resolvesNumber = resolvesNumberMatches.map { it.groupValues[1] }
                 .joinToString()
-                .replace("${Constants.issueIndicator}", "")
+                .replace(Constants.issueIndicator, "")
                 .replace(",", "")
 
             matcher = releasesVersionPattern.matcher(oldCommitMessage)

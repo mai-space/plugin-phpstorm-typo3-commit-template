@@ -3,10 +3,8 @@ package com.github.inf166.pluginphpstormtypo3committemplate.components
 import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
-import java.awt.Dimension
 import java.awt.Font
 import javax.swing.*
-
 
 class SettingsInputField {
     companion object {
