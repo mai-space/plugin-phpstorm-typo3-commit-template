@@ -1,4 +1,4 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.services
+package com.github.inf166.pluginphpstormtypo3committemplate
 
 import com.intellij.openapi.project.Project
 import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle

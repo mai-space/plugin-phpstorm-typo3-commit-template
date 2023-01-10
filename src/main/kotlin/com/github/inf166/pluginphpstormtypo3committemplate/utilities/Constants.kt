@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.helper
+package com.github.inf166.pluginphpstormtypo3committemplate.utilities
 
-import com.github.inf166.pluginphpstormtypo3committemplate.services.PersistentSettings
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.intellij.ui.Gray
 import java.awt.Color
 

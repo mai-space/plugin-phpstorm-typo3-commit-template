@@ -1,10 +1,10 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.services
+package com.github.inf166.pluginphpstormtypo3committemplate.settings
 
+import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.util.xmlb.XmlSerializerUtil
-import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
 import com.intellij.openapi.application.ApplicationManager
 
 @State(name = "typo3-commit-message-template", storages = [(Storage("typo3-commit-message-template.xml"))])

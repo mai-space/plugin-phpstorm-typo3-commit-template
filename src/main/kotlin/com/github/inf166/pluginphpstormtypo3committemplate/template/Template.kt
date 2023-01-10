@@ -1,15 +1,19 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.components
+package com.github.inf166.pluginphpstormtypo3committemplate.template
 
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.FormattedCommitMessage
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Changelog
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Reference
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.SubjectLine
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import javax.swing.*
 
-class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMessage?): DialogWrapper(project) {
+class Template(private val project: Project?, oldCommitMessage: CommitMessage?): DialogWrapper(project) {
 
-    private var oldCommitMessage: FormattedCommitMessage?
+    private var oldCommitMessage: CommitMessage?
 
     private lateinit var container: JPanel
 
@@ -46,12 +50,14 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "Write a brief summary of what the change does now",
             this.oldCommitMessage?.subjectLine ?: ""
         )
-        container.add(SubjectLine.getSubjectLine(
-            typeDropdown,
-            "Type of Commit",
-            subjectInputField,
-            "Subject of Commit"
-        ))
+        container.add(
+            SubjectLine.getSubjectLine(
+                typeDropdown,
+                "Type of Commit",
+                subjectInputField,
+                "Subject of Commit"
+            )
+        )
         container.add(Spacer.getComponentSpacer())
 
         container.add(Changelog.getLabel("${Constants.labelForTasks} "))
@@ -59,7 +65,8 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         taskTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Added something",
             "List the things you have done",
-            this.oldCommitMessage?.doneTasks ?: "")
+            this.oldCommitMessage?.doneTasks ?: ""
+        )
         container.add(Changelog.getScrollPane(taskTextArea))
         container.add(Spacer.getComponentSpacer())
 
@@ -68,7 +75,8 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         breakingTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Done something dangerous",
             "List things you have done that could result in issues",
-            this.oldCommitMessage?.breakingChanges ?: "")
+            this.oldCommitMessage?.breakingChanges ?: ""
+        )
         container.add(Changelog.getScrollPane(breakingTextArea))
         container.add(Spacer.getComponentSpacer())
 
@@ -77,7 +85,8 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
         todoTextArea = Changelog.getTextArea(
             "${Constants.bulletPoint} Need to do this",
             "List open tasks that have to be done",
-            this.oldCommitMessage?.todoList ?: "")
+            this.oldCommitMessage?.todoList ?: ""
+        )
         container.add(Changelog.getScrollPane(todoTextArea))
         container.add(Spacer.getComponentSpacer())
 
@@ -86,7 +95,14 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "Add issues related to this change which are not resolved",
             this.oldCommitMessage?.relatedNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForRelated} ",relatedInputField, true, this.project))
+        container.add(
+            Reference.getLabelWithInput(
+                "${Constants.labelForRelated} ",
+                relatedInputField,
+                true,
+                this.project
+            )
+        )
         container.add(Spacer.getComponentSpacer())
 
         resolvesInputField = Reference.getInputField(
@@ -94,7 +110,14 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "Add issues to this which are resolved by your Changes",
             this.oldCommitMessage?.resolvesNumber ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForResolves} ",resolvesInputField, true, this.project))
+        container.add(
+            Reference.getLabelWithInput(
+                "${Constants.labelForResolves} ",
+                resolvesInputField,
+                true,
+                this.project
+            )
+        )
         container.add(Spacer.getComponentSpacer())
 
         releaseInputField = Reference.getInputField(
@@ -102,7 +125,7 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "This is a comma separated list of the target versions you intend to apply this fix on",
             this.oldCommitMessage?.releasesVersion ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForRelease} ",releaseInputField))
+        container.add(Reference.getLabelWithInput("${Constants.labelForRelease} ", releaseInputField))
         container.add(Spacer.getComponentSpacer())
 
         dependencyInputField = Reference.getInputField(
@@ -110,14 +133,14 @@ class Dialog(private val project: Project?, oldCommitMessage: FormattedCommitMes
             "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch",
             this.oldCommitMessage?.dependencyPatch ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForDepends} ",dependencyInputField))
+        container.add(Reference.getLabelWithInput("${Constants.labelForDepends} ", dependencyInputField))
         container.add(Spacer.getComponentSpacer())
 
         return container
     }
 
-    fun getCommitMessage(): FormattedCommitMessage {
-        return FormattedCommitMessage(
+    fun getCommitMessage(): CommitMessage {
+        return CommitMessage(
             typeDropdown.getItemAt(typeDropdown.selectedIndex).toString(),
             subjectInputField.text.trim { it <= ' ' },
             taskTextArea.text.trim { it <= ' ' },

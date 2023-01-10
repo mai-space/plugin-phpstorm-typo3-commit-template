@@ -1,8 +1,8 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.components
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.GitUtils
-import com.github.inf166.pluginphpstormtypo3committemplate.icons.MyIcons
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.GitBranchName
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Icons
 import com.intellij.openapi.project.Project
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
@@ -20,21 +20,21 @@ class Reference {
             showReloadButton: Boolean = false,
             project: Project? = null
         ): JPanel {
-            val referenceRow = JPanel(BorderLayout(Constants.smallSpace,Constants.smallSpace))
+            val referenceRow = JPanel(BorderLayout(Constants.smallSpace, Constants.smallSpace))
             val referenceLabel = JLabel(labelText)
-            referenceLabel.preferredSize = Dimension(Constants.textFieldWidth,Constants.textFieldHeight)
+            referenceLabel.preferredSize = Dimension(Constants.textFieldWidth, Constants.textFieldHeight)
 
             referenceRow.add(referenceLabel, BorderLayout.WEST)
             referenceRow.add(referenceInput, BorderLayout.CENTER)
 
             val branchIssueNoButton = JButton()
-            if (showReloadButton && project != null && project.let { GitUtils.extractBranchName(it) } != "") {
+            if (showReloadButton && project != null && project.let { GitBranchName.extractIssueNo(it) } != "") {
                 branchIssueNoButton.action = object : AbstractAction() {
                     override fun actionPerformed(ae: ActionEvent) {
-                        referenceInput.text += " ${ project.let { GitUtils.extractBranchName(it) } }"
+                        referenceInput.text += " ${ project.let { GitBranchName.extractIssueNo(it) } }"
                     }
                 }
-                branchIssueNoButton.icon = MyIcons.ReloadIssueNoFromBranchName
+                branchIssueNoButton.icon = Icons.ReloadIssueNoFromBranchName
                 branchIssueNoButton.preferredSize = Dimension(Constants.textFieldHeight, Constants.textFieldHeight)
                 branchIssueNoButton.toolTipText = "Get Issue Number from branch name"
                 referenceRow.add(branchIssueNoButton, BorderLayout.EAST)
@@ -50,7 +50,7 @@ class Reference {
             PromptSupport.setPrompt(placeholder, referenceInput)
             PromptSupport.setFontStyle(Font.ITALIC, referenceInput)
             PromptSupport.setForeground(Constants.placeholderColor, referenceInput)
-            referenceInput.border = JetbrainsBorderFactory.getBorder()
+            referenceInput.border = Border.getBorder()
 
             // Set Values
             referenceInput.toolTipText = toolTipText

@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.components
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.openapi.ui.ComboBox
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
@@ -22,7 +22,7 @@ class SubjectLine {
             }
             commitType.maximumSize = commitType.preferredSize
             commitType.toolTipText = toolTipText
-            commitType.border = JetbrainsBorderFactory.getBorder()
+            commitType.border = Border.getBorder()
             commitType.selectedItem = previousChangeType
             return commitType
         }
@@ -36,7 +36,7 @@ class SubjectLine {
             PromptSupport.setFontStyle(Font.ITALIC, inputField)
             PromptSupport.setForeground(Constants.placeholderColor, inputField)
             inputField.toolTipText = toolTipText
-            inputField.border = JetbrainsBorderFactory.getBorder()
+            inputField.border = Border.getBorder()
             inputField.text = previousSubject
             return inputField
         }
@@ -46,16 +46,16 @@ class SubjectLine {
             subject : JTextField,
             subjectLabel : String = ""
         ): JPanel {
-            val subjectLine = JPanel(BorderLayout(Constants.smallSpace,Constants.noSpace))
+            val subjectLine = JPanel(BorderLayout(Constants.smallSpace, Constants.noSpace))
 
-            val commitTypeRow = JPanel(BorderLayout(Constants.noSpace,Constants.smallSpace))
+            val commitTypeRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
             val commitTypeLabel = JLabel(typeLabel)
             commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
             commitTypeRow.add(type, BorderLayout.SOUTH)
 
             subjectLine.add(commitTypeRow, BorderLayout.WEST)
 
-            val subjectRow = JPanel(BorderLayout(Constants.noSpace,Constants.smallSpace))
+            val subjectRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
             val commitSubjectLabel = JLabel(subjectLabel)
             subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
             subjectRow.add(subject, BorderLayout.SOUTH)

@@ -1,7 +1,7 @@
-package com.github.inf166.pluginphpstormtypo3committemplate
+package com.github.inf166.pluginphpstormtypo3committemplate.actions
 
-import com.github.inf166.pluginphpstormtypo3committemplate.components.Dialog
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.FormattedCommitMessage
+import com.github.inf166.pluginphpstormtypo3committemplate.template.Template
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAware
@@ -20,12 +20,12 @@ class ShowCommitTemplateAction : AnAction(), DumbAware {
             commitMessageString = commitPanel.commitMessage
         }
 
-        val prompt: Dialog = if(commitMessageString.length > 1) {
-            val oldCommitMessage = FormattedCommitMessage(commitMessageString)
-            Dialog(actionEvent.project, oldCommitMessage)
+        val prompt: Template = if(commitMessageString.length > 1) {
+            val oldCommitMessage = CommitMessage(commitMessageString)
+            Template(actionEvent.project, oldCommitMessage)
         } else {
-            val emptyCommitMessage = FormattedCommitMessage()
-            Dialog(actionEvent.project, emptyCommitMessage)
+            val emptyCommitMessage = CommitMessage()
+            Template(actionEvent.project, emptyCommitMessage)
         }
 
         prompt.show()

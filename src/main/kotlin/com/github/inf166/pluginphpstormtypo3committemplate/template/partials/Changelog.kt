@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.components
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.components.JBScrollPane
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
@@ -17,18 +17,18 @@ import javax.swing.*
 class Changelog {
     companion object {
         fun getLabel(labelText: String = ""): JPanel {
-            val labelPanel = JPanel(BorderLayout(Constants.noSpace,Constants.noSpace))
+            val labelPanel = JPanel(BorderLayout(Constants.noSpace, Constants.noSpace))
             val doneTasksLabel = JLabel(labelText)
             labelPanel.add(doneTasksLabel, BorderLayout.WEST)
             return labelPanel
         }
         fun getTextArea(placeholder : String = "", toolTipText : String = "", previousCommitMessage : String = ""): JTextArea {
             // Init and Style TextArea
-            val newTextArea = JTextArea(Constants.textAreaRows,Constants.textAreaColumns)
+            val newTextArea = JTextArea(Constants.textAreaRows, Constants.textAreaColumns)
             PromptSupport.setPrompt(placeholder, newTextArea)
             PromptSupport.setFontStyle(Font.ITALIC, newTextArea)
             PromptSupport.setForeground(Constants.placeholderColor, newTextArea)
-            newTextArea.minimumSize = Dimension(Constants.textAreaWidth,Constants.textAreaHeight)
+            newTextArea.minimumSize = Dimension(Constants.textAreaWidth, Constants.textAreaHeight)
             newTextArea.lineWrap = true
             newTextArea.wrapStyleWord = true
 
@@ -85,7 +85,7 @@ class Changelog {
         }
         fun getScrollPane(textArea : JTextArea): JBScrollPane {
             val newScrollPane = JBScrollPane(textArea)
-            newScrollPane.border = JetbrainsBorderFactory.getBorder()
+            newScrollPane.border = Border.getBorder()
             return newScrollPane
         }
     }

@@ -1,9 +1,9 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.helper
+package com.github.inf166.pluginphpstormtypo3committemplate.utilities
 
 import org.apache.commons.lang.StringUtils.isNotBlank
 import java.util.regex.Pattern
 
-class FormattedCommitMessage {
+class CommitMessage {
 
     var changeType: String
     var subjectLine: String

@@ -1,6 +1,7 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.components
+package com.github.inf166.pluginphpstormtypo3committemplate.settings.form.partials
 
-import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Border
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
 import java.awt.Font
@@ -12,7 +13,7 @@ class SettingsInputField {
             labelText: String = "",
             settingsInput: JTextField,
         ): JPanel {
-            val referenceRow = JPanel(BorderLayout(Constants.smallSpace,Constants.smallSpace))
+            val referenceRow = JPanel(BorderLayout(Constants.smallSpace, Constants.smallSpace))
             val referenceLabel = JLabel(labelText)
 
             referenceRow.add(referenceLabel, BorderLayout.WEST)
@@ -27,7 +28,7 @@ class SettingsInputField {
             PromptSupport.setPrompt(placeholder, settingsInput)
             PromptSupport.setFontStyle(Font.ITALIC, settingsInput)
             PromptSupport.setForeground(Constants.placeholderColor, settingsInput)
-            settingsInput.border = JetbrainsBorderFactory.getBorder()
+            settingsInput.border = Border.getBorder()
 
             // Set Values
             settingsInput.toolTipText = toolTipText
