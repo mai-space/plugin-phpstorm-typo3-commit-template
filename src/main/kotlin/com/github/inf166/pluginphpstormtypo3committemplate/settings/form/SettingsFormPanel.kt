@@ -3,12 +3,27 @@ package com.github.inf166.pluginphpstormtypo3committemplate.settings.form
 import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
 import com.github.inf166.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.awt.GridLayout
 import javax.swing.BoxLayout
+import javax.swing.JCheckBox
 import javax.swing.JPanel
 import javax.swing.JTextField
 
+
 class SettingsFormPanel {
+    var useFlags: JCheckBox = JCheckBox("Use Flags like [FEATURE] and [!!!]")
+    var useSubjectLine: JCheckBox = JCheckBox("Use the Subject Line")
+    var useTaskList: JCheckBox = JCheckBox("Use Task list")
+    var useBreakingList: JCheckBox = JCheckBox("Use Breaking Changes list")
+    var useToDoList: JCheckBox = JCheckBox("Use Todo list")
+    var useRelatedReference: JCheckBox = JCheckBox("Use related issueno reference field")
+    var useResolvesReference: JCheckBox = JCheckBox("Use resolves issueno reference field")
+    var useReleaseReference: JCheckBox = JCheckBox("Use releases on reference field")
+    var useDependsReference: JCheckBox = JCheckBox("Use depends on reference field")
     var bulletPointInput: JTextField = SettingsInputField.getInputField(
         MyBundle.getMessage("bulletPoint"),
         "Will be shown in the Changelog Lists"
@@ -53,89 +68,103 @@ class SettingsFormPanel {
         val containerPanel = JPanel()
         containerPanel.layout = BoxLayout(containerPanel, BoxLayout.PAGE_AXIS)
 
+        val enOrDisableFieldsPanel = JPanel()
+        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.largeSpace)
+        enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or disable template Fields")
+        enOrDisableFieldsPanel.add(useFlags)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useSubjectLine)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useTaskList)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useBreakingList)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useToDoList)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useRelatedReference)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useResolvesReference)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useReleaseReference)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        enOrDisableFieldsPanel.add(useDependsReference)
+        enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+        containerPanel.add(enOrDisableFieldsPanel)
+        containerPanel.add(Spacer.getComponentSpacer())
+
+        val labelConstraints = GridBagConstraints()
+        labelConstraints.gridwidth = 1
+        labelConstraints.anchor = GridBagConstraints.LINE_START
+        val inputConstraints = GridBagConstraints()
+        inputConstraints.gridwidth = 3
+        inputConstraints.anchor = GridBagConstraints.LINE_END
+        inputConstraints.fill = GridBagConstraints.HORIZONTAL
+
+
         val listIndicatorPanel = JPanel()
-        listIndicatorPanel.layout = BoxLayout(listIndicatorPanel, BoxLayout.PAGE_AXIS)
+        listIndicatorPanel.layout = GridBagLayout()
         listIndicatorPanel.border = IdeBorderFactory.createTitledBorder("List Indicators")
-        listIndicatorPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Bulletpoint Indicator",
-                bulletPointInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Bulletpoint Indicator",
+            bulletPointInput,
+            listIndicatorPanel
         )
-        listIndicatorPanel.add(Spacer.getComponentSpacer())
-        listIndicatorPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Issue Number Indicator",
-                issueIndicatorInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Issue Number Indicator",
+            issueIndicatorInput,
+            listIndicatorPanel
         )
         containerPanel.add(listIndicatorPanel)
         containerPanel.add(Spacer.getComponentSpacer())
 
         val changeTypesPanel = JPanel()
-        changeTypesPanel.layout = BoxLayout(changeTypesPanel, BoxLayout.PAGE_AXIS)
+        changeTypesPanel.layout = GridLayout(1, 2, Constants.largeSpace, Constants.largeSpace)
         changeTypesPanel.border = IdeBorderFactory.createTitledBorder("Change Types")
-        changeTypesPanel.add(Spacer.getComponentSpacer())
-        changeTypesPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Define the change Types",
-                changeTypesInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Define the change Types",
+            changeTypesInput,
+            changeTypesPanel
         )
         containerPanel.add(changeTypesPanel)
         containerPanel.add(Spacer.getComponentSpacer())
 
         val labelsPanel = JPanel()
-        labelsPanel.layout = BoxLayout(labelsPanel, BoxLayout.PAGE_AXIS)
+        labelsPanel.layout = GridLayout(7, 2, Constants.largeSpace, Constants.largeSpace)
         labelsPanel.border = IdeBorderFactory.createTitledBorder("Labels")
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for tasks",
-                labelForTasksInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for tasks",
+            labelForTasksInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for Breaking Changes",
-                labelForBreakingChangesInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for Breaking Changes",
+            labelForBreakingChangesInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for To-Do's",
-                labelForTodosInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for To-Do's",
+            labelForTodosInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for Related IssueNo",
-                labelForRelatedInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for Related IssueNo",
+            labelForRelatedInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for Resolved IssueNo",
-                labelForResolvesInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for Resolved IssueNo",
+            labelForResolvesInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for Release Targets",
-                labelForReleaseInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for Release Targets",
+            labelForReleaseInput,
+            labelsPanel
         )
-        labelsPanel.add(Spacer.getComponentSpacer())
-        labelsPanel.add(
-            SettingsInputField.getLabelWithInput(
-                "Label for Dependencies",
-                labelForDependsInput
-            )
+        SettingsInputField.getLabelWithInput(
+            "Label for Dependencies",
+            labelForDependsInput,
+            labelsPanel
         )
         containerPanel.add(labelsPanel)
 

@@ -4,6 +4,7 @@ import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Bor
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
+import java.awt.Dimension
 import java.awt.Font
 import javax.swing.*
 
@@ -12,13 +13,13 @@ class SettingsInputField {
         fun getLabelWithInput(
             labelText: String = "",
             settingsInput: JTextField,
+            panel: JPanel
         ): JPanel {
-            val referenceRow = JPanel(BorderLayout(Constants.smallSpace, Constants.smallSpace))
             val referenceLabel = JLabel(labelText)
-
-            referenceRow.add(referenceLabel, BorderLayout.WEST)
-            referenceRow.add(settingsInput, BorderLayout.CENTER)
-            return referenceRow
+            referenceLabel.preferredSize = Dimension(180, 32)
+            panel.add(referenceLabel)
+            panel.add(settingsInput)
+            return panel
         }
         fun getInputField(
             placeholder: String = "",
