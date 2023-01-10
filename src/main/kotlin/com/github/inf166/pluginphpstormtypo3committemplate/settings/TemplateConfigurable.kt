@@ -1,4 +1,4 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.services
+package com.github.inf166.pluginphpstormtypo3committemplate.settings
 
 import com.intellij.openapi.options.SearchableConfigurable
 import com.github.inf166.pluginphpstormtypo3committemplate.components.TemplateSettingsForm

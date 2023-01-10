@@ -12,9 +12,10 @@
     <depends>com.intellij.modules.vcs</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.PersistentSettings"/>
+        <applicationService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings"/>
         <projectService serviceImplementation="com.github.inf166.pluginphpstormtypo3committemplate.services.ProjectService"/>
-        <applicationConfigurable instance="com.github.inf166.pluginphpstormtypo3committemplate.services.TemplateConfigurable"/>
+        <applicationConfigurable instance="com.github.inf166.pluginphpstormtypo3committemplate.settings.TemplateConfigurable"/>
+        <notificationGroup id="TYPO3 Commit Template Update available" displayType="STICKY_BALLOON" key="inf166.plugin.template.updatable"/>
     </extensions>
 
     <actions>

@@ -3,6 +3,7 @@ package com.github.inf166.pluginphpstormtypo3committemplate.components
 import com.github.inf166.pluginphpstormtypo3committemplate.helper.Constants
 import com.github.inf166.pluginphpstormtypo3committemplate.helper.GitUtils
 import com.github.inf166.pluginphpstormtypo3committemplate.icons.MyIcons
+import com.github.inf166.pluginphpstormtypo3committemplate.services.notifications.TemplateNotifications
 import com.intellij.openapi.project.Project
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
@@ -31,6 +32,8 @@ class Reference {
             if (showReloadButton && project != null && project.let { GitUtils.extractBranchName(it) } != "") {
                 branchIssueNoButton.action = object : AbstractAction() {
                     override fun actionPerformed(ae: ActionEvent) {
+                        val projectNotifier = TemplateNotifications()
+                        projectNotifier.notifyUpdatable(project)
                         referenceInput.text += " ${ project.let { GitUtils.extractBranchName(it) } }"
                     }
                 }
