@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [2022.3.1] - 2023-03-22
+Tasks:
+
+- Add null check for branch name util
+- Remove MacOS Shortcuts
+- New versioning style
+
 ## [1.0.6] - 2023-01-09
 
 ### Added
@@ -66,7 +73,8 @@
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...HEAD
+[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...HEAD
+[2022.3.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...v2022.3.1
 [1.0.6]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
