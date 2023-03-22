@@ -8,11 +8,13 @@ import com.intellij.openapi.vfs.VirtualFile
 object GitBranchName {
     fun extractIssueNo(project: Project): String {
         var currentBranchName = ""
-        val currentProjectFile = project.projectFile as VirtualFile
-        currentBranchName = CurrentBranchComponent.getCurrentBranch(project, currentProjectFile)?.branchName.toString()
-        val issueNoInBranchNameRegex = Regex("[0-9]+")
-        val issueNumberMatches = issueNoInBranchNameRegex.findAll(currentBranchName)
-        currentBranchName = issueNumberMatches.map{ it.value }.joinToString()
+        if (project.projectFile != null) {
+            val currentProjectFile = project.projectFile as VirtualFile
+            currentBranchName = CurrentBranchComponent.getCurrentBranch(project, currentProjectFile)?.branchName.toString()
+            val issueNoInBranchNameRegex = Regex("[0-9]+")
+            val issueNumberMatches = issueNoInBranchNameRegex.findAll(currentBranchName)
+            currentBranchName = issueNumberMatches.map{ it.value }.joinToString()
+        }
         return currentBranchName
     }
 }
