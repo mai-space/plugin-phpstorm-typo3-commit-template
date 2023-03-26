@@ -3,6 +3,7 @@ package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.GitBranchName
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Icons
+import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
@@ -18,7 +19,8 @@ class Reference {
             labelText: String = "",
             referenceInput: JTextField,
             showReloadButton: Boolean = false,
-            project: Project? = null
+            project: Project? = null,
+            dataContext: DataContext? = null
         ): JPanel {
             val referenceRow = JPanel(BorderLayout(Constants.smallSpace, Constants.smallSpace))
             val referenceLabel = JLabel(labelText)
@@ -28,10 +30,17 @@ class Reference {
             referenceRow.add(referenceInput, BorderLayout.CENTER)
 
             val branchIssueNoButton = JButton()
-            if (showReloadButton && project != null && project.let { GitBranchName.extractIssueNo(it) } != "") {
+            if (showReloadButton && project != null && dataContext != null) {
                 branchIssueNoButton.action = object : AbstractAction() {
                     override fun actionPerformed(ae: ActionEvent) {
-                        referenceInput.text += " ${ project.let { GitBranchName.extractIssueNo(it) } }"
+                        val issueNo = GitBranchName.extractIssueNo(project, dataContext)
+                        if (issueNo.isNotEmpty() && !referenceInput.text.contains(issueNo)) {
+                            referenceInput.text += if (referenceInput.text.isEmpty()) {
+                                issueNo
+                            } else {
+                                " $issueNo"
+                            }
+                        }
                     }
                 }
                 branchIssueNoButton.icon = Icons.ReloadIssueNoFromBranchName

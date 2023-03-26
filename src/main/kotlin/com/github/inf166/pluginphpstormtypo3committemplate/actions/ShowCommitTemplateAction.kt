@@ -22,10 +22,11 @@ class ShowCommitTemplateAction : AnAction(), DumbAware {
 
         val prompt: Template = if(commitMessageString.length > 1) {
             val oldCommitMessage = CommitMessage(commitMessageString)
-            Template(actionEvent.project, oldCommitMessage)
+            actionEvent.dataContext
+            Template(actionEvent.project, actionEvent.dataContext, oldCommitMessage)
         } else {
             val emptyCommitMessage = CommitMessage()
-            Template(actionEvent.project, emptyCommitMessage)
+            Template(actionEvent.project, actionEvent.dataContext, emptyCommitMessage)
         }
 
         prompt.show()

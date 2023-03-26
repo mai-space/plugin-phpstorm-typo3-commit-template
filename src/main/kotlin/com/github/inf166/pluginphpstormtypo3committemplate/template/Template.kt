@@ -6,12 +6,13 @@ import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spa
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.SubjectLine
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
+import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import javax.swing.*
 
-class Template(private val project: Project?, oldCommitMessage: CommitMessage?): DialogWrapper(project) {
+class Template(private val project: Project?, private val dataContext: DataContext, oldCommitMessage: CommitMessage?): DialogWrapper(project) {
 
     private var oldCommitMessage: CommitMessage?
 
@@ -100,7 +101,8 @@ class Template(private val project: Project?, oldCommitMessage: CommitMessage?):
                 "${Constants.labelForRelated} ",
                 relatedInputField,
                 true,
-                this.project
+                this.project,
+                this.dataContext
             )
         )
         container.add(Spacer.getComponentSpacer())
@@ -115,7 +117,8 @@ class Template(private val project: Project?, oldCommitMessage: CommitMessage?):
                 "${Constants.labelForResolves} ",
                 resolvesInputField,
                 true,
-                this.project
+                this.project,
+                this.dataContext
             )
         )
         container.add(Spacer.getComponentSpacer())
