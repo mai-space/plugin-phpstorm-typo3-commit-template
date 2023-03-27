@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [2022.3.2] - 2023-03-27
+Tasks:
+
+- Fix the extractIssueNo for PHPStorm
+- Load lib git4idea
+
 ## [2022.3.1] - 2023-03-22
 Tasks:
 
@@ -73,7 +79,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...HEAD
+[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.2...HEAD
+[2022.3.2]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...v2022.3.2
 [2022.3.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...v2022.3.1
 [1.0.6]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
