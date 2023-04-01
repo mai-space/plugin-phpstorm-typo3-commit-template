@@ -1,4 +1,4 @@
-# plugin-phpstorm-typo3-commit-template
+# TYPO3 Commit Template
 
 ![Build](https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
