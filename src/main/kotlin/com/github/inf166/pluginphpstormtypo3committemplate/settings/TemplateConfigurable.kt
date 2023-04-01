@@ -11,7 +11,7 @@ class TemplateConfigurable : SearchableConfigurable {
 
     companion object {
         const val ID = "com.github.inf166.pluginphpstormtypo3committemplate"
-        const val DISPLAY_NAME = "Commit Template with TYPO3 Commit Message Guidelines"
+        const val DISPLAY_NAME = " TYPO3 Commit Template"
     }
     @Nls
     override fun getDisplayName(): String = DISPLAY_NAME
