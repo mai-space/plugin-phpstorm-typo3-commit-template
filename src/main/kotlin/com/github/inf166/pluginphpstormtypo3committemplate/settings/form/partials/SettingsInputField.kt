@@ -3,7 +3,6 @@ package com.github.inf166.pluginphpstormtypo3committemplate.settings.form.partia
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Border
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import org.jdesktop.swingx.prompt.PromptSupport
-import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Font
 import javax.swing.*

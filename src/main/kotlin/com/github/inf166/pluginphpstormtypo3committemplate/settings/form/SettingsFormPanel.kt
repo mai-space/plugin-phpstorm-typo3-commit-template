@@ -13,17 +13,16 @@ import javax.swing.JCheckBox
 import javax.swing.JPanel
 import javax.swing.JTextField
 
-
 class SettingsFormPanel {
-    var useFlags: JCheckBox = JCheckBox("Use Flags like [FEATURE] and [!!!]")
-    var useSubjectLine: JCheckBox = JCheckBox("Use the Subject Line")
-    var useTaskList: JCheckBox = JCheckBox("Use Task list")
-    var useBreakingList: JCheckBox = JCheckBox("Use Breaking Changes list")
-    var useToDoList: JCheckBox = JCheckBox("Use Todo list")
-    var useRelatedReference: JCheckBox = JCheckBox("Use related issueno reference field")
-    var useResolvesReference: JCheckBox = JCheckBox("Use resolves issueno reference field")
-    var useReleaseReference: JCheckBox = JCheckBox("Use releases on reference field")
-    var useDependsReference: JCheckBox = JCheckBox("Use depends on reference field")
+    private var useFlags: JCheckBox = JCheckBox("Use Flags like [FEATURE] and [!!!]")
+    private var useSubjectLine: JCheckBox = JCheckBox("Use the Subject Line")
+    private var useTaskList: JCheckBox = JCheckBox("Use Task list")
+    private var useBreakingList: JCheckBox = JCheckBox("Use Breaking Changes list")
+    private var useToDoList: JCheckBox = JCheckBox("Use Todo list")
+    private var useRelatedReference: JCheckBox = JCheckBox("Use related issueno reference field")
+    private var useResolvesReference: JCheckBox = JCheckBox("Use resolves issueno reference field")
+    private var useReleaseReference: JCheckBox = JCheckBox("Use releases on reference field")
+    private var useDependsReference: JCheckBox = JCheckBox("Use depends on reference field")
     var bulletPointInput: JTextField = SettingsInputField.getInputField(
         MyBundle.getMessage("bulletPoint"),
         "Will be shown in the Changelog Lists"
@@ -70,7 +69,7 @@ class SettingsFormPanel {
 
         val enOrDisableFieldsPanel = JPanel()
         enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.largeSpace)
-        enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or disable template Fields")
+        enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or Disable Template Fields")
         enOrDisableFieldsPanel.add(useFlags)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
         enOrDisableFieldsPanel.add(useSubjectLine)
