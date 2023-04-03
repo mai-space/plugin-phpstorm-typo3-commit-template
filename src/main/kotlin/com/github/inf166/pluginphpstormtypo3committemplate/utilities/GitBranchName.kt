@@ -6,8 +6,8 @@ import git4idea.branch.GitBranchUtil
 
 object GitBranchName {
     fun extractIssueNo(project: Project, dataContext: DataContext): String {
-        val repository = GitBranchUtil.guessRepositoryForOperation(project, dataContext) ?: return ""
-        val branchName = repository.currentBranch?.name ?: return ""
+        val repository = GitBranchUtil.getCurrentRepository(project) ?: return ""
+        val branchName = repository.currentBranchName?: return ""
         val issueNoInBranchNameRegex = Regex("[0-9]+")
         val issueNumberMatches = issueNoInBranchNameRegex.findAll(branchName)
         return issueNumberMatches.map{ it.value }.joinToString()
