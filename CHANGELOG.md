@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [2022.3.4] - 2023-04-03
+Tasks:
+
+- Make Plugin avaible for Version 2021 of PHPStorm
+
 ## [2022.3.3] - 2023-04-02
 Tasks:
 
@@ -84,7 +89,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...HEAD
+[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...HEAD
+[2022.3.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...v2022.3.4
 [2022.3.3]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.2...v2022.3.3
 [2022.3.2]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...v2022.3.2
 [2022.3.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...v2022.3.1
