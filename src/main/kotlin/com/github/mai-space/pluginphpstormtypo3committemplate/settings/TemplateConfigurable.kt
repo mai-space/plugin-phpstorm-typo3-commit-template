@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.settings
+package com.github.mai-space.pluginphpstormtypo3committemplate.settings
 
-import com.github.inf166.pluginphpstormtypo3committemplate.settings.form.SettingsFormPanel
+import com.github.mai-space.pluginphpstormtypo3committemplate.settings.form.SettingsFormPanel
 import com.intellij.openapi.options.SearchableConfigurable
 import javax.swing.JComponent
 import org.jetbrains.annotations.Nls
@@ -10,7 +10,7 @@ class TemplateConfigurable : SearchableConfigurable {
     private val persistentSettings = PersistentSettings.instance
 
     companion object {
-        const val ID = "com.github.inf166.pluginphpstormtypo3committemplate"
+        const val ID = "com.github.mai-space.pluginphpstormtypo3committemplate"
         const val DISPLAY_NAME = " TYPO3 Commit Template"
     }
     @Nls

@@ -89,13 +89,13 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...HEAD
-[2022.3.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...v2022.3.4
-[2022.3.3]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.2...v2022.3.3
-[2022.3.2]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...v2022.3.2
-[2022.3.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...v2022.3.1
-[1.0.6]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
-[1.0.5]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
-[1.0.4]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/commits/v1.0.3
-[1.0.1]: https://github.com/Inf166/plugin-phpstorm-typo3-commit-template/commit/2fe81ec28aeb953fdea4652ea969df56581a4cdc
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...HEAD
+[2022.3.4]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...v2022.3.4
+[2022.3.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.2...v2022.3.3
+[2022.3.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.1...v2022.3.2
+[2022.3.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.6...v2022.3.1
+[1.0.6]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
+[1.0.5]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/commits/v1.0.3
+[1.0.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/commit/2fe81ec28aeb953fdea4652ea969df56581a4cdc

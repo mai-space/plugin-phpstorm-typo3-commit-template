@@ -1,4 +1,4 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.utilities
+package com.github.mai-space.pluginphpstormtypo3committemplate.utilities
 
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project

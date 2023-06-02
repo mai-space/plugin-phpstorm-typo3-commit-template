@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
+package com.github.mai-space.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Constants
 import javax.swing.BorderFactory
 import javax.swing.border.Border
 

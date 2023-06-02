@@ -1,4 +1,4 @@
-package com.github.inf166.pluginphpstormtypo3committemplate
+package com.github.mai-space.pluginphpstormtypo3committemplate
 
 import com.intellij.openapi.project.Project
 

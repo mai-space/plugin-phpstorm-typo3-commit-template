@@ -1,6 +1,6 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.settings
+package com.github.mai-space.pluginphpstormtypo3committemplate.settings
 
-import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
+import com.github.mai-space.pluginphpstormtypo3committemplate.MyBundle
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage

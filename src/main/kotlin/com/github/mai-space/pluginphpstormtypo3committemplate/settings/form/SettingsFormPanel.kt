@@ -1,9 +1,9 @@
-package com.github.inf166.pluginphpstormtypo3committemplate.settings.form
+package com.github.mai-space.pluginphpstormtypo3committemplate.settings.form
 
-import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
-import com.github.inf166.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
-import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
-import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.mai-space.pluginphpstormtypo3committemplate.MyBundle
+import com.github.mai-space.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
+import com.github.mai-space.pluginphpstormtypo3committemplate.template.partials.Spacer
+import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
