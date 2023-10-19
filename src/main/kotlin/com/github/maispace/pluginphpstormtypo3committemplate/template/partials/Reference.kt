@@ -1,8 +1,8 @@
-package com.github.mai-space.pluginphpstormtypo3committemplate.template.partials
+package com.github.maispace.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Constants
-import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.GitBranchName
-import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Icons
+import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.maispace.pluginphpstormtypo3committemplate.utilities.GitBranchName
+import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Icons
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import org.jdesktop.swingx.prompt.PromptSupport

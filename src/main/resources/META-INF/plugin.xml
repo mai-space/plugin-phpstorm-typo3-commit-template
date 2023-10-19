@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.mai-space.pluginphpstormtypo3committemplate</id>
+    <id>com.github.maispace.pluginphpstormtypo3committemplate</id>
     <name>TYPO3 Commit Template</name>
     <vendor email="joel@maispace.de" url="https://github.com/mai-space">Joel Maximilian Mai</vendor>
 
@@ -13,13 +13,13 @@
     <depends>Git4Idea</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.mai-space.pluginphpstormtypo3committemplate.settings.PersistentSettings"/>
-        <projectService serviceImplementation="com.github.mai-space.pluginphpstormtypo3committemplate.ProjectService"/>
-        <applicationConfigurable instance="com.github.mai-space.pluginphpstormtypo3committemplate.settings.TemplateConfigurable"/>
+        <applicationService serviceImplementation="com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings"/>
+        <projectService serviceImplementation="com.github.maispace.pluginphpstormtypo3committemplate.ProjectService"/>
+        <applicationConfigurable instance="com.github.maispace.pluginphpstormtypo3committemplate.settings.TemplateConfigurable"/>
     </extensions>
 
     <actions>
-        <action id="Commit.Button" class="com.github.mai-space.pluginphpstormtypo3committemplate.actions.ShowCommitTemplateAction"
+        <action id="Commit.Button" class="com.github.maispace.pluginphpstormtypo3committemplate.actions.ShowCommitTemplateAction"
                 text="Show Template"
                 description="Show the template for creating commit messages"
                 icon="/icons/action.svg">

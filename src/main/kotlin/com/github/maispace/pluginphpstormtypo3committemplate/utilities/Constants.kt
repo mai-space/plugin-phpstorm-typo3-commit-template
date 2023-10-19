@@ -1,6 +1,6 @@
-package com.github.mai-space.pluginphpstormtypo3committemplate.utilities
+package com.github.maispace.pluginphpstormtypo3committemplate.utilities
 
-import com.github.mai-space.pluginphpstormtypo3committemplate.settings.PersistentSettings
+import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.intellij.ui.Gray
 import java.awt.Color
 

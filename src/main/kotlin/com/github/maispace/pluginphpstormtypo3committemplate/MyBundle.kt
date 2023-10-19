@@ -1,4 +1,4 @@
-package com.github.mai-space.pluginphpstormtypo3committemplate
+package com.github.maispace.pluginphpstormtypo3committemplate
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

@@ -1,7 +1,7 @@
-package com.github.mai-space.pluginphpstormtypo3committemplate.settings.form.partials
+package com.github.maispace.pluginphpstormtypo3committemplate.settings.form.partials
 
-import com.github.mai-space.pluginphpstormtypo3committemplate.template.partials.Border
-import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Border
+import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.Dimension
 import java.awt.Font

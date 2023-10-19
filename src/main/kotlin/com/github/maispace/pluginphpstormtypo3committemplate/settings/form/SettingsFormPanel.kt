@@ -1,9 +1,9 @@
-package com.github.mai-space.pluginphpstormtypo3committemplate.settings.form
+package com.github.maispace.pluginphpstormtypo3committemplate.settings.form
 
-import com.github.mai-space.pluginphpstormtypo3committemplate.MyBundle
-import com.github.mai-space.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
-import com.github.mai-space.pluginphpstormtypo3committemplate.template.partials.Spacer
-import com.github.mai-space.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.maispace.pluginphpstormtypo3committemplate.MyBundle
+import com.github.maispace.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
+import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Spacer
+import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -101,7 +101,7 @@ class SettingsFormPanel {
 
 
         val listIndicatorPanel = JPanel()
-        listIndicatorPanel.layout = GridBagLayout()
+        listIndicatorPanel.layout = GridLayout(2, 2, Constants.largeSpace, Constants.largeSpace)
         listIndicatorPanel.border = IdeBorderFactory.createTitledBorder("List Indicators")
         SettingsInputField.getLabelWithInput(
             "Bulletpoint Indicator",
@@ -131,7 +131,7 @@ class SettingsFormPanel {
         labelsPanel.layout = GridLayout(7, 2, Constants.largeSpace, Constants.largeSpace)
         labelsPanel.border = IdeBorderFactory.createTitledBorder("Labels")
         SettingsInputField.getLabelWithInput(
-            "Label for tasks",
+            "Label for Tasks",
             labelForTasksInput,
             labelsPanel
         )
