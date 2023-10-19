@@ -6,7 +6,6 @@ import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.S
 import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
 import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.GridLayout
 import javax.swing.BoxLayout
 import javax.swing.JCheckBox
@@ -62,6 +61,10 @@ class SettingsFormPanel {
     var labelForDependsInput: JTextField = SettingsInputField.getInputField(
         MyBundle.getMessage("labelForDepends"),
         "Will be the identifier for the depends Reference"
+    )
+    var regexForIssueNoInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("regexForIssueNo"),
+        "This Regex will be used to determine the issue number from the branch name"
     )
     fun createForm() : JPanel {
         val containerPanel = JPanel()
@@ -167,6 +170,16 @@ class SettingsFormPanel {
         )
         containerPanel.add(labelsPanel)
 
+        val regexForIssueNoPanel = JPanel()
+        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.largeSpace, Constants.largeSpace)
+        regexForIssueNoPanel.border = IdeBorderFactory.createTitledBorder("Regex for Issue Number")
+        SettingsInputField.getLabelWithInput(
+            "Regex for Issue Number in Branch Name",
+            regexForIssueNoInput,
+            regexForIssueNoPanel
+        )
+        containerPanel.add(regexForIssueNoPanel)
+
         return containerPanel
     }
 
@@ -238,6 +251,13 @@ class SettingsFormPanel {
             labelForDependsInput.text
         } else {
             MyBundle.getMessage("labelForDepends")
+        }
+    }
+    fun labelForRegex(): String {
+        return if (regexForIssueNoInput.text != "") {
+            regexForIssueNoInput.text
+        } else {
+            MyBundle.getMessage("regexForIssueNo")
         }
     }
 }

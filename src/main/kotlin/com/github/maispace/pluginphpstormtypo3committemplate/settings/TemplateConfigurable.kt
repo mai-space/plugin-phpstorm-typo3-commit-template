@@ -30,7 +30,8 @@ class TemplateConfigurable : SearchableConfigurable {
                 persistentSettings.labelForRelated != settingsFormPanel.labelForRelated() ||
                 persistentSettings.labelForResolves != settingsFormPanel.labelForResolves() ||
                 persistentSettings.labelForRelease != settingsFormPanel.labelForRelease() ||
-                persistentSettings.labelForDepends != settingsFormPanel.labelForDepends()
+                persistentSettings.labelForDepends != settingsFormPanel.labelForDepends() ||
+                persistentSettings.regexForIssueNo != settingsFormPanel.labelForRegex()
     }
     override fun apply() {
         persistentSettings.bulletPoint = settingsFormPanel.bulletPoint()
@@ -43,6 +44,7 @@ class TemplateConfigurable : SearchableConfigurable {
         persistentSettings.labelForResolves = settingsFormPanel.labelForResolves()
         persistentSettings.labelForRelease = settingsFormPanel.labelForRelease()
         persistentSettings.labelForDepends = settingsFormPanel.labelForDepends()
+        persistentSettings.regexForIssueNo = settingsFormPanel.labelForRegex()
     }
     override fun reset() {
         settingsFormPanel.bulletPointInput.text = persistentSettings.bulletPoint
@@ -55,5 +57,6 @@ class TemplateConfigurable : SearchableConfigurable {
         settingsFormPanel.labelForResolvesInput.text = persistentSettings.labelForResolves
         settingsFormPanel.labelForReleaseInput.text = persistentSettings.labelForRelease
         settingsFormPanel.labelForDependsInput.text = persistentSettings.labelForDepends
+        settingsFormPanel.regexForIssueNoInput.text = persistentSettings.regexForIssueNo
     }
 }

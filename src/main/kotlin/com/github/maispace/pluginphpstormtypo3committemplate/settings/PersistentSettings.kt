@@ -18,7 +18,8 @@ class PersistentSettings(
     var labelForRelated: String = MyBundle.getMessage("labelForRelated"),
     var labelForResolves: String = MyBundle.getMessage("labelForResolves"),
     var labelForRelease: String = MyBundle.getMessage("labelForRelease"),
-    var labelForDepends: String = MyBundle.getMessage("labelForDepends")
+    var labelForDepends: String = MyBundle.getMessage("labelForDepends"),
+    var regexForIssueNo: String = MyBundle.getMessage("regexForIssueNo")
 ) : PersistentStateComponent<PersistentSettings> {
 
     override fun getState() = this

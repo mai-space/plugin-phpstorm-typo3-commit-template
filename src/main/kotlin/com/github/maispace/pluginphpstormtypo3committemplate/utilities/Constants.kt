@@ -36,5 +36,7 @@ class Constants {
         var labelForRelease: String = PersistentSettings.instance.labelForRelease
         var labelForDepends: String = PersistentSettings.instance.labelForDepends
 
+        var regexForIssueNo: String = PersistentSettings.instance.regexForIssueNo
+
     }
 }
