@@ -9,6 +9,15 @@ import com.intellij.openapi.application.ApplicationManager
 
 @State(name = "typo3-commit-message-template", storages = [(Storage("typo3-commit-message-template.xml"))])
 class PersistentSettings(
+    var useFlags: Boolean = MyBundle.getMessage("useFlags").toBoolean(),
+    var useSubjectLine: Boolean = MyBundle.getMessage("useSubjectLine").toBoolean(),
+    var useTaskList: Boolean = MyBundle.getMessage("useTaskList").toBoolean(),
+    var useBreakingList: Boolean = MyBundle.getMessage("useBreakingList").toBoolean(),
+    var useToDoList: Boolean = MyBundle.getMessage("useToDoList").toBoolean(),
+    var useRelatedReference: Boolean = MyBundle.getMessage("useRelatedReference").toBoolean(),
+    var useResolvesReference: Boolean = MyBundle.getMessage("useResolvesReference").toBoolean(),
+    var useReleaseReference: Boolean = MyBundle.getMessage("useReleaseReference").toBoolean(),
+    var useDependsReference: Boolean = MyBundle.getMessage("useDependsReference").toBoolean(),
     var bulletPoint: String = MyBundle.getMessage("bulletPoint"),
     var issueIndicator: String = MyBundle.getMessage("issueIndicator"),
     var changeTypes: String = MyBundle.getMessage("changeTypes"),

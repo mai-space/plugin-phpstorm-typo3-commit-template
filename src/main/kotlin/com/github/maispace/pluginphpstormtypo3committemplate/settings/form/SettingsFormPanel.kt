@@ -1,10 +1,12 @@
 package com.github.maispace.pluginphpstormtypo3committemplate.settings.form
 
 import com.github.maispace.pluginphpstormtypo3committemplate.MyBundle
+import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.github.maispace.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
 import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Spacer
 import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
+import com.intellij.ui.layout.selected
 import java.awt.GridBagConstraints
 import java.awt.GridLayout
 import javax.swing.BoxLayout
@@ -22,6 +24,7 @@ class SettingsFormPanel {
     private var useResolvesReference: JCheckBox = JCheckBox("Use resolves issueno reference field")
     private var useReleaseReference: JCheckBox = JCheckBox("Use releases on reference field")
     private var useDependsReference: JCheckBox = JCheckBox("Use depends on reference field")
+
     var bulletPointInput: JTextField = SettingsInputField.getInputField(
         MyBundle.getMessage("bulletPoint"),
         "Will be shown in the Changelog Lists"
@@ -73,24 +76,43 @@ class SettingsFormPanel {
         val enOrDisableFieldsPanel = JPanel()
         enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.largeSpace)
         enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or Disable Template Fields")
+
+        useFlags.setSelected(PersistentSettings.instance.useFlags)
         enOrDisableFieldsPanel.add(useFlags)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useSubjectLine.setSelected(PersistentSettings.instance.useSubjectLine)
         enOrDisableFieldsPanel.add(useSubjectLine)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useTaskList.setSelected(PersistentSettings.instance.useTaskList)
         enOrDisableFieldsPanel.add(useTaskList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useBreakingList.setSelected(PersistentSettings.instance.useBreakingList)
         enOrDisableFieldsPanel.add(useBreakingList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useToDoList.setSelected(PersistentSettings.instance.useToDoList)
         enOrDisableFieldsPanel.add(useToDoList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useRelatedReference.setSelected(PersistentSettings.instance.useRelatedReference)
         enOrDisableFieldsPanel.add(useRelatedReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useResolvesReference.setSelected(PersistentSettings.instance.useResolvesReference)
         enOrDisableFieldsPanel.add(useResolvesReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useReleaseReference.setSelected(PersistentSettings.instance.useReleaseReference)
         enOrDisableFieldsPanel.add(useReleaseReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useDependsReference.setSelected(PersistentSettings.instance.useDependsReference)
         enOrDisableFieldsPanel.add(useDependsReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
         containerPanel.add(enOrDisableFieldsPanel)
         containerPanel.add(Spacer.getComponentSpacer())
 
@@ -181,6 +203,69 @@ class SettingsFormPanel {
         containerPanel.add(regexForIssueNoPanel)
 
         return containerPanel
+    }
+
+    fun getCheckboxValueOfUseFlags(reset: Boolean = false): Boolean {
+        if (reset) {
+            useFlags.setSelected(reset)
+        }
+        return useFlags.isSelected
+    }
+
+    fun getCheckboxValueOfUseSubjectLine(reset: Boolean = false): Boolean {
+        if (reset) {
+            useSubjectLine.setSelected(reset)
+        }
+        return useSubjectLine.isSelected
+    }
+
+    fun getCheckboxValueOfUseTaskList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useTaskList.setSelected(reset)
+        }
+        return useTaskList.isSelected
+    }
+
+    fun getCheckboxValueOfUseBreakingList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useBreakingList.setSelected(reset)
+        }
+        return useBreakingList.isSelected
+    }
+
+    fun getCheckboxValueOfUseToDoList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useToDoList.setSelected(reset)
+        }
+        return useToDoList.isSelected
+    }
+
+    fun getCheckboxValueOfUseRelatedReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useRelatedReference.setSelected(reset)
+        }
+        return useRelatedReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseResolvesReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useResolvesReference.setSelected(reset)
+        }
+        return useResolvesReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseReleaseReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useReleaseReference.setSelected(reset)
+        }
+        return useReleaseReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseDependsReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useDependsReference.setSelected(reset)
+        }
+        return useDependsReference.isSelected
     }
 
     fun bulletPoint(): String {

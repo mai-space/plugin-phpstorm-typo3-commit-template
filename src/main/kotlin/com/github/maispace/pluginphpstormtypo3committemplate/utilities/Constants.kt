@@ -2,6 +2,7 @@ package com.github.maispace.pluginphpstormtypo3committemplate.utilities
 
 import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.intellij.ui.Gray
+import com.jetbrains.rd.generator.nova.PredefinedType
 import java.awt.Color
 
 class Constants {
