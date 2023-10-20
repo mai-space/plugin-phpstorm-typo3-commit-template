@@ -77,38 +77,38 @@ class Template(private val project: Project?, private val dataContext: DataConte
             container.add(Spacer.getComponentSpacer())
         }
 
-        container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTasks} "))
-        container.add(Spacer.getLabelSpacer())
         taskTextArea = Changelog.getTextArea(
             "${PersistentSettings.instance.bulletPoint} Added something",
             "List the things you have done",
             this.oldCommitMessage?.doneTasks ?: ""
         )
         if (PersistentSettings.instance.useTaskList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTasks} "))
+            container.add(Spacer.getLabelSpacer())
             container.add(Changelog.getScrollPane(taskTextArea))
             container.add(Spacer.getComponentSpacer())
         }
 
-        container.add(Changelog.getLabel("${PersistentSettings.instance.labelForBreakingChanges} "))
-        container.add(Spacer.getLabelSpacer())
         breakingTextArea = Changelog.getTextArea(
             "${PersistentSettings.instance.bulletPoint} Done something dangerous",
             "List things you have done that could result in issues",
             this.oldCommitMessage?.breakingChanges ?: ""
         )
         if (PersistentSettings.instance.useBreakingList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForBreakingChanges} "))
+            container.add(Spacer.getLabelSpacer())
             container.add(Changelog.getScrollPane(breakingTextArea))
             container.add(Spacer.getComponentSpacer())
         }
 
-        container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTodos} "))
-        container.add(Spacer.getLabelSpacer())
         todoTextArea = Changelog.getTextArea(
             "${PersistentSettings.instance.bulletPoint} Need to do this",
             "List open tasks that have to be done",
             this.oldCommitMessage?.todoList ?: ""
         )
         if (PersistentSettings.instance.useToDoList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTodos} "))
+            container.add(Spacer.getLabelSpacer())
             container.add(Changelog.getScrollPane(todoTextArea))
             container.add(Spacer.getComponentSpacer())
         }
