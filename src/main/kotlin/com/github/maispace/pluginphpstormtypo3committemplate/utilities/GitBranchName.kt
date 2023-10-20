@@ -12,6 +12,7 @@ object GitBranchName {
 
         val issueNoInBranchNameRegex = Regex(PersistentSettings.instance.regexForIssueNo)
         val issueNumberMatches = issueNoInBranchNameRegex.findAll(branchName)
-        return issueNumberMatches.map{ it.value }.joinToString()
+        val issueNumbers = issueNumberMatches.map { it.value }.toList()
+        return issueNumbers.joinToString(" ").replace(",", "")
     }
 }
