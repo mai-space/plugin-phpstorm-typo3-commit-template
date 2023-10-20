@@ -7,10 +7,8 @@ import git4idea.branch.GitBranchUtil
 
 object GitBranchName {
     fun extractIssueNo(project: Project, dataContext: DataContext): String {
-        // TODO: Remove dataContext
-        // TODO: Remove deprecated method
-        val repository = GitBranchUtil.getCurrentRepository(project) ?: return ""
-        val branchName = repository.currentBranchName?: return ""
+        val repository = GitBranchUtil.guessRepositoryForOperation(project, dataContext) ?: return ""
+        val branchName = repository.currentBranch?.name ?: return ""
 
         val issueNoInBranchNameRegex = Regex(PersistentSettings.instance.regexForIssueNo)
         val issueNumberMatches = issueNoInBranchNameRegex.findAll(branchName)
