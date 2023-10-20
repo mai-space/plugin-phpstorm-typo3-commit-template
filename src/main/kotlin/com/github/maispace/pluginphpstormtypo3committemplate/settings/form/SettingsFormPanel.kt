@@ -6,7 +6,6 @@ import com.github.maispace.pluginphpstormtypo3committemplate.settings.form.parti
 import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Spacer
 import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
-import com.intellij.ui.layout.selected
 import java.awt.GridBagConstraints
 import java.awt.GridLayout
 import javax.swing.BoxLayout
@@ -74,7 +73,7 @@ class SettingsFormPanel {
         containerPanel.layout = BoxLayout(containerPanel, BoxLayout.PAGE_AXIS)
 
         val enOrDisableFieldsPanel = JPanel()
-        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.largeSpace)
+        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.LARGESPACER)
         enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or Disable Template Fields")
 
         useFlags.setSelected(PersistentSettings.instance.useFlags)
@@ -126,7 +125,7 @@ class SettingsFormPanel {
 
 
         val listIndicatorPanel = JPanel()
-        listIndicatorPanel.layout = GridLayout(2, 2, Constants.largeSpace, Constants.largeSpace)
+        listIndicatorPanel.layout = GridLayout(2, 2, Constants.LARGESPACER, Constants.LARGESPACER)
         listIndicatorPanel.border = IdeBorderFactory.createTitledBorder("List Indicators")
         SettingsInputField.getLabelWithInput(
             "Bulletpoint Indicator",
@@ -142,7 +141,7 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val changeTypesPanel = JPanel()
-        changeTypesPanel.layout = GridLayout(1, 2, Constants.largeSpace, Constants.largeSpace)
+        changeTypesPanel.layout = GridLayout(1, 2, Constants.LARGESPACER, Constants.LARGESPACER)
         changeTypesPanel.border = IdeBorderFactory.createTitledBorder("Change Types")
         SettingsInputField.getLabelWithInput(
             "Define the change Types",
@@ -153,7 +152,7 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val labelsPanel = JPanel()
-        labelsPanel.layout = GridLayout(7, 2, Constants.largeSpace, Constants.largeSpace)
+        labelsPanel.layout = GridLayout(7, 2, Constants.LARGESPACER, Constants.LARGESPACER)
         labelsPanel.border = IdeBorderFactory.createTitledBorder("Labels")
         SettingsInputField.getLabelWithInput(
             "Label for Tasks",
@@ -193,7 +192,7 @@ class SettingsFormPanel {
         containerPanel.add(labelsPanel)
 
         val regexForIssueNoPanel = JPanel()
-        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.largeSpace, Constants.largeSpace)
+        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.LARGESPACER, Constants.LARGESPACER)
         regexForIssueNoPanel.border = IdeBorderFactory.createTitledBorder("Regex for Issue Number")
         SettingsInputField.getLabelWithInput(
             "Regex for Issue Number in Branch Name",

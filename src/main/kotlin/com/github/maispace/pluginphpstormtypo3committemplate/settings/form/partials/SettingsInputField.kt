@@ -24,7 +24,7 @@ class SettingsInputField {
             placeholder: String = "",
             toolTipText: String = ""): JTextField {
             // Init and Style for TextField
-            val settingsInput = JTextField(Constants.textFieldColumns)
+            val settingsInput = JTextField(Constants.TEXTFIELDCOLUMNS)
             PromptSupport.setPrompt(placeholder, settingsInput)
             PromptSupport.setFontStyle(Font.ITALIC, settingsInput)
             PromptSupport.setForeground(Constants.placeholderColor, settingsInput)

@@ -31,7 +31,7 @@ class SubjectLine {
             toolTipText : String = "",
             previousSubject : String = ""
         ): JTextField {
-            val inputField = JTextField(Constants.textFieldColumns)
+            val inputField = JTextField(Constants.TEXTFIELDCOLUMNS)
             PromptSupport.setPrompt(placeholder, inputField)
             PromptSupport.setFontStyle(Font.ITALIC, inputField)
             PromptSupport.setForeground(Constants.placeholderColor, inputField)
@@ -46,16 +46,16 @@ class SubjectLine {
             subject : JTextField,
             subjectLabel : String = ""
         ): JPanel {
-            val subjectLine = JPanel(BorderLayout(Constants.smallSpace, Constants.noSpace))
+            val subjectLine = JPanel(BorderLayout(Constants.SMALLSPACER, Constants.NOSPACER))
 
-            val commitTypeRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
+            val commitTypeRow = JPanel(BorderLayout(Constants.NOSPACER, Constants.SMALLSPACER))
             val commitTypeLabel = JLabel(typeLabel)
             commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
             commitTypeRow.add(type, BorderLayout.SOUTH)
 
             subjectLine.add(commitTypeRow, BorderLayout.WEST)
 
-            val subjectRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
+            val subjectRow = JPanel(BorderLayout(Constants.NOSPACER, Constants.SMALLSPACER))
             val commitSubjectLabel = JLabel(subjectLabel)
             subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
             subjectRow.add(subject, BorderLayout.SOUTH)

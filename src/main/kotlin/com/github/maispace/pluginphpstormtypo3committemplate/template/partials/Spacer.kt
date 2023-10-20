@@ -8,10 +8,10 @@ import javax.swing.Box
 class Spacer {
     companion object {
         fun getLabelSpacer(): Component? {
-            return Box.createRigidArea(Dimension(Constants.noSpace, Constants.smallSpace))
+            return Box.createRigidArea(Dimension(Constants.NOSPACER, Constants.SMALLSPACER))
         }
         fun getComponentSpacer(): Component? {
-            return Box.createRigidArea(Dimension(Constants.noSpace, Constants.largeSpace))
+            return Box.createRigidArea(Dimension(Constants.NOSPACER, Constants.LARGESPACER))
         }
     }
 }
