@@ -22,9 +22,9 @@ class Reference {
             project: Project? = null,
             dataContext: DataContext? = null
         ): JPanel {
-            val referenceRow = JPanel(BorderLayout(Constants.SMALLSPACER, Constants.SMALLSPACER))
+            val referenceRow = JPanel(BorderLayout(Constants.SMALL_SPACE, Constants.SMALL_SPACE))
             val referenceLabel = JLabel(labelText)
-            referenceLabel.preferredSize = Dimension(Constants.TEXTFIELDWIDTH, Constants.TEXTFIELDHEIGHT)
+            referenceLabel.preferredSize = Dimension(Constants.TEXT_FIELD_WIDTH, Constants.TEXT_FIELD_HEIGHT)
 
             referenceRow.add(referenceLabel, BorderLayout.WEST)
             referenceRow.add(referenceInput, BorderLayout.CENTER)
@@ -44,7 +44,7 @@ class Reference {
                     }
                 }
                 branchIssueNoButton.icon = Icons.ReloadIssueNoFromBranchName
-                branchIssueNoButton.preferredSize = Dimension(Constants.TEXTFIELDHEIGHT, Constants.TEXTFIELDHEIGHT)
+                branchIssueNoButton.preferredSize = Dimension(Constants.TEXT_FIELD_HEIGHT, Constants.TEXT_FIELD_HEIGHT)
                 branchIssueNoButton.toolTipText = "Get Issue Number from branch name"
                 referenceRow.add(branchIssueNoButton, BorderLayout.EAST)
             }
@@ -55,7 +55,7 @@ class Reference {
             toolTipText: String = "",
             previousCommitMessage: String = ""): JTextField {
             // Init and Style for TextField
-            val referenceInput = JTextField(Constants.TEXTFIELDCOLUMNS)
+            val referenceInput = JTextField(Constants.TEXT_FIELD_COLUMNS)
             PromptSupport.setPrompt(placeholder, referenceInput)
             PromptSupport.setFontStyle(Font.ITALIC, referenceInput)
             PromptSupport.setForeground(Constants.placeholderColor, referenceInput)

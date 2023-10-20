@@ -73,7 +73,7 @@ class SettingsFormPanel {
         containerPanel.layout = BoxLayout(containerPanel, BoxLayout.PAGE_AXIS)
 
         val enOrDisableFieldsPanel = JPanel()
-        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.LARGESPACER)
+        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.LARGE_SPACE)
         enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or Disable Template Fields")
 
         useFlags.setSelected(PersistentSettings.instance.useFlags)
@@ -125,7 +125,7 @@ class SettingsFormPanel {
 
 
         val listIndicatorPanel = JPanel()
-        listIndicatorPanel.layout = GridLayout(2, 2, Constants.LARGESPACER, Constants.LARGESPACER)
+        listIndicatorPanel.layout = GridLayout(2, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         listIndicatorPanel.border = IdeBorderFactory.createTitledBorder("List Indicators")
         SettingsInputField.getLabelWithInput(
             "Bulletpoint Indicator",
@@ -141,7 +141,7 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val changeTypesPanel = JPanel()
-        changeTypesPanel.layout = GridLayout(1, 2, Constants.LARGESPACER, Constants.LARGESPACER)
+        changeTypesPanel.layout = GridLayout(1, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         changeTypesPanel.border = IdeBorderFactory.createTitledBorder("Change Types")
         SettingsInputField.getLabelWithInput(
             "Define the change Types",
@@ -152,7 +152,7 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val labelsPanel = JPanel()
-        labelsPanel.layout = GridLayout(7, 2, Constants.LARGESPACER, Constants.LARGESPACER)
+        labelsPanel.layout = GridLayout(7, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         labelsPanel.border = IdeBorderFactory.createTitledBorder("Labels")
         SettingsInputField.getLabelWithInput(
             "Label for Tasks",
@@ -192,7 +192,7 @@ class SettingsFormPanel {
         containerPanel.add(labelsPanel)
 
         val regexForIssueNoPanel = JPanel()
-        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.LARGESPACER, Constants.LARGESPACER)
+        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         regexForIssueNoPanel.border = IdeBorderFactory.createTitledBorder("Regex for Issue Number")
         SettingsInputField.getLabelWithInput(
             "Regex for Issue Number in Branch Name",

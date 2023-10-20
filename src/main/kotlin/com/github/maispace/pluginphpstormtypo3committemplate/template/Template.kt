@@ -51,7 +51,8 @@ class Template(private val project: Project?, private val dataContext: DataConte
         subjectInputField = SubjectLine.getSubjectInput(
             "A short description",
             "Write a brief summary of what the change does now",
-            this.oldCommitMessage?.subjectLine ?: ""
+            this.oldCommitMessage?.subjectLine ?: "",
+            project
         )
 
         if (PersistentSettings.instance.useFlags && PersistentSettings.instance.useSubjectLine) {

@@ -18,18 +18,18 @@ import javax.swing.*
 class Changelog {
     companion object {
         fun getLabel(labelText: String = ""): JPanel {
-            val labelPanel = JPanel(BorderLayout(Constants.NOSPACER, Constants.NOSPACER))
+            val labelPanel = JPanel(BorderLayout(Constants.NO_SPACE, Constants.NO_SPACE))
             val doneTasksLabel = JLabel(labelText)
             labelPanel.add(doneTasksLabel, BorderLayout.WEST)
             return labelPanel
         }
         fun getTextArea(placeholder : String = "", toolTipText : String = "", previousCommitMessage : String = ""): JTextArea {
             // Init and Style TextArea
-            val newTextArea = JTextArea(Constants.TEXTAREAROWS, Constants.TEXTAREACOLUMNS)
+            val newTextArea = JTextArea(Constants.TEXTAREA_ROWS, Constants.TEXTAREA_COLUMNS)
             PromptSupport.setPrompt(placeholder, newTextArea)
             PromptSupport.setFontStyle(Font.ITALIC, newTextArea)
             PromptSupport.setForeground(Constants.placeholderColor, newTextArea)
-            newTextArea.minimumSize = Dimension(Constants.TEXTAREAWIDTH, Constants.TEXTAREAHEIGHT)
+            newTextArea.minimumSize = Dimension(Constants.TEXTAREA_WIDTH, Constants.TEXTAREA_HEIGHT)
             newTextArea.lineWrap = true
             newTextArea.wrapStyleWord = true
 
