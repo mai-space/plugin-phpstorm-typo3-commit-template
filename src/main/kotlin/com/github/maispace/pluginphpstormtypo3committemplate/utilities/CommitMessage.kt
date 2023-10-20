@@ -40,7 +40,11 @@ class CommitMessage {
         this.dependencyPatch = ""
         try {
             val changeTypePattern = Pattern.compile("(?<=\\[)(${PersistentSettings.instance.changeTypes.split(",").map { it.trim() }.joinToString("|")})(?=])")
-            val subjectPattern = Pattern.compile("[]+?] (.+)")
+            var subjectPattern = Pattern.compile("(.+)")
+            if (PersistentSettings.instance.useFlags) {
+                subjectPattern = Pattern.compile("[]+?] (.+)")
+            }
+
             val releasesVersionPattern = Pattern.compile("((?<=${PersistentSettings.instance.labelForRelease} )(.+))")
             val dependencyPatchPattern = Pattern.compile("((?<=${PersistentSettings.instance.labelForDepends} )(.+))")
 
@@ -133,12 +137,17 @@ class CommitMessage {
     fun getFormattedCommitMessage(): String {
         var formattedCommitMessage = StringBuilder()
 
-        formattedCommitMessage = setMessageFlags(formattedCommitMessage, this.changeType, this.breakingChanges, this.todoList)
+        if (PersistentSettings.instance.useFlags) {
+            formattedCommitMessage = setMessageFlags(formattedCommitMessage, this.changeType, this.breakingChanges, this.todoList)
 
-        formattedCommitMessage
-            .append(" ")
-            .append(this.subjectLine)
-        formattedCommitMessage.append(System.lineSeparator())
+            formattedCommitMessage
+                .append(" ")
+                .append(this.subjectLine)
+            formattedCommitMessage.append(System.lineSeparator())
+        } else {
+            formattedCommitMessage.append(this.subjectLine)
+            formattedCommitMessage.append(System.lineSeparator())
+        }
 
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${PersistentSettings.instance.labelForBreakingChanges} ", this.breakingChanges)
         formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${PersistentSettings.instance.labelForTasks} ", this.doneTasks)
@@ -167,10 +176,10 @@ class CommitMessage {
     }
 
     private fun setMessageFlags(formattedCommitMessage: StringBuilder, changeType: String, breakingChanges: String, todoList: String): StringBuilder {
-        if (isNotBlank(breakingChanges)) {
+        if (isNotBlank(breakingChanges) && PersistentSettings.instance.useBreakingList) {
             formattedCommitMessage.append("[!!!]")
         }
-        if (isNotBlank(todoList)) {
+        if (isNotBlank(todoList) && PersistentSettings.instance.useToDoList) {
             formattedCommitMessage.append("[WIP]")
         }
         formattedCommitMessage.append("[$changeType]")
