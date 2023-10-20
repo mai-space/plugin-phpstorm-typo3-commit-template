@@ -1,5 +1,6 @@
 package com.github.maispace.pluginphpstormtypo3committemplate.utilities
 
+import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import org.apache.commons.lang.StringUtils.isNotBlank
 import java.util.regex.Pattern
 
@@ -38,10 +39,10 @@ class CommitMessage {
         this.releasesVersion = ""
         this.dependencyPatch = ""
         try {
-            val changeTypePattern = Pattern.compile("(?<=\\[)(${Constants.changeTypes.joinToString("|")})(?=])")
+            val changeTypePattern = Pattern.compile("(?<=\\[)(${PersistentSettings.instance.changeTypes.split(",").map { it.trim() }.joinToString("|")})(?=])")
             val subjectPattern = Pattern.compile("[]+?] (.+)")
-            val releasesVersionPattern = Pattern.compile("((?<=${Constants.labelForRelease} )(.+))")
-            val dependencyPatchPattern = Pattern.compile("((?<=${Constants.labelForDepends} )(.+))")
+            val releasesVersionPattern = Pattern.compile("((?<=${PersistentSettings.instance.labelForRelease} )(.+))")
+            val dependencyPatchPattern = Pattern.compile("((?<=${PersistentSettings.instance.labelForDepends} )(.+))")
 
             var matcher = changeTypePattern.matcher(oldCommitMessage)
             if (matcher.find()) {
@@ -57,18 +58,18 @@ class CommitMessage {
                 this.subjectLine = ""
             }
 
-            val relatedNumberRegex = Regex("((?<=${Constants.labelForRelated} )(.+))")
+            val relatedNumberRegex = Regex("((?<=${PersistentSettings.instance.labelForRelated} )(.+))")
             val relatedNumberMatches = relatedNumberRegex.findAll(oldCommitMessage)
             this.relatedNumber = relatedNumberMatches.map { it.groupValues[1] }
                 .joinToString()
-                .replace(Constants.issueIndicator, "")
+                .replace(PersistentSettings.instance.issueIndicator, "")
                 .replace(",", "")
 
-            val resolvesNumberRegex = Regex("((?<=${Constants.labelForResolves} )(.+))")
+            val resolvesNumberRegex = Regex("((?<=${PersistentSettings.instance.labelForResolves} )(.+))")
             val resolvesNumberMatches = resolvesNumberRegex.findAll(oldCommitMessage)
             this.resolvesNumber = resolvesNumberMatches.map { it.groupValues[1] }
                 .joinToString()
-                .replace(Constants.issueIndicator, "")
+                .replace(PersistentSettings.instance.issueIndicator, "")
                 .replace(",", "")
 
             matcher = releasesVersionPattern.matcher(oldCommitMessage)
@@ -90,20 +91,20 @@ class CommitMessage {
             val changeLogs = oldCommitMessage.split("\n\n")
             this.doneTasks = ""
             for (changeLog in changeLogs) {
-                if (changeLog.startsWith("${Constants.labelForBreakingChanges} \n")) {
+                if (changeLog.startsWith("${PersistentSettings.instance.labelForBreakingChanges} \n")) {
                     val stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n')
-                    this.breakingChanges = stringBuilder.toString().trim().replace("- ", "${Constants.bulletPoint} ").replace("${Constants.labelForBreakingChanges} \n", "")
+                    this.breakingChanges = stringBuilder.toString().trim().replace("- ", "${PersistentSettings.instance.bulletPoint} ").replace("${PersistentSettings.instance.labelForBreakingChanges} \n", "")
                 }
-                if (changeLog.startsWith("${Constants.labelForTasks} \n")) {
+                if (changeLog.startsWith("${PersistentSettings.instance.labelForTasks} \n")) {
                     val stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n')
-                    this.doneTasks = stringBuilder.toString().trim().replace("- ", "${Constants.bulletPoint} ").replace("${Constants.labelForTasks} \n", "")
+                    this.doneTasks = stringBuilder.toString().trim().replace("- ", "${PersistentSettings.instance.bulletPoint} ").replace("${PersistentSettings.instance.labelForTasks} \n", "")
                 }
                 if (changeLog.startsWith("To-Do's: \n")) {
                     val stringBuilder: java.lang.StringBuilder = StringBuilder()
                     stringBuilder.append(changeLog).append('\n')
-                    this.todoList = stringBuilder.toString().trim().replace("- ", "${Constants.bulletPoint} ").replace("${Constants.labelForTodos} \n", "")
+                    this.todoList = stringBuilder.toString().trim().replace("- ", "${PersistentSettings.instance.bulletPoint} ").replace("${PersistentSettings.instance.labelForTodos} \n", "")
                 }
             }
 
@@ -139,15 +140,15 @@ class CommitMessage {
             .append(this.subjectLine)
         formattedCommitMessage.append(System.lineSeparator())
 
-        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${Constants.labelForBreakingChanges} ", this.breakingChanges)
-        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${Constants.labelForTasks} ", this.doneTasks)
-        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${Constants.labelForTodos} ", this.todoList)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${PersistentSettings.instance.labelForBreakingChanges} ", this.breakingChanges)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${PersistentSettings.instance.labelForTasks} ", this.doneTasks)
+        formattedCommitMessage = addChangeNotes(formattedCommitMessage, "${PersistentSettings.instance.labelForTodos} ", this.todoList)
 
         val relatedNumberMatches: List<String> = this.relatedNumber.split(" ")
         relatedNumberMatches.forEach {
             if(isNotBlank(it)) {
                 formattedCommitMessage.append(System.lineSeparator())
-                formattedCommitMessage.append("${Constants.labelForRelated} ${Constants.issueIndicator}$it")
+                formattedCommitMessage.append("${PersistentSettings.instance.labelForRelated} ${PersistentSettings.instance.issueIndicator}$it")
             }
         }
 
@@ -155,12 +156,12 @@ class CommitMessage {
         resolvesNumberMatches.forEach {
             if(isNotBlank(it)) {
                 formattedCommitMessage.append(System.lineSeparator())
-                formattedCommitMessage.append("${Constants.labelForResolves} ${Constants.issueIndicator}$it")
+                formattedCommitMessage.append("${PersistentSettings.instance.labelForResolves} ${PersistentSettings.instance.issueIndicator}$it")
             }
         }
         formattedCommitMessage.append(System.lineSeparator())
-        formattedCommitMessage = addReferences(formattedCommitMessage, "${Constants.labelForRelease} ", this.releasesVersion)
-        formattedCommitMessage = addReferences(formattedCommitMessage, "${Constants.labelForDepends} ", this.dependencyPatch)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "${PersistentSettings.instance.labelForRelease} ", this.releasesVersion)
+        formattedCommitMessage = addReferences(formattedCommitMessage, "${PersistentSettings.instance.labelForDepends} ", this.dependencyPatch)
 
         return formattedCommitMessage.toString()
     }
@@ -187,7 +188,7 @@ class CommitMessage {
 
     private fun addChangeNotes(formattedCommitMessage: StringBuilder, changeNotesTitle: String, changeNotes: String): StringBuilder {
         if(!isNotBlank(changeNotes)) return formattedCommitMessage
-        val formattedChangeNotes = changeNotes.replace("- ", "${Constants.bulletPoint} ")
+        val formattedChangeNotes = changeNotes.replace("- ", "${PersistentSettings.instance.bulletPoint} ")
         formattedCommitMessage
             .append(System.lineSeparator())
             .append("$changeNotesTitle\n$formattedChangeNotes")

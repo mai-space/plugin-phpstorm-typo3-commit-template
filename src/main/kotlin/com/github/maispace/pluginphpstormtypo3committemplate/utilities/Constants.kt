@@ -22,22 +22,5 @@ class Constants {
 
         val placeholderColor: Color = Gray._120
         val borderColorLight: Color = Gray._107
-
-        // Also found in MyBundle.properties
-        var bulletPoint: String = PersistentSettings.instance.bulletPoint
-        var issueIndicator: String = PersistentSettings.instance.issueIndicator
-
-        var changeTypes: List<String> = PersistentSettings.instance.changeTypes.split(",").map { it.trim() }
-        var labelForTasks: String = PersistentSettings.instance.labelForTasks
-        var labelForBreakingChanges: String = PersistentSettings.instance.labelForBreakingChanges
-        var labelForTodos: String = PersistentSettings.instance.labelForTodos
-
-        var labelForRelated: String = PersistentSettings.instance.labelForRelated
-        var labelForResolves: String = PersistentSettings.instance.labelForResolves
-        var labelForRelease: String = PersistentSettings.instance.labelForRelease
-        var labelForDepends: String = PersistentSettings.instance.labelForDepends
-
-        var regexForIssueNo: String = PersistentSettings.instance.regexForIssueNo
-
     }
 }

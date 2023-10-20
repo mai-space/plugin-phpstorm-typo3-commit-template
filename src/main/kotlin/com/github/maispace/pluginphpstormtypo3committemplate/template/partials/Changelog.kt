@@ -1,5 +1,6 @@
 package com.github.maispace.pluginphpstormtypo3committemplate.template.partials
 
+import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.components.JBScrollPane
 import org.jdesktop.swingx.prompt.PromptSupport
@@ -45,7 +46,7 @@ class Changelog {
 
                 private fun addNewLineto(newTextArea: JTextArea) {
                     val stringBuilder: java.lang.StringBuilder = StringBuilder()
-                    stringBuilder.append(newTextArea.text).append('\n').append("${Constants.bulletPoint} ")
+                    stringBuilder.append(newTextArea.text).append('\n').append("${PersistentSettings.instance.bulletPoint} ")
                     newTextArea.text = stringBuilder.toString()
                 }
             })
@@ -62,7 +63,7 @@ class Changelog {
                         }
                         val input: String = textArea.text.toString()
                         if (input == "") {
-                            textArea.text = "${Constants.bulletPoint} "
+                            textArea.text = "${PersistentSettings.instance.bulletPoint} "
                         }
                     } catch (ignored: ClassCastException) {
                     }
@@ -74,7 +75,7 @@ class Changelog {
                             textArea = e.component as JTextArea
                         }
                         val input: String = textArea.text.toString()
-                        if (input == "${Constants.bulletPoint} ") {
+                        if (input == "${PersistentSettings.instance.bulletPoint} ") {
                             textArea.text = ""
                         }
                     } catch (ignored: ClassCastException) {
