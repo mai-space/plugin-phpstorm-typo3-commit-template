@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.inf166.pluginphpstormtypo3committemplate</id>
     <name>TYPO3 Commit Template</name>
-    <vendor email="joel@maispace.de" url="https://github.com/Inf166">Joel Maximilian Mai</vendor>
+    <vendor email="joel@maispace.de" url="https://github.com/mai-space">Joel Maximilian Mai</vendor>
 
     <description>
         This Plugin helps you to write better Commit Messages following the TYPO3 Guidelines.
