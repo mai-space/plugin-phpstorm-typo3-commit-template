@@ -88,7 +88,7 @@ jobs:
           git config user.name "GitHub Action"
 
           git checkout -b $BRANCH
-          git commit -am "Changelog update - $VERSION"
+          git commit -am "[DOCS] Changelog update - $VERSION"
           git push --set-upstream origin $BRANCH
           
           gh label create "$LABEL" \
@@ -97,7 +97,7 @@ jobs:
             || true
 
           gh pr create \
-            --title "Changelog update - \`$VERSION\`" \
+            --title "[DOCS] Changelog update - \`$VERSION\`" \
             --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
             --label "$LABEL" \
             --head $BRANCH
