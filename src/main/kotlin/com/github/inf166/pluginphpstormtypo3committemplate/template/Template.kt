@@ -1,10 +1,10 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.template
 
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Changelog
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Reference
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.SubjectLine
-import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
@@ -12,7 +12,8 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import javax.swing.*
 
-class Template(private val project: Project?, private val dataContext: DataContext, oldCommitMessage: CommitMessage?): DialogWrapper(project) {
+class Template(private val project: Project?, private val dataContext: DataContext, oldCommitMessage: CommitMessage?) :
+    DialogWrapper(project) {
 
     private var oldCommitMessage: CommitMessage?
 
@@ -36,108 +37,148 @@ class Template(private val project: Project?, private val dataContext: DataConte
         setOKButtonText("Apply")
         init()
     }
+
     override fun createCenterPanel(): JComponent {
 
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
 
         typeDropdown = SubjectLine.getCommitType(
-            Constants.changeTypes,
+            PersistentSettings.instance.changeTypes.split(",").map { it.trim() },
             "Select the Type of your Commit",
             this.oldCommitMessage?.changeType ?: ""
         )
         subjectInputField = SubjectLine.getSubjectInput(
             "A short description",
             "Write a brief summary of what the change does now",
-            this.oldCommitMessage?.subjectLine ?: ""
+            this.oldCommitMessage?.subjectLine ?: "",
+            project
         )
-        container.add(
-            SubjectLine.getSubjectLine(
-                typeDropdown,
-                "Type of Commit",
-                subjectInputField,
-                "Subject of Commit"
-            )
-        )
-        container.add(Spacer.getComponentSpacer())
 
-        container.add(Changelog.getLabel("${Constants.labelForTasks} "))
-        container.add(Spacer.getLabelSpacer())
+        if (PersistentSettings.instance.useFlags && PersistentSettings.instance.useSubjectLine) {
+            container.add(
+                SubjectLine.getSubjectLine(
+                    typeDropdown,
+                    "Type of Commit",
+                    subjectInputField,
+                    "Subject of Commit"
+                )
+            )
+            container.add(Spacer.getComponentSpacer())
+        } else {
+            if (PersistentSettings.instance.useFlags) {
+                container.add(
+                    typeDropdown
+                )
+            } else {
+                container.add(
+                    subjectInputField
+                )
+            }
+            container.add(Spacer.getComponentSpacer())
+        }
+
         taskTextArea = Changelog.getTextArea(
-            "${Constants.bulletPoint} Added something",
+            "${PersistentSettings.instance.bulletPoint} Added something",
             "List the things you have done",
             this.oldCommitMessage?.doneTasks ?: ""
         )
-        container.add(Changelog.getScrollPane(taskTextArea))
-        container.add(Spacer.getComponentSpacer())
+        if (PersistentSettings.instance.useTaskList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTasks} "))
+            container.add(Spacer.getLabelSpacer())
+            container.add(Changelog.getScrollPane(taskTextArea))
+            container.add(Spacer.getComponentSpacer())
+        }
 
-        container.add(Changelog.getLabel("${Constants.labelForBreakingChanges} "))
-        container.add(Spacer.getLabelSpacer())
         breakingTextArea = Changelog.getTextArea(
-            "${Constants.bulletPoint} Done something dangerous",
+            "${PersistentSettings.instance.bulletPoint} Done something dangerous",
             "List things you have done that could result in issues",
             this.oldCommitMessage?.breakingChanges ?: ""
         )
-        container.add(Changelog.getScrollPane(breakingTextArea))
-        container.add(Spacer.getComponentSpacer())
+        if (PersistentSettings.instance.useBreakingList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForBreakingChanges} "))
+            container.add(Spacer.getLabelSpacer())
+            container.add(Changelog.getScrollPane(breakingTextArea))
+            container.add(Spacer.getComponentSpacer())
+        }
 
-        container.add(Changelog.getLabel("${Constants.labelForTodos} "))
-        container.add(Spacer.getLabelSpacer())
         todoTextArea = Changelog.getTextArea(
-            "${Constants.bulletPoint} Need to do this",
+            "${PersistentSettings.instance.bulletPoint} Need to do this",
             "List open tasks that have to be done",
             this.oldCommitMessage?.todoList ?: ""
         )
-        container.add(Changelog.getScrollPane(todoTextArea))
-        container.add(Spacer.getComponentSpacer())
+        if (PersistentSettings.instance.useToDoList) {
+            container.add(Changelog.getLabel("${PersistentSettings.instance.labelForTodos} "))
+            container.add(Spacer.getLabelSpacer())
+            container.add(Changelog.getScrollPane(todoTextArea))
+            container.add(Spacer.getComponentSpacer())
+        }
 
         relatedInputField = Reference.getInputField(
             "1234 3456",
             "Add issues related to this change which are not resolved",
             this.oldCommitMessage?.relatedNumber ?: ""
         )
-        container.add(
-            Reference.getLabelWithInput(
-                "${Constants.labelForRelated} ",
-                relatedInputField,
-                true,
-                this.project,
-                this.dataContext
+        if (PersistentSettings.instance.useRelatedReference) {
+            container.add(
+                Reference.getLabelWithInput(
+                    "${PersistentSettings.instance.labelForRelated} ",
+                    relatedInputField,
+                    true,
+                    this.project,
+                    this.dataContext
+                )
             )
-        )
-        container.add(Spacer.getComponentSpacer())
+            container.add(Spacer.getComponentSpacer())
+        }
 
         resolvesInputField = Reference.getInputField(
             "1234 3456",
             "Add issues to this which are resolved by your Changes",
             this.oldCommitMessage?.resolvesNumber ?: ""
         )
-        container.add(
-            Reference.getLabelWithInput(
-                "${Constants.labelForResolves} ",
-                resolvesInputField,
-                true,
-                this.project,
-                this.dataContext
+        if (PersistentSettings.instance.useResolvesReference) {
+            container.add(
+                Reference.getLabelWithInput(
+                    "${PersistentSettings.instance.labelForResolves} ",
+                    resolvesInputField,
+                    true,
+                    this.project,
+                    this.dataContext
+                )
             )
-        )
-        container.add(Spacer.getComponentSpacer())
+            container.add(Spacer.getComponentSpacer())
+        }
 
         releaseInputField = Reference.getInputField(
             "main, 11.5",
             "This is a comma separated list of the target versions you intend to apply this fix on",
             this.oldCommitMessage?.releasesVersion ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForRelease} ", releaseInputField))
-        container.add(Spacer.getComponentSpacer())
+        if (PersistentSettings.instance.useReleaseReference) {
+            container.add(
+                Reference.getLabelWithInput(
+                    "${PersistentSettings.instance.labelForRelease} ",
+                    releaseInputField
+                )
+            )
+            container.add(Spacer.getComponentSpacer())
+        }
 
         dependencyInputField = Reference.getInputField(
             "ChangeId, OfCorePatch",
             "For TYPO3 documentation patches. Refer to the corresponding TYPO3 Core patch",
             this.oldCommitMessage?.dependencyPatch ?: ""
         )
-        container.add(Reference.getLabelWithInput("${Constants.labelForDepends} ", dependencyInputField))
-        container.add(Spacer.getComponentSpacer())
+        if (PersistentSettings.instance.useDependsReference) {
+            container.add(
+                Reference.getLabelWithInput(
+                    "${PersistentSettings.instance.labelForDepends} ",
+                    dependencyInputField
+                )
+            )
+            container.add(Spacer.getComponentSpacer())
+        }
 
         return container
     }
