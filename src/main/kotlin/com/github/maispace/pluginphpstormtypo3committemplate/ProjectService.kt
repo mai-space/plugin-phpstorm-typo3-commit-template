@@ -1,6 +1,6 @@
 package com.github.mai
 
-import com.github.maispace.pluginphpstormtypo3committemplate.MyBundle
+import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
 
 import com.intellij.openapi.project.Project
 

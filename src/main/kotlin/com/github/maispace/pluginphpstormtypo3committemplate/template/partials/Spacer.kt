@@ -1,6 +1,6 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.template.partials
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import java.awt.Component
 import java.awt.Dimension
 import javax.swing.Box

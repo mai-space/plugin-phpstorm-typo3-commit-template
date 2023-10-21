@@ -1,11 +1,11 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.template
+package com.github.inf166.pluginphpstormtypo3committemplate.template
 
-import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
-import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Changelog
-import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Reference
-import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.Spacer
-import com.github.maispace.pluginphpstormtypo3committemplate.template.partials.SubjectLine
-import com.github.maispace.pluginphpstormtypo3committemplate.utilities.CommitMessage
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Changelog
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Reference
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
+import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.SubjectLine
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox

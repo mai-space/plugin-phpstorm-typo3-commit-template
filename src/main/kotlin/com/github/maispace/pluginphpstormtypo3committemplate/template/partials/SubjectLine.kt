@@ -1,6 +1,6 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.template.partials
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.ComponentValidator
@@ -50,10 +50,10 @@ class SubjectLine {
                 val validatorSupplier = Supplier {
                     val text = inputField.text
                     if (text.length >= Constants.REMOVE_ABOVE_CHARACTER_COUNT) {
-                        ValidationInfo(Constants.MESSAGE, inputField)
+                        ValidationInfo("(${text.length}/${Constants.REMOVE_ABOVE_CHARACTER_COUNT}) ${Constants.MESSAGE}", inputField)
                     } else {
                         if (text.length >= Constants.WARN_AT_CHARACTER_COUNT) {
-                            ValidationInfo(Constants.MESSAGE, inputField).asWarning()
+                            ValidationInfo("(${text.length}/${Constants.REMOVE_ABOVE_CHARACTER_COUNT}) ${Constants.MESSAGE}", inputField).asWarning()
                         } else {
                             null
                         }

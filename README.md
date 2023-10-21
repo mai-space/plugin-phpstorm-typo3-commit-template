@@ -1,8 +1,8 @@
 # TYPO3 Commit Template
 
 ![Build](https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.maispace.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.maispace.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
+[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
 
 <!-- Plugin description -->
 From the commit guidelines of TYPO3 [here](https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html).

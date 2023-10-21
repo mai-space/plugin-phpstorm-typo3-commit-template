@@ -1,7 +1,7 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.actions
+package com.github.inf166.pluginphpstormtypo3committemplate.actions
 
-import com.github.maispace.pluginphpstormtypo3committemplate.template.Template
-import com.github.maispace.pluginphpstormtypo3committemplate.utilities.CommitMessage
+import com.github.inf166.pluginphpstormtypo3committemplate.template.Template
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAware

@@ -1,6 +1,6 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.utilities
+package com.github.inf166.pluginphpstormtypo3committemplate.utilities
 
-import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import org.apache.commons.lang.StringUtils.isNotBlank
 import java.util.regex.Pattern
 

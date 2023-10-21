@@ -1,4 +1,4 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.utilities
+package com.github.inf166.pluginphpstormtypo3committemplate.utilities
 
 import com.intellij.openapi.util.IconLoader
 

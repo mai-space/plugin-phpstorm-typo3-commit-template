@@ -1,7 +1,7 @@
-package com.github.maispace.pluginphpstormtypo3committemplate.template.partials
+package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
-import com.github.maispace.pluginphpstormtypo3committemplate.settings.PersistentSettings
-import com.github.maispace.pluginphpstormtypo3committemplate.utilities.Constants
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.components.JBScrollPane
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
