@@ -1,12 +1,12 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.settings.form
 
 import com.github.inf166.pluginphpstormtypo3committemplate.MyBundle
+import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.github.inf166.pluginphpstormtypo3committemplate.settings.form.partials.SettingsInputField
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
 import com.intellij.ui.IdeBorderFactory
 import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.GridLayout
 import javax.swing.BoxLayout
 import javax.swing.JCheckBox
@@ -23,6 +23,7 @@ class SettingsFormPanel {
     private var useResolvesReference: JCheckBox = JCheckBox("Use resolves issueno reference field")
     private var useReleaseReference: JCheckBox = JCheckBox("Use releases on reference field")
     private var useDependsReference: JCheckBox = JCheckBox("Use depends on reference field")
+
     var bulletPointInput: JTextField = SettingsInputField.getInputField(
         MyBundle.getMessage("bulletPoint"),
         "Will be shown in the Changelog Lists"
@@ -63,31 +64,54 @@ class SettingsFormPanel {
         MyBundle.getMessage("labelForDepends"),
         "Will be the identifier for the depends Reference"
     )
+    var regexForIssueNoInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("regexForIssueNo"),
+        "This Regex will be used to determine the issue number from the branch name"
+    )
     fun createForm() : JPanel {
         val containerPanel = JPanel()
         containerPanel.layout = BoxLayout(containerPanel, BoxLayout.PAGE_AXIS)
 
         val enOrDisableFieldsPanel = JPanel()
-        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.largeSpace)
+        enOrDisableFieldsPanel.layout = GridLayout(9, 1, 0, Constants.LARGE_SPACE)
         enOrDisableFieldsPanel.border = IdeBorderFactory.createTitledBorder("Enable or Disable Template Fields")
+
+        useFlags.setSelected(PersistentSettings.instance.useFlags)
         enOrDisableFieldsPanel.add(useFlags)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useSubjectLine.setSelected(PersistentSettings.instance.useSubjectLine)
         enOrDisableFieldsPanel.add(useSubjectLine)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useTaskList.setSelected(PersistentSettings.instance.useTaskList)
         enOrDisableFieldsPanel.add(useTaskList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useBreakingList.setSelected(PersistentSettings.instance.useBreakingList)
         enOrDisableFieldsPanel.add(useBreakingList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useToDoList.setSelected(PersistentSettings.instance.useToDoList)
         enOrDisableFieldsPanel.add(useToDoList)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useRelatedReference.setSelected(PersistentSettings.instance.useRelatedReference)
         enOrDisableFieldsPanel.add(useRelatedReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useResolvesReference.setSelected(PersistentSettings.instance.useResolvesReference)
         enOrDisableFieldsPanel.add(useResolvesReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useReleaseReference.setSelected(PersistentSettings.instance.useReleaseReference)
         enOrDisableFieldsPanel.add(useReleaseReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
+        useDependsReference.setSelected(PersistentSettings.instance.useDependsReference)
         enOrDisableFieldsPanel.add(useDependsReference)
         enOrDisableFieldsPanel.add(Spacer.getComponentSpacer())
+
         containerPanel.add(enOrDisableFieldsPanel)
         containerPanel.add(Spacer.getComponentSpacer())
 
@@ -101,7 +125,7 @@ class SettingsFormPanel {
 
 
         val listIndicatorPanel = JPanel()
-        listIndicatorPanel.layout = GridBagLayout()
+        listIndicatorPanel.layout = GridLayout(2, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         listIndicatorPanel.border = IdeBorderFactory.createTitledBorder("List Indicators")
         SettingsInputField.getLabelWithInput(
             "Bulletpoint Indicator",
@@ -117,7 +141,7 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val changeTypesPanel = JPanel()
-        changeTypesPanel.layout = GridLayout(1, 2, Constants.largeSpace, Constants.largeSpace)
+        changeTypesPanel.layout = GridLayout(1, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         changeTypesPanel.border = IdeBorderFactory.createTitledBorder("Change Types")
         SettingsInputField.getLabelWithInput(
             "Define the change Types",
@@ -128,10 +152,10 @@ class SettingsFormPanel {
         containerPanel.add(Spacer.getComponentSpacer())
 
         val labelsPanel = JPanel()
-        labelsPanel.layout = GridLayout(7, 2, Constants.largeSpace, Constants.largeSpace)
+        labelsPanel.layout = GridLayout(7, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
         labelsPanel.border = IdeBorderFactory.createTitledBorder("Labels")
         SettingsInputField.getLabelWithInput(
-            "Label for tasks",
+            "Label for Tasks",
             labelForTasksInput,
             labelsPanel
         )
@@ -167,7 +191,80 @@ class SettingsFormPanel {
         )
         containerPanel.add(labelsPanel)
 
+        val regexForIssueNoPanel = JPanel()
+        regexForIssueNoPanel.layout = GridLayout(1, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
+        regexForIssueNoPanel.border = IdeBorderFactory.createTitledBorder("Regex for Issue Number")
+        SettingsInputField.getLabelWithInput(
+            "Regex for Issue Number in Branch Name",
+            regexForIssueNoInput,
+            regexForIssueNoPanel
+        )
+        containerPanel.add(regexForIssueNoPanel)
+
         return containerPanel
+    }
+
+    fun getCheckboxValueOfUseFlags(reset: Boolean = false): Boolean {
+        if (reset) {
+            useFlags.setSelected(true)
+        }
+        return useFlags.isSelected
+    }
+
+    fun getCheckboxValueOfUseSubjectLine(reset: Boolean = false): Boolean {
+        if (reset) {
+            useSubjectLine.setSelected(true)
+        }
+        return useSubjectLine.isSelected
+    }
+
+    fun getCheckboxValueOfUseTaskList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useTaskList.setSelected(true)
+        }
+        return useTaskList.isSelected
+    }
+
+    fun getCheckboxValueOfUseBreakingList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useBreakingList.setSelected(true)
+        }
+        return useBreakingList.isSelected
+    }
+
+    fun getCheckboxValueOfUseToDoList(reset: Boolean = false): Boolean {
+        if (reset) {
+            useToDoList.setSelected(true)
+        }
+        return useToDoList.isSelected
+    }
+
+    fun getCheckboxValueOfUseRelatedReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useRelatedReference.setSelected(true)
+        }
+        return useRelatedReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseResolvesReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useResolvesReference.setSelected(true)
+        }
+        return useResolvesReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseReleaseReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useReleaseReference.setSelected(true)
+        }
+        return useReleaseReference.isSelected
+    }
+
+    fun getCheckboxValueOfUseDependsReference(reset: Boolean = false): Boolean {
+        if (reset) {
+            useDependsReference.setSelected(true)
+        }
+        return useDependsReference.isSelected
     }
 
     fun bulletPoint(): String {
@@ -238,6 +335,13 @@ class SettingsFormPanel {
             labelForDependsInput.text
         } else {
             MyBundle.getMessage("labelForDepends")
+        }
+    }
+    fun labelForRegex(): String {
+        return if (regexForIssueNoInput.text != "") {
+            regexForIssueNoInput.text
+        } else {
+            MyBundle.getMessage("regexForIssueNo")
         }
     }
 }

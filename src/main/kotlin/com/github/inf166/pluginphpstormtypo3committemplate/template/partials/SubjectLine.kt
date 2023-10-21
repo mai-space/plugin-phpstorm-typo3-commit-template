@@ -1,13 +1,19 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.template.partials
 
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Constants
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.openapi.ui.ComponentValidator
+import com.intellij.openapi.ui.ValidationInfo
+import com.intellij.ui.DocumentAdapter
 import org.jdesktop.swingx.prompt.PromptSupport
 import java.awt.BorderLayout
 import java.awt.Font
+import java.util.function.Supplier
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
+
 
 class SubjectLine {
     companion object {
@@ -27,17 +33,41 @@ class SubjectLine {
             return commitType
         }
         fun getSubjectInput(
-            placeholder : String = "",
-            toolTipText : String = "",
-            previousSubject : String = ""
+            placeholder: String = "",
+            toolTipText: String = "",
+            previousSubject: String = "",
+            project: Project?
         ): JTextField {
-            val inputField = JTextField(Constants.textFieldColumns)
+            val inputField = JTextField(Constants.TEXT_FIELD_COLUMNS)
             PromptSupport.setPrompt(placeholder, inputField)
             PromptSupport.setFontStyle(Font.ITALIC, inputField)
             PromptSupport.setForeground(Constants.placeholderColor, inputField)
             inputField.toolTipText = toolTipText
             inputField.border = Border.getBorder()
             inputField.text = previousSubject
+
+            if (project != null) {
+                val validatorSupplier = Supplier {
+                    val text = inputField.text
+                    if (text.length >= Constants.REMOVE_ABOVE_CHARACTER_COUNT) {
+                        ValidationInfo("(${text.length}/${Constants.REMOVE_ABOVE_CHARACTER_COUNT}) ${Constants.MESSAGE}", inputField)
+                    } else {
+                        if (text.length >= Constants.WARN_AT_CHARACTER_COUNT) {
+                            ValidationInfo("(${text.length}/${Constants.REMOVE_ABOVE_CHARACTER_COUNT}) ${Constants.MESSAGE}", inputField).asWarning()
+                        } else {
+                            null
+                        }
+                    }
+                }
+                ComponentValidator(project).withValidator(validatorSupplier).installOn(inputField)
+            }
+
+            inputField.document.addDocumentListener(object : DocumentAdapter() {
+                override fun textChanged(e: javax.swing.event.DocumentEvent) {
+                    ComponentValidator.getInstance(inputField).ifPresent { v: ComponentValidator -> v.revalidate() }
+                }
+            })
+
             return inputField
         }
         fun getSubjectLine(
@@ -46,16 +76,16 @@ class SubjectLine {
             subject : JTextField,
             subjectLabel : String = ""
         ): JPanel {
-            val subjectLine = JPanel(BorderLayout(Constants.smallSpace, Constants.noSpace))
+            val subjectLine = JPanel(BorderLayout(Constants.SMALL_SPACE, Constants.NO_SPACE))
 
-            val commitTypeRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
+            val commitTypeRow = JPanel(BorderLayout(Constants.NO_SPACE, Constants.SMALL_SPACE))
             val commitTypeLabel = JLabel(typeLabel)
             commitTypeRow.add(commitTypeLabel, BorderLayout.NORTH)
             commitTypeRow.add(type, BorderLayout.SOUTH)
 
             subjectLine.add(commitTypeRow, BorderLayout.WEST)
 
-            val subjectRow = JPanel(BorderLayout(Constants.noSpace, Constants.smallSpace))
+            val subjectRow = JPanel(BorderLayout(Constants.NO_SPACE, Constants.SMALL_SPACE))
             val commitSubjectLabel = JLabel(subjectLabel)
             subjectRow.add(commitSubjectLabel, BorderLayout.NORTH)
             subjectRow.add(subject, BorderLayout.SOUTH)
