@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.inf166.pluginphpstormtypo3committemplate.svg)](https://plugins.jetbrains.com/plugin/20719-commit-template-with-typo3-commit-message-guidelines)
 
 <!-- Plugin description -->
-From the commit guidelines of TYPO3 [here](https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html).
+Inspired by the commit guidelines of TYPO3 [here](https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html).
 
 ## Usage
 
