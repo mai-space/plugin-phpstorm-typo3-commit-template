@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [2024.1.2] - 2024-04-12
+
+[TASK] Update plugin version
+[TASK] Update README.md
+[TASK] Update supported version to 241.*
+
 ## [2023.1.0] - 2023-10-21
 
 Breaking-Changes:
@@ -11,9 +17,6 @@ Breaking-Changes:
 - Update base of plugin
 - Dropped support for ides below 2022.3
 - Updated gradle, qodana and jdk
-
-Tasks:
-
 - Update links from inf166 to mai-space
 - Fix persistent settings https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/issues/29
 - Enhance settings layout in ide
@@ -119,7 +122,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2023.1.0...HEAD
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...HEAD
+[2024.1.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2023.1.0...v2024.1.2
 [2023.1.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...v2023.1.0
 [2022.3.4]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...v2022.3.4
 [2022.3.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.2...v2022.3.3
