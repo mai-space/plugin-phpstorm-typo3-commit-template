@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [2024.1.3] - 2024-04-13
+
+**Tasks:**
+
+- Upgraded usage of deprecated string utensils
+
 ## [2024.1.2] - 2024-04-12
 
 [TASK] Update plugin version
@@ -122,7 +128,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...HEAD
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.3...HEAD
+[2024.1.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...v2024.1.3
 [2024.1.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2023.1.0...v2024.1.2
 [2023.1.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...v2023.1.0
 [2022.3.4]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.3...v2022.3.4
