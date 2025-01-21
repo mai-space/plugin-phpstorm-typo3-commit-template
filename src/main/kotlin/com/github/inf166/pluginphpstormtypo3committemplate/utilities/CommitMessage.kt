@@ -39,7 +39,9 @@ class CommitMessage {
         this.releasesVersion = ""
         this.dependencyPatch = ""
         try {
-            val changeTypePattern = Pattern.compile("(?<=\\[)(${PersistentSettings.instance.changeTypes.split(",").map { it.trim() }.joinToString("|")})(?=])")
+            val changeTypePattern = Pattern.compile("(?<=\\[)(${
+                PersistentSettings.instance.changeTypes.split(",").joinToString("|") { it.trim() }
+            })(?=])")
             var subjectPattern = Pattern.compile("(.+)")
             if (PersistentSettings.instance.useFlags) {
                 subjectPattern = Pattern.compile("[]+?] (.+)")

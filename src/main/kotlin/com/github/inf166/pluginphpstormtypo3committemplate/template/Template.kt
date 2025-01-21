@@ -12,10 +12,10 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import javax.swing.*
 
-class Template(private val project: Project?, private val dataContext: DataContext, oldCommitMessage: CommitMessage?) :
+class Template(private val project: Project?, private val dataContext: DataContext,
+               private var oldCommitMessage: CommitMessage?
+) :
     DialogWrapper(project) {
-
-    private var oldCommitMessage: CommitMessage?
 
     private lateinit var container: JPanel
 
@@ -32,7 +32,6 @@ class Template(private val project: Project?, private val dataContext: DataConte
     private lateinit var todoTextArea: JTextArea
 
     init {
-        this.oldCommitMessage = oldCommitMessage
         title = "Commit Message Template by TYPO3 Guidelines"
         setOKButtonText("Apply")
         init()

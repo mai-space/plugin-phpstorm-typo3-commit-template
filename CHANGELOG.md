@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+**Tasks:**
+
+- Upgraded environment and support vor 2025 Versions of Jetbrains IDE's
+- Removed unused Test Data
+
 ## [2024.1.3] - 2024-04-13
 
 **Tasks:**
