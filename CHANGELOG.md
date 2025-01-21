@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2025.0.0] - 2025-01-21
+
 **Tasks:**
 
 - Upgraded environment and support vor 2025 Versions of Jetbrains IDE's
@@ -133,7 +135,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.3...HEAD
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.0.0...HEAD
+[2025.0.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.3...v2025.0.0
 [2024.1.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...v2024.1.3
 [2024.1.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2023.1.0...v2024.1.2
 [2023.1.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2022.3.4...v2023.1.0
@@ -144,5 +147,5 @@ Tasks:
 [1.0.6]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/commits/v1.0.3
-[1.0.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/commit/2fe81ec28aeb953fdea4652ea969df56581a4cdc
+[1.0.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v1.0.1...v1.0.3
+[1.0.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/commits/v1.0.1
