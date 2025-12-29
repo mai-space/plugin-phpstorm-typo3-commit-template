@@ -28,7 +28,11 @@ class PersistentSettings(
     var labelForResolves: String = MyBundle.getMessage("labelForResolves"),
     var labelForRelease: String = MyBundle.getMessage("labelForRelease"),
     var labelForDepends: String = MyBundle.getMessage("labelForDepends"),
-    var regexForIssueNo: String = MyBundle.getMessage("regexForIssueNo")
+    var regexForIssueNo: String = MyBundle.getMessage("regexForIssueNo"),
+    var ollamaUrl: String = MyBundle.getMessage("ollamaUrl"),
+    var ollamaModel: String = MyBundle.getMessage("ollamaModel"),
+    var ollamaPromptSubject: String = MyBundle.getMessage("ollamaPromptSubject"),
+    var ollamaPromptBody: String = MyBundle.getMessage("ollamaPromptBody")
 ) : PersistentStateComponent<PersistentSettings> {
 
     override fun getState() = this
