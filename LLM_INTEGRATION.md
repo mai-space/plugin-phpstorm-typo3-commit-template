@@ -24,33 +24,66 @@ Navigate to: **Settings/Preferences** > **Tools** > **TYPO3 Commit Template** > 
    ```
 
 2. Open the commit dialog with `Control/CMD + K`
-3. Open the template dialog with `Control + Shift + M`
-4. Click the **"Generate with AI"** button at the top of the dialog
-5. The AI will analyze your git changes and populate the enabled fields
+3. Choose one of two ways to generate:
+   - **Quick Generation**: Click the **"Generate with AI"** button next to the template button
+   - **Template Dialog**: Open the template dialog with `Control + Shift + M`, fill in details, then click **"Generate with AI"** at the bottom
+4. The AI will analyze your git changes and populate the enabled fields
 
 ## How It Works
 
 1. The plugin extracts the git diff of your staged and unstaged changes
 2. Sends the diff to Ollama with your configured prompts
-3. Receives AI-generated suggestions for:
+3. The prompts strictly instruct the model to return only raw text (no formatting, explanations, or greetings)
+4. Response is cleaned to remove any remaining LLM artifacts
+5. Receives AI-generated suggestions for:
    - Subject line (if enabled)
    - Task list (if enabled)
-4. Populates the fields in the template dialog
-5. You can review and edit before applying
+6. Populates the fields directly or in the template dialog
+7. You can review and edit before applying
+
+## Two Generation Modes
+
+### Direct Generation
+Click the "Generate with AI" button in the commit dialog (next to "Show Template"):
+- Instantly generates and populates commit message
+- Uses your enabled fields and settings
+- No dialog - direct insertion
+
+### Template Dialog Generation
+Open template dialog (`Ctrl+Shift+M`), then click "Generate with AI" at the bottom:
+- Generates within the template
+- Allows editing before applying
+- Full control over all fields
 
 ## Customizing Prompts
 
-You can customize the prompts in settings to match your commit style:
+You can customize the prompts in settings to match your commit style. The default prompts are optimized to return clean, raw text:
 
-**Example Subject Prompt:**
+**Default Subject Prompt:**
 ```
-Based on the following git diff, generate a concise commit message subject line (max 50 characters) following TYPO3 conventions:
+Generate ONLY a concise commit message subject line (max 50 characters) from the git diff below. Reply with ONLY the subject line text, no explanations, no formatting, no quotes, no prefixes. Just the raw subject line text.
 ```
 
-**Example Body Prompt:**
+**Default Body Prompt:**
 ```
-Based on the following git diff, generate bullet points describing the changes made in TYPO3 changelog format:
+Generate ONLY bullet points describing the changes from the git diff below. Reply with ONLY the bullet points (one per line, starting with *), no explanations, no greeting, no conclusion, no extra text. Just the raw bullet point list.
 ```
+
+## Text Cleaning
+
+The plugin automatically cleans LLM responses to ensure high-quality output:
+
+**Subject Line Cleaning:**
+- Removes common prefixes ("Subject:", "Here is", etc.)
+- Removes quotes and unnecessary punctuation
+- Takes only the first meaningful line
+- Strips trailing punctuation
+
+**Body Text Cleaning:**
+- Filters out conversational phrases ("Here are the changes", etc.)
+- Removes wrapper text and explanations
+- Ensures proper bullet point formatting
+- Validates output structure
 
 ## Notes
 
@@ -58,3 +91,4 @@ Based on the following git diff, generate bullet points describing the changes m
 - Only enabled fields (configured in settings) will be populated
 - You must have Ollama running locally for this feature to work
 - The generation happens in the background with a progress indicator
+- Prompts are designed to minimize LLM artifacts, but cleaning logic provides additional safety

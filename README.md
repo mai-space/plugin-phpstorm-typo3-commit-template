@@ -58,10 +58,21 @@ This plugin now supports AI-powered commit message generation using a local LLM 
    - Customize the prompts for subject and body generation
 
 ### Usage
+**Quick Generation:**
+- Click the **"Generate with AI"** button in the commit dialog (next to the template button)
+- Instant generation based on your settings
+
+**Template Dialog:**
 1. Open the commit template dialog (<kbd>Control + Shift + M</kbd>)
-2. Click the **"Generate with AI"** button
+2. Click the **"Generate with AI"** button at the bottom
 3. The AI will analyze your git changes and populate the enabled fields
 4. Review and edit the generated content before applying
+
+**Features:**
+- Strict prompts ensure clean, raw text output
+- Automatic cleaning of LLM artifacts (greetings, explanations, formatting)
+- Respects your enabled/disabled field settings
+- Background processing with progress indicators
 
 For more details, see [LLM_INTEGRATION.md](LLM_INTEGRATION.md).
 
