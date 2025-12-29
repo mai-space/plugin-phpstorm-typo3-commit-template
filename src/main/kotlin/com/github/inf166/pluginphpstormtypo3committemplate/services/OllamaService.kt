@@ -1,12 +1,13 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.services
 
 import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
-import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -16,6 +17,7 @@ import java.net.URL
 class OllamaService(private val project: Project?) {
     private val logger = Logger.getInstance(OllamaService::class.java)
     private val settings = PersistentSettings.instance
+    private val gson = Gson()
 
     data class GenerationResult(
         val subject: String = "",
@@ -67,14 +69,14 @@ class OllamaService(private val project: Project?) {
         connection.connectTimeout = 5000
         connection.readTimeout = 60000
 
-        val requestBody = JSONObject().apply {
-            put("model", settings.ollamaModel)
-            put("prompt", "$prompt\n\n$context")
-            put("stream", false)
+        val requestBody = JsonObject().apply {
+            addProperty("model", settings.ollamaModel)
+            addProperty("prompt", "$prompt\n\n$context")
+            addProperty("stream", false)
         }
 
         OutputStreamWriter(connection.outputStream).use { writer ->
-            writer.write(requestBody.toString())
+            writer.write(gson.toJson(requestBody))
             writer.flush()
         }
 
@@ -87,8 +89,8 @@ class OllamaService(private val project: Project?) {
             reader.readText()
         }
 
-        val jsonResponse = JSONObject(response)
-        return jsonResponse.optString("response", "")
+        val jsonResponse = gson.fromJson(response, JsonObject::class.java)
+        return jsonResponse.get("response")?.asString ?: ""
     }
 
     private fun formatAsBulletList(text: String): String {
