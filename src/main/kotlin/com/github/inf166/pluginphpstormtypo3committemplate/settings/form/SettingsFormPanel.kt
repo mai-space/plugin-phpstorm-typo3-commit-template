@@ -68,6 +68,22 @@ class SettingsFormPanel {
         MyBundle.getMessage("regexForIssueNo"),
         "This Regex will be used to determine the issue number from the branch name"
     )
+    var ollamaUrlInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("ollamaUrl"),
+        "The URL of your local Ollama instance"
+    )
+    var ollamaModelInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("ollamaModel"),
+        "The name of the Ollama model to use"
+    )
+    var ollamaPromptSubjectInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("ollamaPromptSubject"),
+        "Prompt used to generate the commit subject line"
+    )
+    var ollamaPromptBodyInput: JTextField = SettingsInputField.getInputField(
+        MyBundle.getMessage("ollamaPromptBody"),
+        "Prompt used to generate the commit body/tasks"
+    )
     fun createForm() : JPanel {
         val containerPanel = JPanel()
         containerPanel.layout = BoxLayout(containerPanel, BoxLayout.PAGE_AXIS)
@@ -200,6 +216,31 @@ class SettingsFormPanel {
             regexForIssueNoPanel
         )
         containerPanel.add(regexForIssueNoPanel)
+
+        val ollamaSettingsPanel = JPanel()
+        ollamaSettingsPanel.layout = GridLayout(4, 2, Constants.LARGE_SPACE, Constants.LARGE_SPACE)
+        ollamaSettingsPanel.border = IdeBorderFactory.createTitledBorder("Ollama LLM Settings")
+        SettingsInputField.getLabelWithInput(
+            "Ollama URL",
+            ollamaUrlInput,
+            ollamaSettingsPanel
+        )
+        SettingsInputField.getLabelWithInput(
+            "Ollama Model",
+            ollamaModelInput,
+            ollamaSettingsPanel
+        )
+        SettingsInputField.getLabelWithInput(
+            "Subject Prompt",
+            ollamaPromptSubjectInput,
+            ollamaSettingsPanel
+        )
+        SettingsInputField.getLabelWithInput(
+            "Body Prompt",
+            ollamaPromptBodyInput,
+            ollamaSettingsPanel
+        )
+        containerPanel.add(ollamaSettingsPanel)
 
         return containerPanel
     }
@@ -342,6 +383,34 @@ class SettingsFormPanel {
             regexForIssueNoInput.text
         } else {
             MyBundle.getMessage("regexForIssueNo")
+        }
+    }
+    fun ollamaUrl(): String {
+        return if (ollamaUrlInput.text != "") {
+            ollamaUrlInput.text
+        } else {
+            MyBundle.getMessage("ollamaUrl")
+        }
+    }
+    fun ollamaModel(): String {
+        return if (ollamaModelInput.text != "") {
+            ollamaModelInput.text
+        } else {
+            MyBundle.getMessage("ollamaModel")
+        }
+    }
+    fun ollamaPromptSubject(): String {
+        return if (ollamaPromptSubjectInput.text != "") {
+            ollamaPromptSubjectInput.text
+        } else {
+            MyBundle.getMessage("ollamaPromptSubject")
+        }
+    }
+    fun ollamaPromptBody(): String {
+        return if (ollamaPromptBodyInput.text != "") {
+            ollamaPromptBodyInput.text
+        } else {
+            MyBundle.getMessage("ollamaPromptBody")
         }
     }
 }

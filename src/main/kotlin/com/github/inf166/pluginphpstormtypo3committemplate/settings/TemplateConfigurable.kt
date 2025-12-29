@@ -40,7 +40,11 @@ class TemplateConfigurable : SearchableConfigurable {
                 persistentSettings.labelForResolves != settingsFormPanel.labelForResolves() ||
                 persistentSettings.labelForRelease != settingsFormPanel.labelForRelease() ||
                 persistentSettings.labelForDepends != settingsFormPanel.labelForDepends() ||
-                persistentSettings.regexForIssueNo != settingsFormPanel.labelForRegex()
+                persistentSettings.regexForIssueNo != settingsFormPanel.labelForRegex() ||
+                persistentSettings.ollamaUrl != settingsFormPanel.ollamaUrl() ||
+                persistentSettings.ollamaModel != settingsFormPanel.ollamaModel() ||
+                persistentSettings.ollamaPromptSubject != settingsFormPanel.ollamaPromptSubject() ||
+                persistentSettings.ollamaPromptBody != settingsFormPanel.ollamaPromptBody()
     }
     override fun apply() {
         persistentSettings.useFlags = settingsFormPanel.getCheckboxValueOfUseFlags()
@@ -63,6 +67,10 @@ class TemplateConfigurable : SearchableConfigurable {
         persistentSettings.labelForRelease = settingsFormPanel.labelForRelease()
         persistentSettings.labelForDepends = settingsFormPanel.labelForDepends()
         persistentSettings.regexForIssueNo = settingsFormPanel.labelForRegex()
+        persistentSettings.ollamaUrl = settingsFormPanel.ollamaUrl()
+        persistentSettings.ollamaModel = settingsFormPanel.ollamaModel()
+        persistentSettings.ollamaPromptSubject = settingsFormPanel.ollamaPromptSubject()
+        persistentSettings.ollamaPromptBody = settingsFormPanel.ollamaPromptBody()
     }
     override fun reset() {
         settingsFormPanel.getCheckboxValueOfUseFlags()
@@ -85,5 +93,9 @@ class TemplateConfigurable : SearchableConfigurable {
         settingsFormPanel.labelForReleaseInput.text = persistentSettings.labelForRelease
         settingsFormPanel.labelForDependsInput.text = persistentSettings.labelForDepends
         settingsFormPanel.regexForIssueNoInput.text = persistentSettings.regexForIssueNo
+        settingsFormPanel.ollamaUrlInput.text = persistentSettings.ollamaUrl
+        settingsFormPanel.ollamaModelInput.text = persistentSettings.ollamaModel
+        settingsFormPanel.ollamaPromptSubjectInput.text = persistentSettings.ollamaPromptSubject
+        settingsFormPanel.ollamaPromptBodyInput.text = persistentSettings.ollamaPromptBody
     }
 }

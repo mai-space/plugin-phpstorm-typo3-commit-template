@@ -1,5 +1,6 @@
 package com.github.inf166.pluginphpstormtypo3committemplate.template
 
+import com.github.inf166.pluginphpstormtypo3committemplate.services.OllamaService
 import com.github.inf166.pluginphpstormtypo3committemplate.settings.PersistentSettings
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Changelog
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Reference
@@ -10,7 +11,12 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.vcs.changes.ChangeListManager
+import git4idea.GitUtil
+import git4idea.repo.GitRepositoryManager
 import javax.swing.*
+import java.awt.FlowLayout
 
 class Template(private val project: Project?, private val dataContext: DataContext,
                private var oldCommitMessage: CommitMessage?
@@ -41,6 +47,16 @@ class Template(private val project: Project?, private val dataContext: DataConte
 
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
+
+        // Add AI generation button at the top
+        val aiButtonPanel = JPanel(FlowLayout(FlowLayout.LEFT))
+        val generateButton = JButton("Generate with AI")
+        generateButton.addActionListener {
+            generateWithAI()
+        }
+        aiButtonPanel.add(generateButton)
+        container.add(aiButtonPanel)
+        container.add(Spacer.getComponentSpacer())
 
         typeDropdown = SubjectLine.getCommitType(
             PersistentSettings.instance.changeTypes.split(",").map { it.trim() },
@@ -194,5 +210,90 @@ class Template(private val project: Project?, private val dataContext: DataConte
             releaseInputField.text.trim { it <= ' ' },
             dependencyInputField.text.trim { it <= ' ' }
         )
+    }
+
+    private fun generateWithAI() {
+        val gitDiff = getGitDiff()
+        if (gitDiff.isEmpty()) {
+            Messages.showWarningDialog(
+                project,
+                "No changes detected. Please stage or modify files before generating commit message.",
+                "No Changes"
+            )
+            return
+        }
+
+        val ollamaService = OllamaService(project)
+        ollamaService.generateCommitMessage(gitDiff) { result ->
+            SwingUtilities.invokeLater {
+                if (result.error != null) {
+                    Messages.showErrorDialog(project, result.error, "AI Generation Failed")
+                } else {
+                    // Populate enabled fields
+                    if (PersistentSettings.instance.useSubjectLine && result.subject.isNotEmpty()) {
+                        subjectInputField.text = result.subject
+                    }
+                    if (PersistentSettings.instance.useTaskList && result.tasks.isNotEmpty()) {
+                        taskTextArea.text = result.tasks
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getGitDiff(): String {
+        if (project == null) return ""
+
+        try {
+            val changeListManager = ChangeListManager.getInstance(project)
+            val changes = changeListManager.allChanges
+
+            if (changes.isEmpty()) {
+                return ""
+            }
+
+            val gitRepositoryManager = GitRepositoryManager.getInstance(project)
+            val repositories = gitRepositoryManager.repositories
+            
+            if (repositories.isEmpty()) {
+                return ""
+            }
+
+            val repository = repositories.firstOrNull() ?: return ""
+            val git = GitUtil.getRepositoryManager(project).getRepositoryForRoot(repository.root) ?: return ""
+
+            // Get diff of staged and unstaged changes
+            val diffBuilder = StringBuilder()
+            
+            for (change in changes) {
+                change.beforeRevision?.let { before ->
+                    change.afterRevision?.let { after ->
+                        diffBuilder.append("File: ${after.file.path}\n")
+                        diffBuilder.append("---\n")
+                        
+                        val beforeContent = before.content ?: ""
+                        val afterContent = after.content ?: ""
+                        
+                        if (beforeContent != afterContent) {
+                            diffBuilder.append("Before:\n$beforeContent\n")
+                            diffBuilder.append("After:\n$afterContent\n")
+                            diffBuilder.append("\n")
+                        }
+                    }
+                } ?: run {
+                    // New file
+                    change.afterRevision?.let { after ->
+                        diffBuilder.append("New file: ${after.file.path}\n")
+                        diffBuilder.append("---\n")
+                        diffBuilder.append(after.content ?: "")
+                        diffBuilder.append("\n\n")
+                    }
+                }
+            }
+
+            return diffBuilder.toString().take(4000) // Limit to avoid overwhelming the LLM
+        } catch (e: Exception) {
+            return ""
+        }
     }
 }
