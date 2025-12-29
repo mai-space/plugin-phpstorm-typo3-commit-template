@@ -16,9 +16,6 @@ import git4idea.repo.GitRepositoryManager
 import javax.swing.SwingUtilities
 
 class GenerateCommitMessageAction : AnAction(), DumbAware {
-    companion object {
-        private const val MAX_DIFF_LENGTH = 4000
-    }
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
         val project = actionEvent.project ?: return
@@ -127,6 +124,8 @@ class GenerateCommitMessageAction : AnAction(), DumbAware {
     }
 
     companion object {
+        private const val MAX_DIFF_LENGTH = 4000
+
         private fun getCommitPanel(e: AnActionEvent?): CommitMessageI? {
             if (e == null) {
                 return null
