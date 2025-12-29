@@ -31,7 +31,7 @@
         <action id="GenerateCommitMessage.Button" class="com.github.inf166.pluginphpstormtypo3committemplate.actions.GenerateCommitMessageAction"
                 text="Generate with AI"
                 description="Generate commit message directly using AI"
-                icon="/icons/action.svg">
+                icon="/icons/action_ai.svg">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="after" relative-to-action="Commit.Button"/>
         </action>
     </actions>

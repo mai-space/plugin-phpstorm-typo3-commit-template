@@ -7,6 +7,7 @@ import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Ref
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.Spacer
 import com.github.inf166.pluginphpstormtypo3committemplate.template.partials.SubjectLine
 import com.github.inf166.pluginphpstormtypo3committemplate.utilities.CommitMessage
+import com.github.inf166.pluginphpstormtypo3committemplate.utilities.Icons
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
@@ -207,6 +208,9 @@ class Template(private val project: Project?, private val dataContext: DataConte
 
     override fun createActions(): Array<Action> {
         val generateAction = object : DialogWrapperAction("Generate with AI") {
+            init {
+                putValue(Action.SMALL_ICON, Icons.ActionAI)
+            }
             override fun doAction(e: java.awt.event.ActionEvent?) {
                 generateWithAI()
             }
