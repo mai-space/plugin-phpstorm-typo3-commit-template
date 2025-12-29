@@ -61,12 +61,12 @@ You can customize the prompts in settings to match your commit style. The defaul
 
 **Default Subject Prompt:**
 ```
-Generate ONLY a concise commit message subject line (max 50 characters) from the git diff below. Reply with ONLY the subject line text, no explanations, no formatting, no quotes, no prefixes. Just the raw subject line text.
+Generate ONLY a concise commit message subject line (max 50 characters) from the git diff below. Reply with ONLY the subject line text, no explanations, no formatting (NO BOLDING), no quotes, no prefixes. Just the raw subject line text.
 ```
 
 **Default Body Prompt:**
 ```
-Generate ONLY bullet points describing the changes from the git diff below. Reply with ONLY the bullet points (one per line, starting with *), no explanations, no greeting, no conclusion, no extra text. Just the raw bullet point list.
+Generate ONLY bullet points describing the changes from the git diff below. Reply with ONLY the bullet points (one per line, starting with *), no explanations, no greeting, no conclusion, no extra text, no markdown formatting (NO BOLDING). Just the raw bullet point list.
 ```
 
 ## Text Cleaning
@@ -76,12 +76,14 @@ The plugin automatically cleans LLM responses to ensure high-quality output:
 **Subject Line Cleaning:**
 - Removes common prefixes ("Subject:", "Here is", etc.)
 - Removes quotes and unnecessary punctuation
+- Removes markdown bolding (**bold**, __bold__)
 - Takes only the first meaningful line
 - Strips trailing punctuation
 
 **Body Text Cleaning:**
 - Filters out conversational phrases ("Here are the changes", etc.)
 - Removes wrapper text and explanations
+- Removes markdown bolding (**bold**, __bold__)
 - Ensures proper bullet point formatting
 - Validates output structure
 
