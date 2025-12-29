@@ -15,7 +15,6 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vcs.changes.ChangeListManager
 import git4idea.repo.GitRepositoryManager
 import javax.swing.*
-import java.awt.FlowLayout
 
 class Template(private val project: Project?, private val dataContext: DataContext,
                private var oldCommitMessage: CommitMessage?
@@ -50,16 +49,6 @@ class Template(private val project: Project?, private val dataContext: DataConte
 
         container = JPanel()
         container.layout = BoxLayout(container, BoxLayout.PAGE_AXIS)
-
-        // Add AI generation button at the top
-        val aiButtonPanel = JPanel(FlowLayout(FlowLayout.LEFT))
-        val generateButton = JButton("Generate with AI")
-        generateButton.addActionListener {
-            generateWithAI()
-        }
-        aiButtonPanel.add(generateButton)
-        container.add(aiButtonPanel)
-        container.add(Spacer.getComponentSpacer())
 
         typeDropdown = SubjectLine.getCommitType(
             PersistentSettings.instance.changeTypes.split(",").map { it.trim() },
@@ -213,6 +202,15 @@ class Template(private val project: Project?, private val dataContext: DataConte
             releaseInputField.text.trim { it <= ' ' },
             dependencyInputField.text.trim { it <= ' ' }
         )
+    }
+
+    override fun createActions(): Array<Action> {
+        val generateAction = object : DialogWrapperAction("Generate with AI") {
+            override fun doAction(e: java.awt.event.ActionEvent?) {
+                generateWithAI()
+            }
+        }
+        return arrayOf(generateAction, okAction, cancelAction)
     }
 
     private fun generateWithAI() {

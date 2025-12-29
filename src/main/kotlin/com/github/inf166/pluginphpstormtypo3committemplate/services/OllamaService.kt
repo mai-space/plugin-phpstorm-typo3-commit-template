@@ -43,19 +43,21 @@ class OllamaService(private val project: Project?) {
                     // Generate subject line
                     indicator.text = "Generating subject line..."
                     indicator.fraction = 0.3
-                    val subject = callOllama(settings.ollamaPromptSubject, gitDiff)
+                    val rawSubject = callOllama(settings.ollamaPromptSubject, gitDiff)
+                    val cleanedSubject = cleanSubjectLine(rawSubject)
 
                     // Generate body (tasks)
                     indicator.text = "Generating task list..."
                     indicator.fraction = 0.6
-                    val tasks = callOllama(settings.ollamaPromptBody, gitDiff)
+                    val rawTasks = callOllama(settings.ollamaPromptBody, gitDiff)
+                    val cleanedTasks = cleanAndFormatBody(rawTasks)
 
                     indicator.text = "Completed"
                     indicator.fraction = 1.0
 
                     callback(GenerationResult(
-                        subject = subject.trim().take(MAX_SUBJECT_LENGTH),
-                        tasks = formatAsBulletList(tasks)
+                        subject = cleanedSubject.take(MAX_SUBJECT_LENGTH),
+                        tasks = cleanedTasks
                     ))
                 } catch (e: Exception) {
                     logger.error("Failed to generate commit message with Ollama", e)
@@ -122,5 +124,64 @@ class OllamaService(private val project: Project?) {
             .filterNotNull()
 
         return lines.joinToString("\n")
+    }
+
+    private fun cleanSubjectLine(rawSubject: String): String {
+        var cleaned = rawSubject.trim()
+        
+        // Remove common LLM artifacts
+        cleaned = cleaned.removePrefix("Subject:").removePrefix("subject:")
+            .removePrefix("Subject line:").removePrefix("subject line:")
+            .removePrefix("Commit message:").removePrefix("commit message:")
+            .trim()
+        
+        // Remove quotes
+        cleaned = cleaned.removeSurrounding("\"").removeSurrounding("'").trim()
+        
+        // Remove any prefixes like "Here is...", "The subject...", etc.
+        val unwantedPrefixes = listOf(
+            "here is", "here's", "the subject", "commit message", 
+            "subject line", "i suggest", "i would suggest", "this commit"
+        )
+        for (prefix in unwantedPrefixes) {
+            if (cleaned.lowercase().startsWith(prefix)) {
+                cleaned = cleaned.substring(prefix.length).trim()
+                    .removePrefix(":").removePrefix("-").trim()
+            }
+        }
+        
+        // Take first line only
+        cleaned = cleaned.lines().firstOrNull { it.trim().isNotEmpty() } ?: cleaned
+        
+        // Remove trailing punctuation if present
+        cleaned = cleaned.trimEnd('.', '!', '?')
+        
+        return cleaned
+    }
+
+    private fun cleanAndFormatBody(rawBody: String): String {
+        var cleaned = rawBody.trim()
+        
+        // Remove common LLM wrapper text
+        val unwantedPhrases = listOf(
+            "here are the bullet points",
+            "here are the changes",
+            "the changes are",
+            "i've generated",
+            "here is the list",
+            "below are",
+            "the following changes"
+        )
+        
+        val lines = cleaned.lines().toMutableList()
+        
+        // Remove lines that contain unwanted phrases
+        val filteredLines = lines.filter { line ->
+            val lowerLine = line.trim().lowercase()
+            !unwantedPhrases.any { phrase -> lowerLine.contains(phrase) }
+        }
+        
+        // Format as bullet list
+        return formatAsBulletList(filteredLines.joinToString("\n"))
     }
 }
