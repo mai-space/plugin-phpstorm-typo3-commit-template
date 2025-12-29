@@ -44,6 +44,27 @@ If you want to fix a typo or add items, simply click the TYPO3 Icon or hit the S
 
 <img src="https://raw.githubusercontent.com/mai-space/plugin-phpstorm-typo3-commit-template/main/src/main/resources/images/fixed-commit-message.png" alt="message" width="550"><br>
 
+## AI-Powered Commit Message Generation
+
+This plugin now supports AI-powered commit message generation using a local LLM via Ollama!
+
+### Setup
+1. Install [Ollama](https://ollama.ai) on your local machine
+2. Pull a model: `ollama pull llama3.2`
+3. Configure the plugin settings:
+   - Go to <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>TYPO3 Commit Template</kbd>
+   - Set your Ollama URL (default: `http://localhost:11434`)
+   - Set your preferred model (default: `llama3.2`)
+   - Customize the prompts for subject and body generation
+
+### Usage
+1. Open the commit template dialog (<kbd>Control + Shift + M</kbd>)
+2. Click the **"Generate with AI"** button
+3. The AI will analyze your git changes and populate the enabled fields
+4. Review and edit the generated content before applying
+
+For more details, see [LLM_INTEGRATION.md](LLM_INTEGRATION.md).
+
 ## Installation
 
 - Using IDE built-in plugin system:

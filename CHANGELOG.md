@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Added
+
+- AI-powered commit message generation using local LLM (Ollama integration)
+- "Generate with AI" button in commit template dialog
+- Configuration settings for Ollama URL, model name, and custom prompts
+- Automatic population of subject line and task list based on git diff analysis
+
 ## [2025.0.0] - 2025-01-21
 
 **Tasks:**
