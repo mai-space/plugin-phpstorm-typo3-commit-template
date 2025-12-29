@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2025.3.1] - 2025-12-29
+
 ### Added
 
 - AI-powered commit message generation using local LLM (Ollama integration)
@@ -142,7 +144,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.0.0...HEAD
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.3.1...HEAD
+[2025.3.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.0.0...v2025.3.1
 [2025.0.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.3...v2025.0.0
 [2024.1.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...v2024.1.3
 [2024.1.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2023.1.0...v2024.1.2
