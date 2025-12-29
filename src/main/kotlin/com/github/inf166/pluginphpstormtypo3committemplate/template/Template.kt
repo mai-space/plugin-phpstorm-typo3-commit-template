@@ -13,7 +13,6 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vcs.changes.ChangeListManager
-import git4idea.GitUtil
 import git4idea.repo.GitRepositoryManager
 import javax.swing.*
 import java.awt.FlowLayout
@@ -22,6 +21,10 @@ class Template(private val project: Project?, private val dataContext: DataConte
                private var oldCommitMessage: CommitMessage?
 ) :
     DialogWrapper(project) {
+
+    companion object {
+        private const val MAX_DIFF_LENGTH = 4000
+    }
 
     private lateinit var container: JPanel
 
@@ -259,9 +262,6 @@ class Template(private val project: Project?, private val dataContext: DataConte
                 return ""
             }
 
-            val repository = repositories.firstOrNull() ?: return ""
-            val git = GitUtil.getRepositoryManager(project).getRepositoryForRoot(repository.root) ?: return ""
-
             // Get diff of staged and unstaged changes
             val diffBuilder = StringBuilder()
             
@@ -291,7 +291,7 @@ class Template(private val project: Project?, private val dataContext: DataConte
                 }
             }
 
-            return diffBuilder.toString().take(4000) // Limit to avoid overwhelming the LLM
+            return diffBuilder.toString().take(MAX_DIFF_LENGTH) // Limit to avoid overwhelming the LLM
         } catch (e: Exception) {
             return ""
         }

@@ -19,6 +19,12 @@ class OllamaService(private val project: Project?) {
     private val settings = PersistentSettings.instance
     private val gson = Gson()
 
+    companion object {
+        private const val MAX_SUBJECT_LENGTH = 50
+        private const val CONNECT_TIMEOUT_MS = 5000
+        private const val READ_TIMEOUT_MS = 60000
+    }
+
     data class GenerationResult(
         val subject: String = "",
         val tasks: String = "",
@@ -48,7 +54,7 @@ class OllamaService(private val project: Project?) {
                     indicator.fraction = 1.0
 
                     callback(GenerationResult(
-                        subject = subject.trim().take(50),
+                        subject = subject.trim().take(MAX_SUBJECT_LENGTH),
                         tasks = formatAsBulletList(tasks)
                     ))
                 } catch (e: Exception) {
@@ -66,8 +72,8 @@ class OllamaService(private val project: Project?) {
         connection.requestMethod = "POST"
         connection.setRequestProperty("Content-Type", "application/json")
         connection.doOutput = true
-        connection.connectTimeout = 5000
-        connection.readTimeout = 60000
+        connection.connectTimeout = CONNECT_TIMEOUT_MS
+        connection.readTimeout = READ_TIMEOUT_MS
 
         val requestBody = JsonObject().apply {
             addProperty("model", settings.ollamaModel)
@@ -82,7 +88,12 @@ class OllamaService(private val project: Project?) {
 
         val responseCode = connection.responseCode
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw RuntimeException("Ollama API returned error code: $responseCode")
+            val errorBody = try {
+                BufferedReader(InputStreamReader(connection.errorStream)).use { it.readText() }
+            } catch (e: Exception) {
+                "Unable to read error details"
+            }
+            throw RuntimeException("Ollama API returned error code $responseCode: $errorBody")
         }
 
         val response = BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
