@@ -23,6 +23,11 @@ class OllamaService(private val project: Project?) {
         private const val MAX_SUBJECT_LENGTH = 50
         private const val CONNECT_TIMEOUT_MS = 5000
         private const val READ_TIMEOUT_MS = 60000
+
+        fun removeMarkdownBolding(text: String): String {
+            return text.replace(Regex("\\*\\*(.*?)\\*\\*"), "$1")
+                .replace(Regex("__(.*?)__"), "$1")
+        }
     }
 
     data class GenerationResult(
@@ -153,6 +158,9 @@ class OllamaService(private val project: Project?) {
         // Take first line only
         cleaned = cleaned.lines().firstOrNull { it.trim().isNotEmpty() } ?: cleaned
         
+        // Remove markdown bolding
+        cleaned = removeMarkdownBolding(cleaned)
+
         // Remove trailing punctuation if present
         cleaned = cleaned.trimEnd('.', '!', '?')
         
@@ -162,6 +170,9 @@ class OllamaService(private val project: Project?) {
     private fun cleanAndFormatBody(rawBody: String): String {
         var cleaned = rawBody.trim()
         
+        // Remove markdown bolding
+        cleaned = removeMarkdownBolding(cleaned)
+
         // Remove common LLM wrapper text
         val unwantedPhrases = listOf(
             "here are the bullet points",
