@@ -1,0 +1,90 @@
+name: Update IntelliJ Compatibility
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-compatibility:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.2.0
+
+      - name: Detect latest IntelliJ build branch
+        id: detect
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import re
+          import urllib.request
+          from pathlib import Path
+
+          output_path = Path(os.environ["GITHUB_OUTPUT"])
+          properties = Path("gradle.properties").read_text(encoding="utf-8")
+
+          current_match = re.search(r"^pluginUntilBuild\s*=\s*(\d+)\.\*\s*$", properties, re.MULTILINE)
+          if not current_match:
+              raise SystemExit("Unable to parse pluginUntilBuild from gradle.properties")
+
+          current_branch = int(current_match.group(1))
+
+          with urllib.request.urlopen("https://data.services.jetbrains.com/products/releases?code=IU&latest=true&type=release", timeout=30) as response:
+              data = json.load(response)
+
+          latest = data["IU"][0]
+          latest_build = latest["build"]
+          latest_branch = int(str(latest_build).split(".", 1)[0])
+          latest_until_build = f"{latest_branch}.*"
+          has_update = latest_branch > current_branch
+
+          with output_path.open("a", encoding="utf-8") as output:
+              output.write(f"current_branch={current_branch}\n")
+              output.write(f"latest_branch={latest_branch}\n")
+              output.write(f"latest_until_build={latest_until_build}\n")
+              output.write(f"has_update={'true' if has_update else 'false'}\n")
+          PY
+
+      - name: Verify plugin against candidate compatibility range
+        if: steps.detect.outputs.has_update == 'true'
+        run: ./gradlew check verifyPlugin -PpluginUntilBuild=${{ steps.detect.outputs.latest_until_build }}
+
+      - name: Update compatibility range
+        if: steps.detect.outputs.has_update == 'true'
+        shell: bash
+        run: |
+          sed -Ei 's/^pluginUntilBuild = .*/pluginUntilBuild = ${{ steps.detect.outputs.latest_until_build }}/' gradle.properties
+
+      - name: Create Pull Request
+        if: steps.detect.outputs.has_update == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/update-intellij-compat-${{ steps.detect.outputs.latest_branch }}
+          commit-message: "chore: extend IntelliJ compatibility to ${{ steps.detect.outputs.latest_until_build }}"
+          title: "chore: extend IntelliJ compatibility to ${{ steps.detect.outputs.latest_until_build }}"
+          body: |
+            This automated change extends the plugin compatibility range to the latest stable IntelliJ IDEA build branch.
+
+            - Previous `pluginUntilBuild`: `${{ steps.detect.outputs.current_branch }}.*`
+            - New `pluginUntilBuild`: `${{ steps.detect.outputs.latest_until_build }}`
+
+            Verification is run in this workflow with:
+            - `./gradlew check`
+            - `./gradlew verifyPlugin -PpluginUntilBuild=${{ steps.detect.outputs.latest_until_build }}`
