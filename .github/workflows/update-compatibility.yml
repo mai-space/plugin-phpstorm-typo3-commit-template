@@ -44,16 +44,55 @@ jobs:
           if not current_match:
               raise SystemExit("Unable to parse pluginUntilBuild from gradle.properties")
 
+          platform_type_match = re.search(r"^platformType\s*=\s*([A-Za-z0-9]+)\s*$", properties, re.MULTILINE)
+          if not platform_type_match:
+              raise SystemExit("Unable to parse platformType from gradle.properties")
+
           current_branch = int(current_match.group(1))
+          platform_type = platform_type_match.group(1).upper()
 
-          with urllib.request.urlopen("https://data.services.jetbrains.com/products/releases?code=IU&latest=true&type=release", timeout=30) as response:
-              data = json.load(response)
+          def extract_latest_release(payload: object, product_code: str) -> dict | None:
+              if isinstance(payload, dict):
+                  values = payload.get(product_code)
+                  if isinstance(values, list) and values:
+                      latest_value = values[0]
+                      if isinstance(latest_value, dict):
+                          return latest_value
 
-          latest = data["IU"][0]
-          latest_build = latest["build"]
-          latest_branch = int(str(latest_build).split(".", 1)[0])
-          latest_until_build = f"{latest_branch}.*"
-          has_update = latest_branch > current_branch
+                  candidates = [
+                      value[0]
+                      for value in payload.values()
+                      if isinstance(value, list) and value and isinstance(value[0], dict) and "build" in value[0]
+                  ]
+                  if len(candidates) == 1:
+                      return candidates[0]
+
+              if isinstance(payload, list) and payload and isinstance(payload[0], dict):
+                  return payload[0]
+
+              return None
+
+          latest = None
+          try:
+              with urllib.request.urlopen(
+                  f"https://data.services.jetbrains.com/products/releases?code={platform_type}&latest=true&type=release",
+                  timeout=30,
+              ) as response:
+                  data = json.load(response)
+              latest = extract_latest_release(data, platform_type)
+          except Exception as exc:
+              print(f"Warning: unable to fetch IntelliJ release metadata ({exc}); skipping update run")
+
+          if latest is None:
+              print(f"Warning: unable to detect latest release for platform {platform_type}; skipping update run")
+              latest_branch = current_branch
+              latest_until_build = f"{current_branch}.*"
+              has_update = False
+          else:
+              latest_build = latest["build"]
+              latest_branch = int(str(latest_build).split(".", 1)[0])
+              latest_until_build = f"{latest_branch}.*"
+              has_update = latest_branch > current_branch
 
           with output_path.open("a", encoding="utf-8") as output:
               output.write(f"current_branch={current_branch}\n")
