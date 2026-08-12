@@ -7,15 +7,22 @@ on:
 
 jobs:
   cleanup:
-    name: Delete merged stale branches
+    name: Auto-merge and delete stale branches
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
-      - name: Delete stale merged branches
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Auto-merge and delete stale branches
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -23,7 +30,7 @@ jobs:
 
           PROTECTED_BRANCHES="main"
 
-          for branch in $(git branch -r --merged origin/main | grep 'origin/' | sed 's|origin/||' | tr -d ' '); do
+          for branch in $(git branch -r | grep 'origin/' | grep -v 'origin/HEAD' | sed 's|origin/||' | tr -d ' '); do
             skip=false
             for protected in $PROTECTED_BRANCHES; do
               if [ "$branch" = "$protected" ]; then
@@ -31,9 +38,28 @@ jobs:
                 break
               fi
             done
+            [ "$skip" = "true" ] && continue
 
-            if [ "$skip" = "false" ]; then
-              echo "Deleting merged branch: $branch"
+            # Check if branch is already fully merged into main
+            if git merge-base --is-ancestor "origin/$branch" origin/main; then
+              echo "Branch '$branch' is already merged — deleting."
               gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$branch"
+              continue
+            fi
+
+            # Attempt a dry-run merge to detect conflicts without touching the working tree
+            git checkout -q origin/main
+            if git merge --no-commit --no-ff "origin/$branch" > /dev/null 2>&1; then
+              git merge --abort 2>/dev/null || true
+
+              # Perform the actual merge on main
+              git checkout -q main
+              git merge --no-ff "origin/$branch" -m "chore: auto-merge stale branch '$branch' into main"
+              git push origin main
+              echo "Branch '$branch' merged into main — deleting."
+              gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$branch"
+            else
+              git merge --abort 2>/dev/null || true
+              echo "Branch '$branch' has merge conflicts — skipping."
             fi
           done
