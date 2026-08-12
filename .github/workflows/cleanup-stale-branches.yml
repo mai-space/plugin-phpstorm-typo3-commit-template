@@ -22,7 +22,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Auto-merge and delete stale branches
+      - name: Rebase and fast-forward stale branches into main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -40,26 +40,26 @@ jobs:
             done
             [ "$skip" = "true" ] && continue
 
-            # Check if branch is already fully merged into main
+            # Branch already contained in main — just delete it
             if git merge-base --is-ancestor "origin/$branch" origin/main; then
               echo "Branch '$branch' is already merged — deleting."
               gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$branch"
               continue
             fi
 
-            # Attempt a dry-run merge to detect conflicts without touching the working tree
-            git checkout -q origin/main
-            if git merge --no-commit --no-ff "origin/$branch" > /dev/null 2>&1; then
-              git merge --abort 2>/dev/null || true
-
-              # Perform the actual merge on main
-              git checkout -q main
-              git merge --no-ff "origin/$branch" -m "chore: auto-merge stale branch '$branch' into main"
+            # Attempt a dry-run rebase onto main to detect conflicts
+            git checkout -q -b "dry-run/$branch" "origin/$branch"
+            if git rebase "origin/main" > /dev/null 2>&1; then
+              git checkout -q -B main origin/main
+              # Fast-forward main to the successfully rebased tip
+              git merge --ff-only "dry-run/$branch"
               git push origin main
-              echo "Branch '$branch' merged into main — deleting."
+              echo "Branch '$branch' rebased and fast-forwarded into main — deleting."
               gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$branch"
             else
-              git merge --abort 2>/dev/null || true
-              echo "Branch '$branch' has merge conflicts — skipping."
+              git rebase --abort 2>/dev/null || true
+              echo "Branch '$branch' has rebase conflicts — skipping."
             fi
+            git checkout -q main
+            git branch -D "dry-run/$branch" 2>/dev/null || true
           done
