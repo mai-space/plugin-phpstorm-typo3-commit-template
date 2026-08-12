@@ -1,0 +1,39 @@
+name: Cleanup Stale Branches
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    name: Delete merged stale branches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v7
+
+      - name: Delete stale merged branches
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch --prune origin
+
+          PROTECTED_BRANCHES="main"
+
+          for branch in $(git branch -r --merged origin/main | grep 'origin/' | sed 's|origin/||' | tr -d ' '); do
+            skip=false
+            for protected in $PROTECTED_BRANCHES; do
+              if [ "$branch" = "$protected" ]; then
+                skip=true
+                break
+              fi
+            done
+
+            if [ "$skip" = "false" ]; then
+              echo "Deleting merged branch: $branch"
+              gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$branch"
+            fi
+          done
