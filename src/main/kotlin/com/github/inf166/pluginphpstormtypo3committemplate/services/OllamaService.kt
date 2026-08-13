@@ -12,7 +12,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
-import java.net.URL
+import java.net.URI
 
 class OllamaService(private val project: Project?) {
     private val logger = Logger.getInstance(OllamaService::class.java)
@@ -73,7 +73,7 @@ class OllamaService(private val project: Project?) {
     }
 
     private fun callOllama(prompt: String, context: String): String {
-        val url = URL("${settings.ollamaUrl}/api/generate")
+        val url = URI.create("${settings.ollamaUrl}/api/generate").toURL()
         val connection = url.openConnection() as HttpURLConnection
 
         connection.requestMethod = "POST"
