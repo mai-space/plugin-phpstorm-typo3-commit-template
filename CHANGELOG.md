@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [2026.0.2] - 2026-08-13
+
+- [TASK] Bump org.jetbrains.kotlinx.kover from 0.9.8 to 0.9.9 by @dependabot[bot] in https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/pull/208
+- Troubleshooting publish plugin issues by @mai-space with @Copilot in https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/pull/221
+
 ## [2025.3.1] - 2025-12-29
 
 ### Added
@@ -144,7 +149,8 @@ Tasks:
 - Done tasks, breaking changes, to-do changelog
 - Dynamic Flags based on Input
 
-[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.3.1...HEAD
+[Unreleased]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2026.0.2...HEAD
+[2026.0.2]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.3.1...v2026.0.2
 [2025.3.1]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2025.0.0...v2025.3.1
 [2025.0.0]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.3...v2025.0.0
 [2024.1.3]: https://github.com/mai-space/plugin-phpstorm-typo3-commit-template/compare/v2024.1.2...v2024.1.3
